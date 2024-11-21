@@ -2,21 +2,65 @@ name: AI Code Reviewer
 
 on:
   pull_request:
-    types:
-      - opened
-      - synchronize
-permissions: write-all
+    types: [opened, synchronize]
+    paths:
+      - 'src/**/*.{ts,tsx,js,jsx}'
+
 jobs:
   review:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
     steps:
-      - name: Checkout Repo
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-      - name: AI Code Reviewer
+      - name: AI Code Review
         uses: se0kcess/ai-code-reviewer@main
         with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # The GITHUB_TOKEN is there by default so you just need to keep it like it is and not necessarily need to add it as secret as it will throw an error. [More Details](https://docs.github.com/en/actions/security-guides/automatic-token-authentication#about-the-github_token-secret)
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_API_MODEL: 'gpt-3.5-turbo' # Optional: defaults to "gpt-4"
-          exclude: '**/*.json, **/*.md' # Optional: exclude patterns separated by commas
+          OPENAI_API_MODEL: 'gpt-3.5-turbo'
+          language: 'Korean'
+          system_message: |
+            당신은 친절하고 꼼꼼한 시니어 개발자입니다.
+
+            코드 리뷰 시 다음 사항들을 중점적으로 확인해주세요:
+
+            1. 코드 품질
+              - 클린 코드 원칙 준수 여부
+              - 명명 규칙의 적절성
+              - 중복 코드 여부
+              - 함수/컴포넌트의 단일 책임 원칙 준수
+
+            2. 성능
+              - 불필요한 렌더링 발생 여부
+              - 메모리 누수 가능성
+              - 비효율적인 로직
+
+            3. 타입스크립트
+              - 타입 정의의 적절성
+              - any 타입 사용 지양
+              - 타입 추론 활용
+
+            4. React 모범 사례
+              - 훅 사용의 적절성
+              - 상태 관리 방식
+              - 컴포넌트 분리의 적절성
+
+            5. 피드백 스타일
+              - 친근하고 이해하기 쉬운 한국어로 설명
+              - 구체적인 개선 방안 제시
+              - 긍정적인 피드백 포함
+              - 코드 예시 함께 제공
+
+          review_comment_prefix: '🤖 코드리뷰 의견입니다:'
+          max_files: 5
+          max_lines: 300
+          review_level: 4
+          DEBUG: true
+
+          exclude_patterns: |
+            **/*.json
+            **/*.md
+            **/*.test.{ts,tsx}
