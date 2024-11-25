@@ -8,7 +8,39 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        path: '', // 홈 페이지
+        path: '/', // 랜딩 페이지
+        element: <Main />,
+      },
+      {
+        path: '/main',
+        element: <Main />,
+      },
+      {
+        path: '/login',
+        element: <Main />,
+      },
+      {
+        path: '/register',
+        element: <Main />,
+      },
+      {
+        path: '/find-password',
+        element: <Main />,
+      },
+      {
+        path: '/reset-password',
+        element: <Main />,
+      },
+      {
+        path: '/find-id',
+        element: <Main />,
+      },
+      {
+        path: '/detail-answer',
+        element: <Main />,
+      },
+      {
+        path: '/comments',
         element: <Main />,
       },
     ],
