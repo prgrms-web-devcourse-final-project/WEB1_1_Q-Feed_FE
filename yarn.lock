@@ -4009,6 +4009,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/eslint-plugin-query@npm:4":
+  version: 4.38.0
+  resolution: "@tanstack/eslint-plugin-query@npm:4.38.0"
+  peerDependencies:
+    eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+  checksum: 10c0/cf6ee6b8992b37edf6c833755616f1d784449c3300900dbf775cd2b6eba87a7eb86cfb3aa2afb2ff0ef56b70f9e2fa5c8ed5ed498e624fc3d0cea77c18ffe222
+  languageName: node
+  linkType: hard
+
 "@tanstack/query-core@npm:5.60.6":
   version: 5.60.6
   resolution: "@tanstack/query-core@npm:5.60.6"
@@ -5320,6 +5329,18 @@ __metadata:
   version: 12.1.0
   resolution: "commander@npm:12.1.0"
   checksum: 10c0/6e1996680c083b3b897bfc1cfe1c58dfbcd9842fd43e1aaf8a795fbc237f65efcc860a3ef457b318e73f29a4f4a28f6403c3d653d021d960e4632dd45bde54a9
+  languageName: node
+  linkType: hard
+
+"commitlint@npm:^19.6.0":
+  version: 19.6.0
+  resolution: "commitlint@npm:19.6.0"
+  dependencies:
+    "@commitlint/cli": "npm:^19.6.0"
+    "@commitlint/types": "npm:^19.5.0"
+  bin:
+    commitlint: cli.js
+  checksum: 10c0/bc88b5383bca70174a28303bfbe96902eeeae707167dcecbf6b9fc5e6e06a65390230a78a1107ae8e96fc6abbb6419b2d9c754214c8445c71a24344978fffb43
   languageName: node
   linkType: hard
 
@@ -11084,6 +11105,7 @@ __metadata:
     "@storybook/react": "npm:^8.4.5"
     "@storybook/react-vite": "npm:^8.4.5"
     "@storybook/test": "npm:^8.4.5"
+    "@tanstack/eslint-plugin-query": "npm:4"
     "@tanstack/react-query": "npm:^5.60.6"
     "@types/node": "npm:^22.9.0"
     "@types/react": "npm:^18.3.12"
@@ -11093,6 +11115,7 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.8.0"
     "@vite-pwa/assets-generator": "npm:^0.2.4"
     "@vitejs/plugin-react": "npm:^4.2.1"
+    commitlint: "npm:^19.6.0"
     eslint: "npm:^8.57.0"
     eslint-plugin-react-hooks: "npm:^4.6.2"
     eslint-plugin-react-refresh: "npm:^0.4.6"
@@ -11104,6 +11127,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     react-icons: "npm:^5.3.0"
     react-router-dom: "npm:^6.28.0"
+    signal-exit: "npm:^4.1.0"
     socket.io: "npm:^4.8.1"
     storybook: "npm:^8.4.5"
     typescript: "npm:^5.6.3"
