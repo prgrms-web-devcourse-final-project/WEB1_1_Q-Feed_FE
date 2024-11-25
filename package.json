@@ -2,6 +2,7 @@
   "name": "web1_1_13_q-feed",
   "private": true,
   "version": "0.0.0",
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -41,8 +42,6 @@
     "@storybook/addon-essentials": "^8.4.5",
     "@storybook/addon-interactions": "^8.4.5",
     "@storybook/addon-links": "^8.4.5",
-    "@storybook/addon-mdx-gfm": "^8.4.5",
-    "@storybook/addon-onboarding": "^8.4.5",
     "@storybook/blocks": "^8.4.5",
     "@storybook/react": "^8.4.5",
     "@storybook/react-vite": "^8.4.5",
