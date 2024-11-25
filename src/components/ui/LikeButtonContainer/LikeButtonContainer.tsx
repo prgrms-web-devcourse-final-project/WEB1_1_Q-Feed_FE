@@ -21,8 +21,7 @@ const IconWrapper = styled.div<{ isLiked: boolean }>`
 `;
 
 const Count = styled.span<{ isLiked: boolean }>`
-  font-size: 0.875rem;
-  font-weight: 600;
+  font-size: 0.725rem;
   color: #6b7280;
 `;
 
