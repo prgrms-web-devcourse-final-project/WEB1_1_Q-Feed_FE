@@ -1,4 +1,4 @@
-name: AI Code Reviewer
+name: Code Review
 
 on:
   pull_request:
@@ -7,30 +7,41 @@ on:
 jobs:
   review:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      pull-requests: write
     steps:
       - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: AI Code Review
         uses: se0kcess/ai-code-reviewer@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
-          OPENAI_API_MODEL: 'gpt-3.5-turbo'
-          language: 'Korean'
-          system_message: |
-            당신은 시니어 개발자입니다.
-            다음 규칙에 따라 코드를 리뷰해주세요:
-            1. 코드의 품질, 가독성, 유지보수성을 중점적으로 검토합니다.
-            2. 구체적인 개선 제안을 해주세요.
-            3. 긍정적인 피드백도 함께 제공해주세요.
-            4. 한국어로 친근하고 명확하게 설명해주세요.
-            5. 보안, 성능, 확장성 관련 이슈도 체크해주세요.
+          MODEL: 'gpt-3.5-turbo'
+          LANGUAGE: 'ko'
+          MAX_FILES: 10
+          REVIEW_COMMENT_PREFIX: '🤖 코드 리뷰 의견'
+          PROMPT: |
+            당신은 시니어 프론트엔드 개발자입니다.
+            아래 가이드라인에 따라 코드 리뷰를 진행해주세요:
 
-          max_files: 5
-          exclude_patterns: |
-            **/*.json
-            **/*.md
-            **/*.lock
+            1. 코드의 품질, 가독성, 유지보수성을 중점적으로 검토해주세요.
+            2. 리액트와 타입스크립트의 모범 사례를 기준으로 평가해주세요.
+            3. 성능 개선이 가능한 부분이 있다면 구체적인 해결 방안을 제시해주세요.
+            4. 발견된 문제점에 대해서는 개선 방향을 명확하게 설명해주세요.
+            5. 긍정적인 피드백도 함께 제공해주세요.
+            6. 모든 리뷰는 한국어로 작성해주세요.
+
+            리뷰는 다음 형식으로 작성해주세요:
+
+            ## 전반적인 검토 의견
+            - 코드의 전반적인 품질과 개선이 필요한 주요 사항을 요약해주세요.
+
+            ## 구체적인 개선 제안
+            1. [파일명:줄번호] 개선이 필요한 부분
+                - 현재 상황
+                - 개선 방안
+                - 기대 효과
+
+            ## 잘된 점
+            - 좋은 구현 사례와 긍정적인 부분들을 언급해주세요.
