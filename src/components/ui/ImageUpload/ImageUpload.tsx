@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
-import { FaImage, FaTrashAlt } from 'react-icons/fa';
+import { LuImagePlus, LuImageOff } from 'react-icons/lu';
+import theme from '@/styles/theme';
 
 interface ImageUploadProps {
   onImageUpload?: (file: File) => void; // 이미지 업로드 이벤트 콜백
@@ -10,15 +11,13 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']; // 허용 MIME 타입
+  const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
 
-  // 파일 처리
   const processFile = (file: File) => {
     if (!validImageTypes.includes(file.type)) {
       setError('이미지 파일(JPEG, PNG, GIF, WEBP)만 허용됩니다.');
       return;
     }
-
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreview(reader.result as string);
@@ -28,13 +27,11 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
     onImageUpload?.(file);
   };
 
-  // 파일 입력 이벤트 핸들러
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) processFile(file);
   };
 
-  // 드래그 앤 드롭 이벤트 핸들러
   const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const file = e.dataTransfer.files?.[0];
@@ -45,26 +42,32 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
     e.preventDefault();
   };
 
-  // 이미지 삭제
-  const handleRemoveImage = () => {
-    setPreview(null);
-    setError(null);
+  const handleBoxClick = () => {
+    if (preview) {
+      setPreview(null);
+      setError(null);
+    }
   };
 
   return (
     <Container>
-      <UploadBox onDrop={handleDrop} onDragOver={handleDragOver}>
+      <UploadBox
+        onDrop={handleDrop}
+        onDragOver={handleDragOver}
+        onClick={handleBoxClick}
+        hasPreview={!!preview}
+      >
+        <input type="file" accept="image/*" onChange={handleFileChange} />
         {preview ? (
           <PreviewContainer>
             <PreviewImage src={preview} alt="Uploaded Preview" />
-            <RemoveButton onClick={handleRemoveImage}>
-              <FaTrashAlt size="1.5rem" />
-            </RemoveButton>
+            <RemoveOverlay>
+              <LuImageOff size="3rem" color={theme.colors.primary} />
+            </RemoveOverlay>
           </PreviewContainer>
         ) : (
           <Placeholder>
-            <FaImage size="3rem" color="#aaa" />
-            <input type="file" accept="image/*" onChange={handleFileChange} />
+            <LuImagePlus size="3rem" color={theme.colors.primary} />
           </Placeholder>
         )}
       </UploadBox>
@@ -81,23 +84,29 @@ const Container = styled.div`
   width: 100%;
 `;
 
-const UploadBox = styled.div`
+const UploadBox = styled.div<{ hasPreview: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 18.75rem;
-  height: 18.75rem;
-  border: 0.125rem dashed #ccc;
-  border-radius: 0.625rem;
+  width: 23.562rem;
+  height: 16.25rem;
+  border: ${({ hasPreview }) => (hasPreview ? '0.125rem solid' : '0.125rem dashed')} ${theme.colors.primary};
+  border-radius: 1rem;
+  background-color: #efe7de;
   position: relative;
   overflow: hidden;
+  cursor: pointer;
 
-  &:hover {
-    border-color: #76c7e0;
+  input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
   }
 `;
 
-const Placeholder = styled.label`
+const Placeholder = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -105,21 +114,19 @@ const Placeholder = styled.label`
   color: #aaa;
   font-size: 1rem;
   text-align: center;
-  cursor: pointer;
-
-  input {
-    display: none;
-  }
-
-  svg {
-    margin-bottom: 0.5rem;
-  }
 `;
 
 const PreviewContainer = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover > div {
+    opacity: 1;
+  }
 `;
 
 const PreviewImage = styled.img`
@@ -127,30 +134,25 @@ const PreviewImage = styled.img`
   height: 100%;
   object-fit: cover;
   border-radius: 0.625rem;
+  transition: all 0.2s;
+
+  &:hover {
+    filter: brightness(0.7);
+  }
 `;
 
-const RemoveButton = styled.button`
+const RemoveOverlay = styled.div`
   position: absolute;
-  top: 0.5rem;
-  right: 0.5rem;
-  background: rgba(255, 255, 255, 0.7);
-  border: none;
-  border-radius: 50%;
-  width: 2rem;
-  height: 2rem;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
-  transition: background 0.2s;
-
-  &:hover {
-    background: rgba(255, 255, 255, 1);
-  }
-
-  svg {
-    color: #f44336;
-  }
+  opacity: 0;
+  transition: opacity 0.2s;
 `;
 
 const ErrorMessage = styled.p`
