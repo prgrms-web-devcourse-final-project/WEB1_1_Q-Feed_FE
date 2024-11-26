@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import theme from '@/styles/theme'
 
 interface SelectableHobbyTagsProps {
   tags: string[]; // 태그 목록
@@ -46,16 +47,16 @@ const TagContainer = styled.div`
 const Tag = styled.button<{ isSelected: boolean }>`
   padding: 0.5rem 1rem;
   border-radius: 3.125rem;
-  border: ${({ isSelected }) => (isSelected ? '1px solid #9D6F70' : '1px solid #BAB0B1')};
-  background-color: ${({ isSelected }) => (isSelected ? '#9D6F70' : 'transparent')};
-  color: ${({ isSelected }) => (isSelected ? '#FFFFFF' : '#BAB0B1')};
+  border: ${({ isSelected }) => (isSelected ? `1px solid ${theme.colors.primary}` : `1px solid ${theme.colors.gray[300]}`)};
+  background-color: ${({ isSelected }) => (isSelected ? theme.colors.primary : 'transparent')};
+  color: ${({ isSelected }) => (isSelected ? theme.colors.white : theme.colors.gray[300])};
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s;
 
   &:hover {
-    background-color: #bab0b1;
-    border: #bab0b1;
-    color: #ffffff;
+    color: ${theme.colors.white};
+    border-color: ${theme.colors.gray[300]};
+    background-color: ${theme.colors.gray[300]};
   }
 `;
