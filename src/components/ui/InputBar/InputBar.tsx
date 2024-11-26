@@ -52,10 +52,10 @@ const containerStyle = css`
   display: flex;
   align-items: center;
   width: 100%;
-  max-width: 200px;
+  max-width: 377px;
   margin: 10px auto;
   border: 1px solid #ccc;
-  border-radius: 5px;
+  border-radius: 16px;
   overflow: hidden;
 `;
 
@@ -63,7 +63,7 @@ const containerStyle = css`
 const inputStyle = css`
   flex: 1;
   padding: 8px 12px;
-  font-size: 8px;
+  font-size: 16px;
   border: none;
   outline: none;
 
@@ -74,7 +74,6 @@ const inputStyle = css`
 
 // 돋보기 버튼 스타일
 const iconButtonStyle = css`
-  background: #f5f5f5;
   border: none;
   padding: 8px;
   cursor: pointer;
@@ -82,14 +81,10 @@ const iconButtonStyle = css`
   align-items: center;
   justify-content: center;
 
-  &:hover {
-    background: #e0e0e0;
-  }
-
   svg {
     font-size: 18px;
-    color: #007bff;
-  }
+    color: black;
+
 `;
 
 export default SearchInput;

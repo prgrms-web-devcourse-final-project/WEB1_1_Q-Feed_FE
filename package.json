@@ -34,6 +34,8 @@
     "react-router-dom": "^6.28.0",
     "rimraf": "^6.0.1",
     "socket.io": "^4.8.1",
+    "storybook": "^8.4.5",
+    "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.2",
     "zustand": "^5.0.1"
   },
