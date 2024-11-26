@@ -4,26 +4,42 @@ import { Button, Input, FormControl, FormLabel, FormErrorMessage, Stack, HStack 
 import { useForm, SubmitHandler } from "react-hook-form"
 import { RiKakaoTalkFill } from "react-icons/ri";
 
+const LAYOUT = {
+  HEADER_HEIGHT: '0.9375rem',
+  MIN_HEIGHT: '48.3125rem',
+  PADDING: '2rem',
+  GAP: '1rem',
+} as const;
+
+const FORM = {
+  MAX_WIDTH: '26.5625rem',
+  CONTROL_HEIGHT: '100px',
+  MARGIN_BOTTOM: '1rem',
+} as const;
+
+const LOGO = {
+  SIZE: '30%',
+} as const;
+
+
 const Container = styled.div`
-  height :calc(100vh- 0.9375rem);
-  min-height : 48.3125rem;
+  height :calc(100vh- ${LAYOUT.HEADER_HEIGHT});
+  min-height : ${LAYOUT.MIN_HEIGHT};
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 2rem;
-  gap : 1rem;
+  padding: ${LAYOUT.PADDING};
+  gap : ${LAYOUT.GAP};
 `;
 
 const FormWrapper = styled.form`
   width: 100%;
-  max-width : 26.5625rem; // 425px;
+  max-width : ${FORM.MAX_WIDTH};
 `;
 
 const StyledStack = styled(Stack)`
-  gap: 4;
   align :flex-start;
   width : 100%;
-
 `;
 
 const StyledButton = styled(Button)`
@@ -31,11 +47,10 @@ const StyledButton = styled(Button)`
 `;
 
 
-
 const StyledFormControl = styled(FormControl)`
-  height: 100px;
+  height: ${FORM.CONTROL_HEIGHT};
   position: relative;
-  margin-bottom: 1rem;
+  margin-bottom: ${FORM.MARGIN_BOTTOM};
 `;
 
 const StyledFormErrorMessage = styled(FormErrorMessage)`
@@ -81,7 +96,7 @@ const handleRegister = () =>{
 }
 
 
-export const Login = () => {  // children prop 제거
+export const Login = () => {
   const {
     register,
     handleSubmit,
@@ -94,7 +109,7 @@ export const Login = () => {  // children prop 제거
 
   return (
     <Container>
-      <Logo width="30%" height="30%" />
+      <Logo width={LOGO.SIZE} height={LOGO.SIZE} />
       <h3>일상의 질문으로 연결되는 우리들의 이야기(가제)</h3>
 
       <FormWrapper onSubmit={handleSubmit(onSubmit)}>
