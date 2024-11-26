@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import FloatingButton from './FloatingButton';
 const meta = {
-  title: 'Components/FloatingButton',
+  title: 'Components/QSpaceMain/FloatingButton',
   component: FloatingButton,
   parameters: {
     layout: 'centered',

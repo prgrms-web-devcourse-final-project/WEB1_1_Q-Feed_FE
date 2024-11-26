@@ -8,9 +8,11 @@ interface GroupStateTagProps {
 
 const StateTag = styled.div<{ isOpen: boolean }>`
   display: inline-flex;
+  width: 3rem;
   align-items: center;
+  white-space: nowrap;
   justify-content: center;
-  padding: 0.4rem 1rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 50px;
   font-size: ${theme.typography.body2.size};
   font-weight: ${theme.typography.body2.weight};
