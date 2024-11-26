@@ -1,4 +1,5 @@
 import RootLayout from '@/components/RootLayout';
+import Login from '@/pages/Login';
 import Main from '@/pages/Main';
 import { createBrowserRouter } from 'react-router-dom';
 
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/login',
-        element: <Main />,
+        element: <Login />,
       },
       {
         path: '/register',
