@@ -4,6 +4,9 @@ import { RouterProvider } from 'react-router-dom';
 import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import router from '@/router';
+import { ThemeProvider } from '@emotion/react';
+import { GlobalStyles } from '@/styles/GlobalStyles';
+import theme from '@/styles/theme';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,9 +23,12 @@ const queryClient = new QueryClient({
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ChakraProvider>
-        <RouterProvider router={router} />
-      </ChakraProvider>
+      <ThemeProvider theme={theme}>
+        <ChakraProvider>
+          <GlobalStyles />
+          <RouterProvider router={router} />
+        </ChakraProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );
