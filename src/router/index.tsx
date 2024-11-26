@@ -9,11 +9,7 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        path: '/', // 랜딩 페이지
-        element: <Main />,
-      },
-      {
-        path: '/main',
+        path: '/',
         element: <Main />,
       },
       {
