@@ -21,6 +21,8 @@ const router = createBrowserRouter([
       {
         path: '/mypage', // 마이페이지
         element: <MyPage />,
+      },
+      {
         path: '/qspace', // 홈 페이지
         element: <QSpaceMainPage />,
       },
