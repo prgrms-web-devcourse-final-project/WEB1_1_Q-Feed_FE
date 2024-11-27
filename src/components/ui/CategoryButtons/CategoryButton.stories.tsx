@@ -2,7 +2,7 @@ import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {
-  title: 'Components/QSpaceMain/CategoryButton',
+  title: 'Components/ui/CategoryButton',
   component: CategoryButton,
   parameters: {
     layout: 'centered',

@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { SelectableHobbyTags } from './SelectableHobbyTags';
 
 const meta: Meta<typeof SelectableHobbyTags> = {
-  title: 'Components/SelectableHobbyTags',
+  title: 'Components/ui/SelectableHobbyTags',
   component: SelectableHobbyTags,
   argTypes: {
     onSelectionChange: { action: 'selectionChanged' },

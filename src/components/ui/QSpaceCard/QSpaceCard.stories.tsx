@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from '@storybook/react';
-import { QSpace } from './QSpace';
+import { QSpaceCard } from './QSpaceCard';
 
-const meta: Meta<typeof QSpace> = {
-  title: 'Components/QSpace',
-  component: QSpace,
+const meta: Meta<typeof QSpaceCard> = {
+  title: 'Components/ui/QSpaceCard',
+  component: QSpaceCard,
   argTypes: {
     imageUrl: {
       control: 'text',
@@ -30,7 +30,7 @@ const meta: Meta<typeof QSpace> = {
 
 export default meta;
 
-type Story = StoryObj<typeof QSpace>;
+type Story = StoryObj<typeof QSpaceCard>;
 
 export const Recruiting: Story = {
   args: {
@@ -58,7 +58,8 @@ export const LongText: Story = {
   args: {
     imageUrl: 'https://via.placeholder.com/100',
     title: '사진이 있는 공간',
-    description: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis quae, nesciunt suscipit perferendis necessitatibus odit maiores corporis minus! Maiores neque, voluptate ipsum quasi saepe optio voluptas consequuntur veritatis molestias quis!',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Omnis quae, nesciunt suscipit perferendis necessitatibus odit maiores corporis minus! Maiores neque, voluptate ipsum quasi saepe optio voluptas consequuntur veritatis molestias quis!',
     memberCount: 200,
     isRecruiting: true,
     lastUpdated: '6시간 전',

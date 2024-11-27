@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 import GroupStateCheckBox from '@/pages/QSpaceMain/components/GroupStateCheckBox/GroupStateCheckBox';
-import { QSpace } from '@/components/ui/QSpace/QSpace';
+import { QSpaceCard } from '@/components/ui/QSpaceCard/QSpaceCard';
 import FloatingButton from '@/pages/QSpaceMain/components/FloatingButton/FloatingButton';
 import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
 
@@ -71,7 +71,7 @@ const QSpaceMainPage = () => {
         </FilterSection>
         <QSpaceList>
           {spaces.map((space, index) => (
-            <QSpace
+            <QSpaceCard
               key={index}
               imageUrl={space.imageUrl}
               title={space.title}
