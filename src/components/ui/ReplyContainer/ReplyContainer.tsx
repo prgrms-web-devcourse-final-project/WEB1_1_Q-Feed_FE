@@ -7,6 +7,15 @@ interface ReplyContainerProps {
   className?: string;
 }
 
+export const ReplyContainer = ({ replyCount, onReplyClick, className }: ReplyContainerProps) => {
+  return (
+    <Container onClick={onReplyClick} className={className}>
+      <ReplyIcon />
+      {replyCount > 0 && <ReplyCount>{replyCount}</ReplyCount>}
+    </Container>
+  );
+};
+
 const Container = styled.div`
   display: flex;
   align-items: center;
@@ -26,12 +35,3 @@ const ReplyCount = styled.span`
   font-size: 0.725rem;
   color: #666;
 `;
-
-export const ReplyContainer = ({ replyCount, onReplyClick, className }: ReplyContainerProps) => {
-  return (
-    <Container onClick={onReplyClick} className={className}>
-      <ReplyIcon />
-      {replyCount > 0 && <ReplyCount>{replyCount}</ReplyCount>}
-    </Container>
-  );
-};

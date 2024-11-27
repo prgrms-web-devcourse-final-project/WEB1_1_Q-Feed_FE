@@ -2,29 +2,6 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
-const ButtonContainer = styled.button<{ isLiked: boolean; disabled?: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0;
-  border: none;
-  background: none;
-  transition: all 0.3s ease;
-  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
-  opacity: ${(props) => (props.disabled ? 0.6 : 1)};
-`;
-
-const IconWrapper = styled.div<{ isLiked: boolean }>`
-  display: flex;
-  align-items: center;
-  color: ${(props) => (props.isLiked ? '#ef4444' : '#6b7280')};
-`;
-
-const Count = styled.span<{ isLiked: boolean }>`
-  font-size: 0.725rem;
-  color: #6b7280;
-`;
-
 export interface LikeButtonProps {
   initialLiked?: boolean;
   initialCount?: number;
@@ -82,3 +59,26 @@ const LikeButtonContainer = ({
 };
 
 export default LikeButtonContainer;
+
+const ButtonContainer = styled.button<{ isLiked: boolean; disabled?: boolean }>`
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0;
+  border: none;
+  background: none;
+  transition: all 0.3s ease;
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${(props) => (props.disabled ? 0.6 : 1)};
+`;
+
+const IconWrapper = styled.div<{ isLiked: boolean }>`
+  display: flex;
+  align-items: center;
+  color: ${(props) => (props.isLiked ? '#ef4444' : '#6b7280')};
+`;
+
+const Count = styled.span<{ isLiked: boolean }>`
+  font-size: 0.725rem;
+  color: #6b7280;
+`;

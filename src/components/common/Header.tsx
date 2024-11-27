@@ -5,6 +5,45 @@ import theme from '@/styles/theme';
 import Logo from '@/assets/qfeed-logo.svg?react';
 import DefaultProfile from '@/assets/default-profile-image.svg?react';
 
+interface HeaderProps {
+  onSearchClick?: () => void;
+  onNotificationClick?: () => void;
+  onProfileClick?: () => void;
+  onLogoClick?: () => void;
+  profileImage?: string;
+  className?: string;
+}
+
+const Header = ({
+  onSearchClick,
+  onNotificationClick,
+  onProfileClick,
+  onLogoClick,
+  profileImage,
+  className,
+}: HeaderProps) => {
+  return (
+    <StyledHeader className={className}>
+      <LogoWrapper onClick={onLogoClick}>
+        <Logo />
+      </LogoWrapper>
+      <RightSection>
+        <IconButton onClick={onSearchClick} aria-label='검색'>
+          <IoSearch size={24} />
+        </IconButton>
+        <IconButton onClick={onNotificationClick} aria-label='알림'>
+          <HiOutlineBell size={28} />
+        </IconButton>
+        <ProfileButton onClick={onProfileClick} aria-label='프로필'>
+          {profileImage ? <img src={profileImage} alt='프로필' /> : <DefaultProfile />}
+        </ProfileButton>
+      </RightSection>
+    </StyledHeader>
+  );
+};
+
+export default Header;
+
 const StyledHeader = styled.header`
   width: 100%;
   padding: 0.5rem 1.5rem;
@@ -51,42 +90,3 @@ const ProfileButton = styled(IconButton)`
     object-fit: cover;
   }
 `;
-
-interface HeaderProps {
-  onSearchClick?: () => void;
-  onNotificationClick?: () => void;
-  onProfileClick?: () => void;
-  onLogoClick?: () => void;
-  profileImage?: string;
-  className?: string;
-}
-
-const Header = ({
-  onSearchClick,
-  onNotificationClick,
-  onProfileClick,
-  onLogoClick,
-  profileImage,
-  className,
-}: HeaderProps) => {
-  return (
-    <StyledHeader className={className}>
-      <LogoWrapper onClick={onLogoClick}>
-        <Logo />
-      </LogoWrapper>
-      <RightSection>
-        <IconButton onClick={onSearchClick} aria-label='검색'>
-          <IoSearch size={24} />
-        </IconButton>
-        <IconButton onClick={onNotificationClick} aria-label='알림'>
-          <HiOutlineBell size={28} />
-        </IconButton>
-        <ProfileButton onClick={onProfileClick} aria-label='프로필'>
-          {profileImage ? <img src={profileImage} alt='프로필' /> : <DefaultProfile />}
-        </ProfileButton>
-      </RightSection>
-    </StyledHeader>
-  );
-};
-
-export default Header;
