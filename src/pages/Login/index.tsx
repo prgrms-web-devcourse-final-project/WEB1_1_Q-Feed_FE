@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { HStack } from '@chakra-ui/react';
 import { Logo } from "@/components/ui/Logo/Logo";
 import theme from '@/styles/theme';
-import { LoginForm, LoginFormValues } from '@/pages/Login/LoginForm/LoginForm';
+import { LoginForm } from '@/pages/Login/LoginForm/LoginForm';
 import { KakaoLoginButton } from '@/pages/Login/KakaoLoginButton/KakaoLoginButton';
 
 
@@ -73,24 +73,20 @@ const TextButton = styled.button`
 `;
 
 export const Login = () => {
-  const handleLoginSubmit = (data: LoginFormValues) => {
-    console.log('로그인 시도:', data);
-    // 로그인 로직 처리
-
+  const handleLoginSubmit = () => {
+    alert('로그인 클릭');
   };
 
   const handleKakaoLogin = () =>{
-    // 카카오 로그인 로직
-    console.log('카카오');
-
+    alert('카카오 로그인 클릭');
   };
 
   const handleFindEmail = () => {
-    // 이메일/비밀번호 찾기 로직
+    alert('이메일/비밀번호 찾기 클릭');
   };
 
   const handleRegister = () => {
-    // 회원가입 로직
+    alert('회원가입 클릭');
   };
 
   return (

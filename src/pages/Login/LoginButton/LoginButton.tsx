@@ -8,6 +8,7 @@ const STYLES = {
     FONT_SIZE : '1rem',          //16px
     BORDER_RADIUS : '0.9375rem', //15px
     MARGIN_BOTTOM : '1rem',
+    MARGIN_TOP : '1rem'
   }
 }
 
@@ -22,6 +23,7 @@ const StyledButton = styled(Button)<{width : string}>`
   background : ${theme.colors.primary};
   border-radius : ${STYLES.BUTTON.BORDER_RADIUS};
   margin-bottom : ${STYLES.BUTTON.MARGIN_BOTTOM};
+  margin-top : ${STYLES.BUTTON.MARGIN_TOP};
 `;
 
 type LoginButtonProps = {
