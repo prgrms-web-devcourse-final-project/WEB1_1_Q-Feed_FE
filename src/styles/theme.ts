@@ -6,6 +6,7 @@ const theme = {
     blue: '#59B3F8',
     yellow: '#FCF4D0',
     textYellow: '#C1A830',
+    kakaoYellow : '#FEE500',
     background: '#F3EBE0',
     white: '#ffffff',
     black: '#121212',

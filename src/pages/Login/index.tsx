@@ -1,163 +1,109 @@
 import styled from '@emotion/styled';
+import { HStack } from '@chakra-ui/react';
 import { Logo } from "@/components/ui/Logo/Logo";
-import { Button, Input, FormControl, FormLabel, FormErrorMessage, Stack, HStack } from "@chakra-ui/react"
-import { useForm, SubmitHandler } from "react-hook-form"
-import { RiKakaoTalkFill } from "react-icons/ri";
+import theme from '@/styles/theme';
+import { LoginForm, LoginFormValues } from '@/pages/Login/LoginForm/LoginForm';
+import { KakaoLoginButton } from '@/pages/Login/KakaoLoginButton/KakaoLoginButton';
 
-const LAYOUT = {
-  HEADER_HEIGHT: '0.9375rem',
-  MIN_HEIGHT: '48.3125rem',
-  PADDING: '2rem',
-  GAP: '1rem',
+
+const STYLES = {
+  LAYOUT : {
+    HEADER_HEIGHT: '0.9375rem',   //15px
+    MIN_HEIGHT: '48.3125rem',     //773px
+    PADDING: '1.5rem',            //24px
+    GAP: '1rem',
+  },
+  LOGO : {
+    WIDTH: '5.375rem',            //86px
+    HEIGHT: '4.5625rem'           //73px
+  },
+
 } as const;
 
-const FORM = {
-  MAX_WIDTH: '26.5625rem',
-  CONTROL_HEIGHT: '100px',
-  MARGIN_BOTTOM: '1rem',
-} as const;
-
-const LOGO = {
-  SIZE: '30%',
-} as const;
 
 
-const Container = styled.div`
-  height :calc(100vh- ${LAYOUT.HEADER_HEIGHT});
-  min-height : ${LAYOUT.MIN_HEIGHT};
+const LogoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: ${LAYOUT.PADDING};
-  gap : ${LAYOUT.GAP};
 `;
 
-const FormWrapper = styled.form`
+const Container = styled.div`
+  height: calc(100vh - ${STYLES.LAYOUT.HEADER_HEIGHT});
+  min-height: ${STYLES.LAYOUT.MIN_HEIGHT};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: ${STYLES.LAYOUT.PADDING};
+  gap: ${STYLES.LAYOUT.GAP};
+  background: ${theme.colors.background};
+`;
+
+const StyledStack = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
-  max-width : ${FORM.MAX_WIDTH};
-`;
-
-const StyledStack = styled(Stack)`
-  align :flex-start;
-  width : 100%;
-`;
-
-const StyledButton = styled(Button)`
- width : 100%;
-`;
-
-
-const StyledFormControl = styled(FormControl)`
-  height: ${FORM.CONTROL_HEIGHT};
-  position: relative;
-  margin-bottom: ${FORM.MARGIN_BOTTOM};
-`;
-
-const StyledFormErrorMessage = styled(FormErrorMessage)`
-  position: absolute;
-  bottom: 0;
 `;
 
 const StyledHStack = styled(HStack)`
-  align-items : center;
-  justify-content : center;
-  width : 100%;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 `;
 
+const Title = styled.h1`
+  font-size: ${theme.typography.title1.size};
+  line-height: ${theme.typography.title1.lineHeight};
+  font-weight: ${theme.typography.title1.weight};
+  text-align: center;
+  color: ${theme.colors.primary};
+  margin-top : 40px;
+`;
 
-const TextButton = styled(Button)`
-  background:transparent;
+const TextButton = styled.button`
+  color: ${theme.colors.gray[300]};
+  background: none;
+  border: none;
+  cursor: pointer;
 
   &:hover {
-    background:transparent;
-    color : gray;
+    text-decoration: underline;
   }
-
 `;
 
-
-interface LoginFormValues {
-  email: string;
-  password: string;
-}
-
-const handleClickLogin = ()=>{
-  console.log("로그인 클릭");
-
-}
-
-const handleFindEmail = () =>{
-  console.log('이메일찾기 버튼 클릭');
-}
-
-const handleRegister = () =>{
-  console.log('회원가입 버튼 클릭');
-
-}
-
-
 export const Login = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValues>();
+  const handleLoginSubmit = (data: LoginFormValues) => {
+    console.log('로그인 시도:', data);
+    // 로그인 로직 처리
 
-  const onSubmit: SubmitHandler<LoginFormValues> = (data) => {
-    console.log(data);
+  };
+
+  const handleKakaoLogin = () =>{
+    // 카카오 로그인 로직
+    console.log('카카오');
+
+  };
+
+  const handleFindEmail = () => {
+    // 이메일/비밀번호 찾기 로직
+  };
+
+  const handleRegister = () => {
+    // 회원가입 로직
   };
 
   return (
     <Container>
-      <Logo width={LOGO.SIZE} height={LOGO.SIZE} />
-      <h3>일상의 질문으로 연결되는 우리들의 이야기(가제)</h3>
 
-      <FormWrapper onSubmit={handleSubmit(onSubmit)}>
-        <StyledStack>
-          <StyledFormControl isInvalid={!!errors.email}>
-              <FormLabel>이메일</FormLabel>
-
-              <Input
-                {...register("email", {
-                  required: "이메일을 입력해주세요",
-                  pattern: {
-                    value: /\S+@\S+\.\S+/,
-                    message: "올바른 이메일 형식이 아닙니다"
-                  }
-                })}
-                type="email"
-              />
-
-              <StyledFormErrorMessage>
-                {errors.email?.message}
-              </StyledFormErrorMessage>
-            </StyledFormControl>
-
-          <StyledFormControl isInvalid={!!errors.password}>
-            <FormLabel>비밀번호</FormLabel>
-            <Input
-              {...register("password", {
-                required: "비밀번호를 입력해주세요",
-                minLength: {
-                  value: 8,
-                  message: "비밀번호는 8자 이상이어야 합니다"
-                }
-              })}
-              type="password"
-            />
-            <StyledFormErrorMessage>
-              {errors.password?.message}
-            </StyledFormErrorMessage>
-          </StyledFormControl>
-
-          <StyledButton type="submit" onClick={handleClickLogin}>로그인</StyledButton>
-        </StyledStack>
-      </FormWrapper>
+      <LogoContainer>
+        <Logo width={STYLES.LOGO.WIDTH} height={STYLES.LOGO.HEIGHT} />
+        <Title>나의 취향 메이트 찾기</Title>
+      </LogoContainer>
 
       <StyledStack>
-        <StyledButton leftIcon={<RiKakaoTalkFill /> } colorScheme='yellow' >
-          카카오 로그인
-        </StyledButton>
+        <LoginForm onSubmit={handleLoginSubmit} />
+        <KakaoLoginButton onClick={handleKakaoLogin}/>
       </StyledStack>
 
       <StyledHStack >
