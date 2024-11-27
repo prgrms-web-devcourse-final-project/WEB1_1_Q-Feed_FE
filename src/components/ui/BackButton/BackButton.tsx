@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Button as ChakraButton } from '@chakra-ui/react';
-import { IoMdArrowRoundBack } from "react-icons/io";
+import { IoIosArrowBack } from 'react-icons/io';
 
 type BackButtonProps = {
   onClick?: () => void;
@@ -8,12 +8,20 @@ type BackButtonProps = {
   height?: string | number;
 };
 
+export const BackButton = ({ onClick, width = '2.5rem', height = '2.5rem' }: BackButtonProps) => {
+  return (
+    <StyledButton variant='ghost' size='md' onClick={onClick} width={width} height={height}>
+      <IoIosArrowBack />
+    </StyledButton>
+  );
+};
+
 const StyledButton = styled(ChakraButton)<{ width?: string | number; height?: string | number }>`
   cursor: pointer;
   border: none;
   background: transparent;
-  width: ${props => props.width || 'auto'};
-  height: ${props => props.height || 'auto'};
+  width: ${(props) => props.width || 'auto'};
+  height: ${(props) => props.height || 'auto'};
 
   svg {
     width: 70%;
@@ -27,19 +35,4 @@ const StyledButton = styled(ChakraButton)<{ width?: string | number; height?: st
       transform: translateX(-5px);
     }
   }
-
 `;
-
-export const BackButton = ({ onClick, width='2.5rem', height='2.5rem'  }: BackButtonProps) => {
-  return (
-      <StyledButton
-        variant="ghost"
-        size="md"
-        onClick={onClick}
-        width={width}
-        height={height}
-      >
-        <IoMdArrowRoundBack />
-      </StyledButton>
-  );
-};

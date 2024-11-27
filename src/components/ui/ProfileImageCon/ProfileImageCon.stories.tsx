@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 
 // Meta 설정
 const meta: Meta<typeof ProfileImage> = {
-  title: 'Components/ProfileImage', // Storybook 내에서 컴포넌트의 경로
+  title: 'Components/ui/ProfileImage', // Storybook 내에서 컴포넌트의 경로
   component: ProfileImage,
   argTypes: {
     src: {
