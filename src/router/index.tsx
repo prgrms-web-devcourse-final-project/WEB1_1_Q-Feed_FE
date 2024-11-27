@@ -1,6 +1,8 @@
 import RootLayout from '@/components/RootLayout';
-import Login from '@/pages/Login';
+import ChatList from '@/pages/ChatList';
 import Main from '@/pages/Main';
+import MyPage from '@/pages/MyPage';
+import Qspace from '@/pages/Qspace';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -13,16 +15,16 @@ const router = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: '/qspace', // 홈 페이지
-        element: <Login />,
+        path: '/qspace', // 큐스페이지
+        element: <Qspace />,
       },
       {
-        path: 'chat', // 홈 페이지
-        element: <Main />,
+        path: 'chat', // 채팅 목록
+        element: <ChatList />,
       },
       {
-        path: '/mypage', // 홈 페이지
-        element: <Main />,
+        path: '/mypage', // 마이페이지
+        element: <MyPage />,
       },
     ],
   },
