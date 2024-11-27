@@ -15,10 +15,10 @@ const GroupStateCheckBox = ({ initialChecked = false, onChange }: GroupStateChec
         onChange={(e) => onChange?.(e.target.checked)}
         sx={{
           'span.chakra-checkbox__control': {
-            width: '24px',
-            height: '24px',
+            width: '18px',
+            height: '18px',
             borderRadius: '4px',
-            borderColor: 'gray.400',
+            borderColor: 'gray.300',
             _checked: {
               background: theme.colors.primary,
               borderColor: theme.colors.primary,
