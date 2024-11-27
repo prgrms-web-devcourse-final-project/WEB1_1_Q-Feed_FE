@@ -2,7 +2,7 @@ import { LoginButton } from '@/pages/Login/LoginButton/LoginButton';
 import theme from '@/styles/theme';
 import { FormControl, FormErrorMessage, FormLabel, Input, Stack } from '@chakra-ui/react';
 import styled from '@emotion/styled';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from "react-hook-form";
 
 const STYLES = {
   FORM: {
