@@ -2,7 +2,7 @@ import { Meta, StoryObj } from '@storybook/react';
 import { HobbyTags } from './HobbyTags';
 
 const meta: Meta<typeof HobbyTags> = {
-  title: 'Components/HobbyTags',
+  title: 'Components/ui/HobbyTags',
   component: HobbyTags,
   argTypes: {
     tags: {

@@ -7,20 +7,6 @@ interface GroupStateCheckBoxProps {
   onChange?: (isChecked: boolean) => void;
 }
 
-const StyledContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const StyledTitle = styled.span`
-  color: ${theme.colors.gray[400]};
-  font-family: ${theme.typography.body2};
-  font-size: ${theme.typography.body2.size};
-  font-weight: ${theme.typography.body2.weight};
-  line-height: ${theme.typography.body2.lineHeight};
-`;
-
 const GroupStateCheckBox = ({ initialChecked = false, onChange }: GroupStateCheckBoxProps) => {
   return (
     <StyledContainer>
@@ -29,10 +15,10 @@ const GroupStateCheckBox = ({ initialChecked = false, onChange }: GroupStateChec
         onChange={(e) => onChange?.(e.target.checked)}
         sx={{
           'span.chakra-checkbox__control': {
-            width: '24px',
-            height: '24px',
+            width: '18px',
+            height: '18px',
             borderRadius: '4px',
-            borderColor: 'gray.400',
+            borderColor: 'gray.300',
             _checked: {
               background: theme.colors.primary,
               borderColor: theme.colors.primary,
@@ -57,3 +43,17 @@ const GroupStateCheckBox = ({ initialChecked = false, onChange }: GroupStateChec
 };
 
 export default GroupStateCheckBox;
+
+const StyledContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const StyledTitle = styled.span`
+  color: ${theme.colors.gray[400]};
+  font-family: ${theme.typography.body2};
+  font-size: ${theme.typography.body2.size};
+  font-weight: ${theme.typography.body2.weight};
+  line-height: ${theme.typography.body2.lineHeight};
+`;

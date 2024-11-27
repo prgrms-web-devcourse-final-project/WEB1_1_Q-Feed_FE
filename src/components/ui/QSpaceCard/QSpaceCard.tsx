@@ -1,9 +1,8 @@
-import React from 'react';
 import styled from '@emotion/styled';
 import { CiUser } from 'react-icons/ci';
 import theme from '@/styles/theme';
 
-interface QSpaceProps {
+interface QSpaceCardProps {
   imageUrl: string; // 이미지 URL
   title: string; // 제목
   description: string; // 소개글
@@ -12,14 +11,14 @@ interface QSpaceProps {
   lastUpdated: string; // 마지막 업데이트 시간
 }
 
-export const QSpace: React.FC<QSpaceProps> = ({
+export const QSpaceCard = ({
   imageUrl,
   title,
   description,
   memberCount,
   isRecruiting,
   lastUpdated,
-}) => {
+}: QSpaceCardProps) => {
   return (
     <Container>
       <Content>
@@ -27,9 +26,7 @@ export const QSpace: React.FC<QSpaceProps> = ({
           <Image src={imageUrl} alt={title} />
         </ImageContainer>
         <TextContainer>
-          <RecruitingStatus isRecruiting={isRecruiting}>
-            {isRecruiting ? '모집중' : '모집 완료'}
-          </RecruitingStatus>
+          <RecruitingStatus isRecruiting={isRecruiting}>{isRecruiting ? '모집중' : '모집 완료'}</RecruitingStatus>
           <Title>{title}</Title>
           <Description>{description}</Description>
         </TextContainer>
@@ -37,7 +34,7 @@ export const QSpace: React.FC<QSpaceProps> = ({
       <Divider />
       <Footer>
         <Members>
-          <CiUser size="1rem" />
+          <CiUser size='1rem' />
           <MemberCount>{memberCount}</MemberCount>
         </Members>
         <LastUpdated>{lastUpdated}</LastUpdated>
@@ -108,7 +105,7 @@ const Description = styled.p`
 
 const Divider = styled.hr`
   border: none;
-  border-top: 0.25px solid${theme.colors.gray[200]};
+  border-top: 0.25px solid ${theme.colors.gray[200]};
   margin: 0.5rem 0;
 `;
 

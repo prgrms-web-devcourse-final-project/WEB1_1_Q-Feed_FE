@@ -8,22 +8,32 @@ const globalStyles = css`
     font-style: normal;
   }
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
   * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
-      'Helvetica Neue', sans-serif;
+    font-family: 'Noto Sans KR', 'Playfair Display', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu,
+      Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   }
+
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    font-family: 'GyeonggiBatang', serif;
+    font-family: 'GyeonggiBatang', 'Open Sans', serif;
   }
+
+  .en {
+    font-family: 'Playfair Display', serif;
+    &.header {
+      font-family: 'Open Sans', sans-serif;
+    }
+  }
+
   html,
   body {
     width: 100%;

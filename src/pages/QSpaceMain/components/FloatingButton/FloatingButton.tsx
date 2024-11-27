@@ -6,6 +6,16 @@ interface FloatingButtonProps {
   className?: string;
 }
 
+const FloatingButton = ({ onClick, className }: FloatingButtonProps) => {
+  return (
+    <StyledButton onClick={onClick} className={className} aria-label='Add new item'>
+      <PlusIcon />
+    </StyledButton>
+  );
+};
+
+export default FloatingButton;
+
 const StyledButton = styled.button`
   width: 2.5rem;
   height: 2.5rem;
@@ -55,13 +65,3 @@ const PlusIcon = styled.div`
     top: 0;
   }
 `;
-
-const FloatingButton = ({ onClick, className }: FloatingButtonProps) => {
-  return (
-    <StyledButton onClick={onClick} className={className} aria-label='Add new item'>
-      <PlusIcon />
-    </StyledButton>
-  );
-};
-
-export default FloatingButton;

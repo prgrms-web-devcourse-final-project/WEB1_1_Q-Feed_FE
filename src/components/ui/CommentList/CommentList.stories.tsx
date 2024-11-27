@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { CommentList } from './CommentList';
 
 const meta = {
-  title: 'Components/CommentList',
+  title: 'Components/ui/CommentList',
   component: CommentList,
   parameters: {
     layout: 'padded',
