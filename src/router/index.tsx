@@ -1,6 +1,7 @@
 import RootLayout from '@/components/RootLayout';
 import Main from '@/pages/Main';
 import QSpaceMainPage from '@/pages/QSpaceMain';
+import CategorySelectPage from '@/pages/QSpacePost/CategorySelectPage';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -13,8 +14,12 @@ const router = createBrowserRouter([
         element: <Main />,
       },
       {
-        path: '/qspace', // 홈 페이지
+        path: '/qspace',
         element: <QSpaceMainPage />,
+      },
+      {
+        path: '/qspace/category',
+        element: <CategorySelectPage />,
       },
     ],
   },
