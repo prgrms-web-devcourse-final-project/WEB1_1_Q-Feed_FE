@@ -10,6 +10,8 @@ const theme = {
     textYellow: '#C1A830',
     kakaoYellow : '#FEE500',
     background: '#F3EBE0',
+    backgroundBase : '#FFF9F4',
+    background40: 'rgba(243, 235, 224, 0.4)',
     white: '#ffffff',
     white80: 'rgba(255, 255, 255, 0.8)',
     black: '#121212',
