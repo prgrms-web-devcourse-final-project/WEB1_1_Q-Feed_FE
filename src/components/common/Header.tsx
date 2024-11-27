@@ -3,7 +3,6 @@ import { HiOutlineBell } from 'react-icons/hi';
 import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 import Logo from '@/assets/qfeed-logo.svg?react';
-import DefaultProfile from '@/assets/default-profile-image.svg?react';
 
 interface HeaderProps {
   onSearchClick?: () => void;
@@ -14,14 +13,7 @@ interface HeaderProps {
   className?: string;
 }
 
-const Header = ({
-  onSearchClick,
-  onNotificationClick,
-  onProfileClick,
-  onLogoClick,
-  profileImage,
-  className,
-}: HeaderProps) => {
+const Header = ({ onSearchClick, onNotificationClick, onLogoClick, className }: HeaderProps) => {
   return (
     <StyledHeader className={className}>
       <LogoWrapper onClick={onLogoClick}>
@@ -34,9 +26,6 @@ const Header = ({
         <IconButton onClick={onNotificationClick} aria-label='알림'>
           <HiOutlineBell size={28} />
         </IconButton>
-        <ProfileButton onClick={onProfileClick} aria-label='프로필'>
-          {profileImage ? <img src={profileImage} alt='프로필' /> : <DefaultProfile />}
-        </ProfileButton>
       </RightSection>
     </StyledHeader>
   );
@@ -74,19 +63,4 @@ const IconButton = styled.button`
   align-items: center;
   justify-content: center;
   color: ${theme.colors.black};
-`;
-
-const ProfileButton = styled(IconButton)`
-  width: 36px;
-  height: 36px;
-  padding: 0;
-  border-radius: 50%;
-  background-color: ${theme.colors.gray[200]};
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 `;
