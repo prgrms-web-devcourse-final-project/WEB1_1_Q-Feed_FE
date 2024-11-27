@@ -2,7 +2,8 @@ import { IoSearch } from 'react-icons/io5';
 import { HiOutlineBell } from 'react-icons/hi';
 import styled from '@emotion/styled';
 import theme from '@/styles/theme';
-import Logo from '@/assets/Logo';
+import Logo from '@/assets/qfeed-logo.svg?react';
+import DefaultProfile from '@/assets/default-profile-image.svg?react';
 
 const StyledHeader = styled.header`
   width: 100%;
@@ -36,14 +37,38 @@ const IconButton = styled.button`
   color: ${theme.colors.black};
 `;
 
+const ProfileButton = styled(IconButton)`
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border-radius: 50%;
+  background-color: ${theme.colors.gray[200]};
+  overflow: hidden;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
 interface HeaderProps {
   onSearchClick?: () => void;
   onNotificationClick?: () => void;
+  onProfileClick?: () => void;
   onLogoClick?: () => void;
+  profileImage?: string;
   className?: string;
 }
 
-const Header = ({ onSearchClick, onNotificationClick, onLogoClick, className }: HeaderProps) => {
+const Header = ({
+  onSearchClick,
+  onNotificationClick,
+  onProfileClick,
+  onLogoClick,
+  profileImage,
+  className,
+}: HeaderProps) => {
   return (
     <StyledHeader className={className}>
       <LogoWrapper onClick={onLogoClick}>
@@ -56,6 +81,9 @@ const Header = ({ onSearchClick, onNotificationClick, onLogoClick, className }: 
         <IconButton onClick={onNotificationClick} aria-label='알림'>
           <HiOutlineBell size={28} />
         </IconButton>
+        <ProfileButton onClick={onProfileClick} aria-label='프로필'>
+          {profileImage ? <img src={profileImage} alt='프로필' /> : <DefaultProfile />}
+        </ProfileButton>
       </RightSection>
     </StyledHeader>
   );
