@@ -79,6 +79,7 @@ const Container = styled.div`
 const CommentItem = styled.div`
   display: flex;
   gap: 1rem;
+  border-bottom: 1px solid ${theme.colors.gray[300]};
 `;
 
 const StyledAvatar = styled(Avatar)`

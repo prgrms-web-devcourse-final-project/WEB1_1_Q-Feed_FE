@@ -7,6 +7,8 @@ import { AnswerCard } from '@/pages/Main/components/AnswerCard/AnswerCard';
 import { PopularPostSlider } from '@/pages/Main/components/PopularPostSlider/PopularPostSlider';
 import theme from '@/styles/theme';
 import { ProfileSlider } from '@/pages/Main/components/ProfileSlider/ProfileSlider';
+import { CommentList } from '@/components/ui/CommentList/CommentList';
+import { dummyComments } from '@/pages/Main/type/dummyComments';
 
 const categories = ['여행', '스포츠', '패션', '문화', '맛집', '기타'];
 
@@ -81,6 +83,13 @@ export const Main = () => {
       console.log('Selected category:', category);
     }
   };
+  const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
+    console.log(`Comment ${commentId} liked: ${isLiked}, count: ${count}`);
+  };
+
+  const handleReplyClick = (commentId: string) => {
+    console.log(`Reply clicked for comment ${commentId}`);
+  };
 
   return (
     <Container>
@@ -109,6 +118,12 @@ export const Main = () => {
         <ProfileSlideWrapper>
           <ProfileSlider initialProfiles={userProfileData} />
         </ProfileSlideWrapper>
+
+        <CommentList
+          comments={dummyComments}
+          onLikeComment={handleLikeComment}
+          onReplyClick={handleReplyClick}
+        />
       </Body>
     </Container>
   );
@@ -121,6 +136,9 @@ const Container = styled.div`
   background: ${theme.colors.background};
   align-items: center;
   justify-content: center;
+  padding-bottom: 84px; //footer-height
+  min-height: 100vh;
+  position: relative;
 `;
 
 const Body = styled.div`
@@ -130,6 +148,8 @@ const Body = styled.div`
   align-items: center;
   gap: 20px;
   margin-top: 20px;
+  width: 100%;
+  padding: 0 16px;
 `;
 
 const CategorySection = styled.div`
