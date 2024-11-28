@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Avatar } from '@chakra-ui/react';
 import LikeButtonContainer from '@/components/ui/LikeButtonContainer/LikeButtonContainer';
 import { ReplyContainer } from '@/components/ui/ReplyContainer/ReplyContainer';
+import theme from '@/styles/theme';
 
 interface Comment {
   id: string;
@@ -93,27 +94,27 @@ const CommentContent = styled.div`
 
 const AuthorInfo = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
   margin-bottom: 0.25rem;
 `;
 
 const AuthorName = styled.span`
-  font-weight: 600;
-  color: #111111;
-  font-size: 0.875rem;
+  color: ${theme.colors.gray[400]};
+  font-weight: ${theme.typography.weights.medium};
+  font-size: ${theme.typography.body2.size};
 `;
 
 const CreatedAt = styled.span`
-  color: #dddddd;
-  font-size: 0.75rem;
+  color: ${theme.colors.gray[200]};
+  font-size: ${theme.typography.body3.size};
 `;
 
 const Content = styled.p`
-  color: #111111;
-  font-size: 0.875rem;
-  margin: 0.25rem 0 0.5rem 0;
-  line-height: 1.5;
+  color: ${theme.colors.black};
+  font-size: ${theme.typography.body2.size};
+  font-weight: ${theme.typography.weights.regular};
 `;
 
 const ActionButtons = styled.div`

@@ -1,5 +1,4 @@
-import Header from '@/components/common/Header';
-
+import Header from "@/components/common/Header";
 export default function Main() {
   return (
     <div>
