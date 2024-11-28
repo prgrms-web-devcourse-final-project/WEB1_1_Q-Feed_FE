@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import KebabMenu from './KebabMenu';
 
 const meta = {
-  title: 'Components/KebabMenu',
+  title: 'Components/QSpaceDetail/KebabMenu',
   component: KebabMenu,
   parameters: {
     layout: 'centered',

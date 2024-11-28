@@ -3,7 +3,7 @@ import { ReplyContainer } from './ReplyContainer';
 import { action } from '@storybook/addon-actions';
 
 const meta = {
-  title: 'Components/ReplyContainer',
+  title: 'Components/ui/ReplyContainer',
   component: ReplyContainer,
   parameters: {
     layout: 'centered',
