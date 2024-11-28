@@ -6,6 +6,7 @@ import MyPage from '@/pages/MyPage';
 import QSpaceMainPage from '@/pages/QSpaceMain';
 import CategorySelectPage from '@/pages/QSpacePost/CategorySelectPage';
 import { createBrowserRouter } from 'react-router-dom';
+import PostGroupPage from '@/pages/QSpacePost/PostGroupPage';
 
 const router = createBrowserRouter([
   {
@@ -13,11 +14,11 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        path: '',
+        path: '/',
         element: <Main />,
       },
       {
-        path: '/chat', // 채팅 목록
+        path: 'chat', // 채팅 목록
         element: <ChatList />,
       },
       {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
       {
         path: '/qspace/category',
         element: <CategorySelectPage />,
+      },
+      {
+        path: '/qspace/post',
+        element: <PostGroupPage />,
       },
       {
         path: '/login',
