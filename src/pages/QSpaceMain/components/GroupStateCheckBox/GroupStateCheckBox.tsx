@@ -52,7 +52,7 @@ const StyledContainer = styled.div`
 
 const StyledTitle = styled.span`
   color: ${theme.colors.gray[400]};
-  font-family: ${theme.typography.body2};
+  font-family: ${theme.typography.body2.fontFamily};
   font-size: ${theme.typography.body2.size};
   font-weight: ${theme.typography.body2.weight};
   line-height: ${theme.typography.body2.lineHeight};

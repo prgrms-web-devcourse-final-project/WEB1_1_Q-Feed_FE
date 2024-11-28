@@ -14,7 +14,7 @@ const StyledTag = styled.button<{ isSelected?: boolean }>`
   border: 1px solid ${theme.colors.gray[300]};
   background-color: ${(props) => (props.isSelected ? theme.colors.primary : theme.colors.white)};
   color: ${(props) => (props.isSelected ? theme.colors.white : theme.colors.gray[500])};
-  font-family: ${theme.typography.body1};
+  font-family: ${theme.typography.body1.fontFamily};
   font-size: ${theme.typography.body1.size};
   font-weight: ${theme.typography.body1.weight};
   line-height: ${theme.typography.body1.lineHeight};
