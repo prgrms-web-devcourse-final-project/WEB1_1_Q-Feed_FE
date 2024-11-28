@@ -1,33 +1,30 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React, { useState } from "react";
-import { MdOutlineAddAPhoto } from "react-icons/md";
+import { css } from '@emotion/react';
+import React, { useState } from 'react';
+import { MdOutlineAddAPhoto } from 'react-icons/md';
 
 interface InputBarProps {
   placeholder?: string;
   onSend?: (value: string) => void;
 }
 
-const ChatInputBar: React.FC<InputBarProps> = ({
-  placeholder = "메시지를 입력하세요.",
-  onSend,
-}) => {
-  const [value, setValue] = useState("");
+const ChatInputBar: React.FC<InputBarProps> = ({ placeholder = '메시지를 입력하세요.', onSend }) => {
+  const [value, setValue] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
   const handleSend = () => {
-    if (onSend && value.trim() !== "") {
+    if (onSend && value.trim() !== '') {
       const messageToSend = value.trim();
-      setValue(""); // 입력 필드 초기화
+      setValue(''); // 입력 필드 초기화
       onSend(messageToSend); // 메시지 전송
     }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
+    if (e.key === 'Enter') {
       e.preventDefault(); // 기본 동작 방지
       handleSend(); // 메시지 전송
     }
@@ -42,7 +39,7 @@ const ChatInputBar: React.FC<InputBarProps> = ({
         </button>
         {/* 텍스트 입력 */}
         <input
-          type="text"
+          type='text'
           css={inputStyle}
           placeholder={placeholder}
           value={value}
@@ -52,7 +49,7 @@ const ChatInputBar: React.FC<InputBarProps> = ({
       </div>
       {/* 보내기 버튼 */}
       <button css={sendButtonStyle} onClick={handleSend}>
-        <img src="/src/asset/SendButton.svg" alt="Send" css={sendIconStyle} />
+        <img src='/src/assets/SendButton.svg' alt='Send' css={sendIconStyle} />
       </button>
     </div>
   );
