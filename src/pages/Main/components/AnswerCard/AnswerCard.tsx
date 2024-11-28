@@ -2,20 +2,19 @@ import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
 type AnswerCardProps = {
-  date : string;
-  question : string;
+  answer : string;
 };
 
-export const AnswerCard = ({ date, question }: AnswerCardProps) => {
+export const AnswerCard = ({ answer }: AnswerCardProps) => {
   return (
     <Container>
-      <TextDate>{date}</TextDate>
-      <TextAnswer>{question}</TextAnswer>
+      <TextTitle>나의 답변</TextTitle>
+      <TextAnswer>{answer}</TextAnswer>
     </Container>
   );
 };
 
-const TextDate = styled.h1`
+const TextTitle = styled.h1`
   width : 100%;
   font-family : 'Noto Sans KR';
   font-size : 16px;

@@ -10374,6 +10374,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"swiper@npm:^11.1.15":
+  version: 11.1.15
+  resolution: "swiper@npm:11.1.15"
+  checksum: 10c0/3faabc5b33c0663513e8e41c4ef7920d4c9a1ca6b988848f2e51e1db0d01471a1bae22fce3177b9d3ab2c128fc6df23074415ae7957bd0f8542fd7387fa5263d
+  languageName: node
+  linkType: hard
+
 "tar-fs@npm:^2.0.0":
   version: 2.1.1
   resolution: "tar-fs@npm:2.1.1"
@@ -11097,6 +11104,7 @@ __metadata:
     signal-exit: "npm:^4.1.0"
     socket.io: "npm:^4.8.1"
     storybook: "npm:^8.4.5"
+    swiper: "npm:^11.1.15"
     typescript: "npm:^5.6.3"
     vite: "npm:^5.4.11"
     vite-plugin-pwa: "npm:^0.20.0"

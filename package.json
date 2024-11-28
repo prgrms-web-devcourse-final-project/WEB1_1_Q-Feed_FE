@@ -37,6 +37,7 @@
     "rollup": "^4.27.4",
     "socket.io": "^4.8.1",
     "storybook": "^8.4.5",
+    "swiper": "^11.1.15",
     "vite-plugin-svgr": "^4.3.0",
     "vite-tsconfig-paths": "^5.1.2",
     "zustand": "^5.0.1"
