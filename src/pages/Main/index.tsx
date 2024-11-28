@@ -1,3 +1,10 @@
+import Header from '@/components/common/Header';
+
 export default function Main() {
-  return <div>q-feed main</div>;
+  return (
+    <div>
+      <Header />
+      q-feed main
+    </div>
+  );
 }

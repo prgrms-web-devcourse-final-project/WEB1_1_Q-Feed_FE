@@ -1,27 +1,36 @@
-import styled from '@emotion/styled';
-import { Button as ChakraButton } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { IoIosArrowBack } from 'react-icons/io';
+import styled from '@emotion/styled';
 
-type BackButtonProps = {
-  onClick?: () => void;
-  width?: string | number;
-  height?: string | number;
-};
+interface BackButtonProps {
+  width?: string;
+  height?: string;
+}
 
-export const BackButton = ({ onClick, width = '2.5rem', height = '2.5rem' }: BackButtonProps) => {
+const BackButton = ({ width = '2.5rem', height = '2.5rem' }: BackButtonProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/');
+  };
+
   return (
-    <StyledButton variant='ghost' size='md' onClick={onClick} width={width} height={height}>
+    <Button onClick={handleClick} width={width} height={height}>
       <IoIosArrowBack />
-    </StyledButton>
+    </Button>
   );
 };
 
-const StyledButton = styled(ChakraButton)<{ width?: string | number; height?: string | number }>`
+const Button = styled.button<BackButtonProps>`
   cursor: pointer;
   border: none;
   background: transparent;
-  width: ${(props) => props.width || 'auto'};
-  height: ${(props) => props.height || 'auto'};
+  width: ${(props) => props.width};
+  height: ${(props) => props.height};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
 
   svg {
     width: 70%;
@@ -36,3 +45,5 @@ const StyledButton = styled(ChakraButton)<{ width?: string | number; height?: st
     }
   }
 `;
+
+export default BackButton;
