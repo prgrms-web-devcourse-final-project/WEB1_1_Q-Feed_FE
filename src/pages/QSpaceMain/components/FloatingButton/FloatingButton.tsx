@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
@@ -6,9 +7,15 @@ interface FloatingButtonProps {
   className?: string;
 }
 
-const FloatingButton = ({ onClick, className }: FloatingButtonProps) => {
+const FloatingButton = ({ className }: FloatingButtonProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/qspace/category');
+  };
+
   return (
-    <StyledButton onClick={onClick} className={className} aria-label='Add new item'>
+    <StyledButton onClick={handleClick} className={className} aria-label='Add new item'>
       <PlusIcon />
     </StyledButton>
   );
