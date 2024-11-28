@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React from "react";
-import { GoPerson } from "react-icons/go";
+import theme from '@/styles/theme';
+import { css } from '@emotion/react';
+import { IoPerson } from 'react-icons/io5';
 
 // Props 타입 정의
 interface ProfileImageProps {
@@ -11,19 +11,15 @@ interface ProfileImageProps {
   alt?: string; // 대체 텍스트
 }
 
-const ProfileImage: React.FC<ProfileImageProps> = ({
+const ProfileImage = ({
   src,
   size = 50, // 기본 크기 50px
-  bgColor = "#d3cdcd", // 기본 배경색
-  alt = "Profile Image", // 기본 대체 텍스트
-}) => {
+  bgColor = '#d3cdcd', // 기본 배경색
+  alt = 'Profile Image', // 기본 대체 텍스트
+}: ProfileImageProps) => {
   return (
     <div css={containerStyle(size, bgColor)}>
-      {src ? (
-        <img css={imageStyle(size)} src={src} alt={alt} />
-      ) : (
-        <GoPerson css={iconStyle(size)} />
-      )}
+      {src ? <img css={imageStyle(size)} src={src} alt={alt} /> : <IoPerson css={iconStyle()} />}
     </div>
   );
 };
@@ -48,10 +44,10 @@ const imageStyle = (size: number) => css`
 `;
 
 // 아이콘 스타일
-const iconStyle = (size: number) => css`
-  width: ${size * 0.6}px; /* 아이콘은 크기의 60%로 설정 */
-  height: ${size * 0.6}px;
-  color: #5f5959; /* 아이콘 색상 */
+const iconStyle = () => css`
+  width: 80%;
+  height: 80%;
+  color: ${theme.colors.gray[100]};
 `;
 
 export default ProfileImage;
