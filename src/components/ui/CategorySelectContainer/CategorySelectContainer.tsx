@@ -3,12 +3,12 @@ import theme from '@/styles/theme';
 import { useState } from 'react';
 
 // 이미지 import
-import travelImg from '@/assets/img/airplane.jpg';
-import sportsImg from '@/assets/img/sports.jpg';
-import fashionImg from '@/assets/img/fashion.jpg';
-import cultureImg from '@/assets/img/culture.jpg';
-import matzipImg from '@/assets/img/matzip.jpg';
-import etcImg from '@/assets/img/etc.jpg';
+import travelImg from '@/assets/images/airplane.jpg';
+import sportsImg from '@/assets/images/sports.jpg';
+import fashionImg from '@/assets/images/fashion.jpg';
+import cultureImg from '@/assets/images/culture.jpg';
+import matzipImg from '@/assets/images/matzip.jpg';
+import etcImg from '@/assets/images/etc.jpg';
 
 interface CategoryItem {
   id: string;
