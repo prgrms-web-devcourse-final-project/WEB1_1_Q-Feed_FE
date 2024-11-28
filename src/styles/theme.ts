@@ -8,7 +8,7 @@ const theme = {
     blue: '#59B3F8',
     yellow: '#FCF4D0',
     textYellow: '#C1A830',
-    background: '#FFF9F4',
+    background: '#F9F3EC',
     white: '#ffffff',
     white80: 'rgba(255, 255, 255, 0.8)',
     black: '#121212',
