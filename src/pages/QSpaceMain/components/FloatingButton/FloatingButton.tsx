@@ -28,9 +28,13 @@ const StyledButton = styled.button`
   justify-content: center;
   position: fixed;
   right: 1.5rem;
-  bottom: 1.5rem;
+  bottom: 6.75rem;
   box-shadow: 0 4px 8px rgba(157, 111, 112, 0.2), 0 2px 4px rgba(157, 111, 112, 0.1);
   transition: all 0.2s ease-in-out;
+
+  @media (min-width: 430px) {
+    right: calc(50% - 215px + 1.5rem);
+  }
 
   &:hover {
     transform: translateY(-2px);

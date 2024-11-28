@@ -3,12 +3,12 @@ import theme from '@/styles/theme';
 import { useState } from 'react';
 
 // 이미지 import
-import travelImg from '@/assets/img/airplane.jpg';
-import sportsImg from '@/assets/img/sports.jpg';
-import fashionImg from '@/assets/img/fashion.jpg';
-import cultureImg from '@/assets/img/culture.jpg';
-import matzipImg from '@/assets/img/matzip.jpg';
-import etcImg from '@/assets/img/etc.jpg';
+import travelImg from '@/assets/images/airplane.jpg';
+import sportsImg from '@/assets/images/sports.jpg';
+import fashionImg from '@/assets/images/fashion.jpg';
+import cultureImg from '@/assets/images/culture.jpg';
+import matzipImg from '@/assets/images/matzip.jpg';
+import etcImg from '@/assets/images/etc.jpg';
 
 interface CategoryItem {
   id: string;
@@ -39,7 +39,7 @@ const CategorySelectContainer = ({ onCategorySelect }: CategorySelectContainerPr
   };
 
   return (
-    <Container>
+    <>
       <Grid>
         {categories.map((category) => (
           <CategoryCard
@@ -57,13 +57,9 @@ const CategorySelectContainer = ({ onCategorySelect }: CategorySelectContainerPr
           </CategoryCard>
         ))}
       </Grid>
-    </Container>
+    </>
   );
 };
-
-const Container = styled.div`
-  padding: 1rem;
-`;
 
 const Grid = styled.div`
   display: grid;
@@ -78,7 +74,7 @@ const CategoryCard = styled.button<{ isSelected: boolean }>`
   justify-content: center;
   background-color: ${theme.colors.white};
   border-radius: 1rem;
-  padding: 1.5rem 1rem;
+  padding: 1rem 0.5rem;
   cursor: pointer;
   border: 3px solid ${(props) => (props.isSelected ? theme.colors.primary : 'transparent')};
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
@@ -92,9 +88,9 @@ const CategoryCard = styled.button<{ isSelected: boolean }>`
 `;
 
 const IconWrapper = styled.div`
-  width: 2.5rem;
-  height: 2.5rem;
-  margin-bottom: 0.75rem;
+  width: 2rem;
+  height: 2rem;
+  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -110,18 +106,18 @@ const TextContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  margin-top: 0.25rem;
 `;
 
 const KoreanName = styled.span`
-  color: ${theme.colors.gray[600]};
-  font-size: ${theme.typography.body1.size};
-  font-weight: ${theme.typography.weights.medium};
+  color: ${theme.colors.primary};
+  font-size: 1rem;
+  font-weight: ${theme.typography.weights.bold};
 `;
 
 const EnglishName = styled.span`
   color: ${theme.colors.gray[400]};
-  font-size: ${theme.typography.body2.size};
+  font-size: 0.6rem;
 `;
 
 export default CategorySelectContainer;

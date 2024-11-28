@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import styled from '@emotion/styled';
-import { Input } from '@chakra-ui/react'
+import { Input } from '@chakra-ui/react';
 import theme from '@/styles/theme';
 
 type InputFormProps = {
@@ -18,14 +18,14 @@ export const InputForm = ({
   title,
   placeholder,
   value,
-  type = "text",
+  type = 'text',
   isInvalid,
   errorMessage,
   onChange,
-  children
+  children,
 }: InputFormProps) => {
   return (
-     <Container>
+    <Container>
       {children}
       <Title>{title}</Title>
       <StyledInput
@@ -35,39 +35,35 @@ export const InputForm = ({
         placeholder={isInvalid ? errorMessage : placeholder}
         isInvalid={isInvalid}
         focusBorderColor={theme.colors.primary}
-        errorBorderColor={theme.colors.red}
-        _placeholder={{ color: isInvalid ? theme.colors.red : theme.colors.gray[300] }}
+        errorBorderColor={theme.colors.notice}
+        _placeholder={{ color: isInvalid ? theme.colors.notice : theme.colors.gray[300] }}
       />
     </Container>
   );
 };
 
-const Container = styled.div`
-
-`;
+const Container = styled.div``;
 
 const Title = styled.h1`
   font-size: ${theme.typography.body1.size};
   line-height: ${theme.typography.body1.lineHeight};
   font-weight: ${theme.typography.body1.weight};
   text-align: left;
-  margin-bottom : 15px;
+  margin-bottom: 15px;
 `;
 
-
 const StyledInput = styled(Input)`
-  width : 100%;
-  min-width : 377px;
-  height : 56px;
-  color : ${theme.colors.gray[300]};
-  font-size : 1rem;
-  border-radius : 15px;
-  padding : 0 1rem;
-  border: 1px solid ${props => props.isInvalid ? theme.colors.red : theme.colors.gray[300]};
+  width: 100%;
+  min-width: 377px;
+  height: 56px;
+  color: ${theme.colors.gray[300]};
+  font-size: 1rem;
+  border-radius: 15px;
+  padding: 0 1rem;
+  border: 1px solid ${(props) => (props.isInvalid ? theme.colors.notice : theme.colors.gray[300])};
 
   &:focus {
-    border-color: ${props => props.isInvalid ? theme.colors.red : theme.colors.primary};
-    box-shadow: 0 0 0 1px ${props => props.isInvalid ? theme.colors.red : theme.colors.primary};
+    border-color: ${(props) => (props.isInvalid ? theme.colors.notice : theme.colors.primary)};
+    box-shadow: 0 0 0 1px ${(props) => (props.isInvalid ? theme.colors.notice : theme.colors.primary)};
   }
-
 `;

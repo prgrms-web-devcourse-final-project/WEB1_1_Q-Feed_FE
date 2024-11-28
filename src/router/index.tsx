@@ -4,6 +4,7 @@ import ChatList from '@/pages/ChatList';
 import Main from '@/pages/Main';
 import MyPage from '@/pages/MyPage';
 import QSpaceMainPage from '@/pages/QSpaceMain';
+import CategorySelectPage from '@/pages/QSpacePost/CategorySelectPage';
 import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
@@ -12,11 +13,11 @@ const router = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        path: '/',
+        path: '',
         element: <Main />,
       },
       {
-        path: 'chat', // 채팅 목록
+        path: '/chat', // 채팅 목록
         element: <ChatList />,
       },
       {
@@ -24,14 +25,17 @@ const router = createBrowserRouter([
         element: <MyPage />,
       },
       {
-        path: '/qspace', // 홈 페이지
+        path: '/qspace',
         element: <QSpaceMainPage />,
+      },
+      {
+        path: '/qspace/category',
+        element: <CategorySelectPage />,
       },
       {
         path: '/login',
         element: <Login />,
       },
-
     ],
   },
 ]);
