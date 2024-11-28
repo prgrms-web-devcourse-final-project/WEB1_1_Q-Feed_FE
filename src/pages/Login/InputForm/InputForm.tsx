@@ -64,6 +64,7 @@ const StyledInput = styled(Input)`
 
   &:focus {
     border-color: ${(props) => (props.isInvalid ? theme.colors.notice : theme.colors.primary)};
-    box-shadow: 0 0 0 1px ${(props) => (props.isInvalid ? theme.colors.notice : theme.colors.primary)};
+    box-shadow: 0 0 0 1px
+      ${(props) => (props.isInvalid ? theme.colors.notice : theme.colors.primary)};
   }
 `;

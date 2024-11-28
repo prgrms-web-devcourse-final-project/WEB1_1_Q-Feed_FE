@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import LogoImg from "../../../assets/images/qfeed-logo.svg";
+import LogoImg from '../../../assets/images/qfeed-logo.svg';
 
 type LogoProps = {
   width?: string | number;
@@ -16,12 +16,5 @@ const Container = styled.img<{
 `;
 
 export const Logo = ({ width, height }: LogoProps) => {
-  return (
-    <Container
-      src={LogoImg}
-      width={width}
-      height={height}
-      alt="logo"
-    />
-  );
+  return <Container src={LogoImg} width={width} height={height} alt="logo" />;
 };

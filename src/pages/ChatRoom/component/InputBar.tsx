@@ -8,7 +8,10 @@ interface InputBarProps {
   onSend?: (value: string) => void;
 }
 
-const ChatInputBar: React.FC<InputBarProps> = ({ placeholder = '메시지를 입력하세요.', onSend }) => {
+const ChatInputBar: React.FC<InputBarProps> = ({
+  placeholder = '메시지를 입력하세요.',
+  onSend,
+}) => {
   const [value, setValue] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +42,7 @@ const ChatInputBar: React.FC<InputBarProps> = ({ placeholder = '메시지를 입
         </button>
         {/* 텍스트 입력 */}
         <input
-          type='text'
+          type="text"
           css={inputStyle}
           placeholder={placeholder}
           value={value}
@@ -49,7 +52,7 @@ const ChatInputBar: React.FC<InputBarProps> = ({ placeholder = '메시지를 입
       </div>
       {/* 보내기 버튼 */}
       <button css={sendButtonStyle} onClick={handleSend}>
-        <img src='/src/assets/SendButton.svg' alt='Send' css={sendIconStyle} />
+        <img src="/src/assets/SendButton.svg" alt="Send" css={sendIconStyle} />
       </button>
     </div>
   );

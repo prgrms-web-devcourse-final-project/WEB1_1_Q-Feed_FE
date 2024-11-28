@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import theme from '@/styles/theme'
+import theme from '@/styles/theme';
 
 interface HobbyTagsProps {
   tags: string[]; // 태그 목록
@@ -23,7 +23,7 @@ const TagContainer = styled.div`
 `;
 
 const Tag = styled.span`
- padding: 0.5rem 1rem;
+  padding: 0.5rem 1rem;
   border-radius: 3.125rem;
   border: 1px solid ${theme.colors.primary};
   background-color: ${theme.colors.primary};

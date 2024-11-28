@@ -1,9 +1,9 @@
-import { IoSearch } from "react-icons/io5";
-import { HiOutlineBell } from "react-icons/hi";
-import styled from "@emotion/styled";
-import { useNavigate } from "react-router-dom"; // React Router의 useNavigate 가져오기
-import theme from "@/styles/theme";
-import Logo from "@/assets/qfeed-logo.svg?react";
+import { IoSearch } from 'react-icons/io5';
+import { HiOutlineBell } from 'react-icons/hi';
+import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom'; // React Router의 useNavigate 가져오기
+import theme from '@/styles/theme';
+import Logo from '@/assets/qfeed-logo.svg?react';
 
 interface HeaderProps {
   onSearchClick?: () => void;
@@ -16,7 +16,7 @@ const Header = ({ onSearchClick, onLogoClick, className }: HeaderProps) => {
   const navigate = useNavigate();
 
   const handleNotificationClick = () => {
-    navigate("/alarm");
+    navigate('/alarm');
   };
 
   return (

@@ -1,9 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { IoChevronBack } from "react-icons/io5";
-import ProfileImage from "@/components/ui/ProfileImageCon/ProfileImageCon";
+import { css } from '@emotion/react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { IoChevronBack } from 'react-icons/io5';
+import ProfileImage from '@/components/ui/ProfileImageCon/ProfileImageCon';
 interface NotificationItem {
   id: number;
   type: string;
@@ -16,39 +16,39 @@ const NotificationPage: React.FC = () => {
   const notifications: NotificationItem[] = [
     {
       id: 1,
-      type: "알림 유형(큐스페이스, 이벤트 등)",
+      type: '알림 유형(큐스페이스, 이벤트 등)',
       message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: "방금",
+      time: '방금',
     },
     {
       id: 2,
-      type: "알림 유형(큐스페이스, 이벤트 등)",
+      type: '알림 유형(큐스페이스, 이벤트 등)',
       message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: "1시간 전",
+      time: '1시간 전',
     },
     {
       id: 3,
-      type: "알림 유형(큐스페이스, 이벤트 등)",
+      type: '알림 유형(큐스페이스, 이벤트 등)',
       message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: "1시간 전",
+      time: '1시간 전',
     },
     {
       id: 4,
-      type: "알림 유형(큐스페이스, 이벤트 등)",
+      type: '알림 유형(큐스페이스, 이벤트 등)',
       message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: "방금",
+      time: '방금',
     },
     {
       id: 5,
-      type: "알림 유형(큐스페이스, 이벤트 등)",
+      type: '알림 유형(큐스페이스, 이벤트 등)',
       message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: "1시간 전",
+      time: '1시간 전',
     },
     {
       id: 6,
-      type: "알림 유형(큐스페이스, 이벤트 등)",
+      type: '알림 유형(큐스페이스, 이벤트 등)',
       message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: "1시간 전",
+      time: '1시간 전',
     },
   ];
 
@@ -72,9 +72,7 @@ const NotificationPage: React.FC = () => {
 
       {/* Unread count */}
       <div css={readWrap}>
-        <div css={unreadCountStyle}>
-          안읽은 알림 {notifications.length - readItems.length}개
-        </div>
+        <div css={unreadCountStyle}>안읽은 알림 {notifications.length - readItems.length}개</div>
         <span css={markAllAsReadStyle} onClick={markAllAsRead}>
           모두 읽음 표시
         </span>
