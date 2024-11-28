@@ -15,13 +15,10 @@ const QSpaceMainPage = () => {
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
       setActiveCategory(category);
-      console.log('Selected category:', category);
     }
   };
 
-  const handleRecruitingChange = (isChecked: boolean) => {
-    console.log('Recruiting filter:', isChecked);
-  };
+  // const handleRecruitingChange = (isChecked: boolean) => {};
 
   // 임시 데이터
   const spaces = [

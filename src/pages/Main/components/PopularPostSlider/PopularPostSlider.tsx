@@ -17,33 +17,28 @@ interface PopularPostSliderProps {
   popularPosts: PopularPost[];
 }
 
-export const PopularPostSlider = ({popularPosts }: PopularPostSliderProps) => {
+export const PopularPostSlider = ({ popularPosts }: PopularPostSliderProps) => {
   return (
     <Container>
       <Title>지금 뜨는 인기 답변</Title>
       <StyledSwiper
-         slidesPerView={2}
-         spaceBetween={20}
-         loop={true}
-         autoplay={{
-           delay: 5000,
-           disableOnInteraction: false
-         }}
-
-         pagination={{
-           clickable: true,
-         }}
-         modules={[Pagination,Autoplay]}
+        slidesPerView={2}
+        spaceBetween={20}
+        loop={true}
+        autoplay={{
+          delay: 5000,
+          disableOnInteraction: false,
+        }}
+        pagination={{
+          clickable: true,
+        }}
+        modules={[Pagination, Autoplay]}
       >
-         {popularPosts.map((item, index) => (
+        {popularPosts.map((item, index) => (
           <SwiperSlide key={index}>
-            <PopularPostCard
-              post={item.post}
-              src={item.src}
-            />
+            <PopularPostCard post={item.post} />
           </SwiperSlide>
         ))}
-
       </StyledSwiper>
     </Container>
   );
@@ -63,6 +58,7 @@ const Title = styled.h1`
   font-weight: bold;
   text-align: left;
   margin-bottom: 20px;
+  margin-left: 20px;
 `;
 
 const StyledSwiper = styled(Swiper)`
@@ -75,6 +71,5 @@ const StyledSwiper = styled(Swiper)`
   .swiper-pagination {
     display: none;
   }
-  border : 1px solid red;
-
+  border: 1px solid red;
 `;

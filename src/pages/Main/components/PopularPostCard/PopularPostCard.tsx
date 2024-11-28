@@ -1,15 +1,17 @@
-
 import theme from '@/styles/theme';
 import styled from '@emotion/styled';
 
 type PopularPostCardProps = {
-  post : string;
+  post: string;
   src?: string;
 };
 
-export const PopularPostCard = ({ post , src='https://png.pngtree.com/thumb_back/fw800/background/20230613/pngtree-christmas-market-in-a-huge-german-city-image_2933958.jpg'}: PopularPostCardProps) => {
+export const PopularPostCard = ({ post, src }: PopularPostCardProps) => {
+  const defaultSrc =
+    'https://png.pngtree.com/thumb_back/fw800/background/20230613/pngtree-christmas-market-in-a-huge-german-city-image_2933958.jpg';
+
   return (
-    <Container src={src}>
+    <Container src={src ?? defaultSrc}>
       <PostText>{post}</PostText>
     </Container>
   );
@@ -19,12 +21,11 @@ type ContainerProps = {
   src: string;
 };
 
-
 const Container = styled.div<ContainerProps>`
   width: 208px;
   height: 152px;
   border-radius: 15px;
-  position: relative;  // 추가
+  position: relative; // 추가
   background-image: url(${({ src }) => src});
   background-size: cover;
   background-position: center;
@@ -47,7 +48,7 @@ const Container = styled.div<ContainerProps>`
 
 const PostText = styled.h1`
   font-family: ${theme.typography.fontFamily.korean};
-  font-size:12px;
+  font-size: 12px;
   color: ${theme.colors.white};
   text-align: center;
   position: relative;

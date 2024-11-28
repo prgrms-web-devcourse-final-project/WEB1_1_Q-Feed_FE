@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
 type QuestionCardProps = {
-  date : string;
-  question : string;
+  date: string;
+  question: string;
 };
 
 export const QuestionCard = ({ date, question }: QuestionCardProps) => {
@@ -16,11 +16,11 @@ export const QuestionCard = ({ date, question }: QuestionCardProps) => {
 };
 
 const TextDate = styled.h1`
-  width : 100%;
-  font-family : 'Open Sans';
-  font-size : ${theme.typography.body1.size};
+  width: 100%;
+  font-family: 'Open Sans';
+  font-size: ${theme.typography.body1.size};
   font-weight: semibold;
-  color : ${theme.colors.primary};
+  color: ${theme.colors.primary};
   text-align: center;
 `;
 
@@ -34,7 +34,7 @@ const TextQuestion = styled.h2`
   word-wrap: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
-  margin-top:15px;
+  margin-top: 15px;
 `;
 
 const Container = styled.div`
@@ -49,4 +49,10 @@ const Container = styled.div`
   border-radius: 15px;
   box-shadow: 0 10px 16px 0 rgba(0, 0, 0, 0.2);
   padding: 20px 40px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 20px 0 rgba(0, 0, 0, 0.15);
+  }
 `;
