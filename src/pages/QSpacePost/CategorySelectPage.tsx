@@ -76,7 +76,7 @@ const ContentSection = styled.main`
 
 const ButtonSection = styled.div`
   padding: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 `;
 
 const Title = styled.h1`
