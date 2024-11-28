@@ -1,17 +1,11 @@
-import theme from '@/styles/theme';
 import styled from '@emotion/styled';
-
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { PopularPostCard } from '@/pages/Main/components/PopularPostCard/PopularPostCard';
-
-interface PopularPost {
-  post: string;
-  src?: string | null;
-}
+import { PopularPost } from '@/pages/Main/type/popularPosts';
 
 interface PopularPostSliderProps {
   popularPosts: PopularPost[];
@@ -20,7 +14,6 @@ interface PopularPostSliderProps {
 export const PopularPostSlider = ({ popularPosts }: PopularPostSliderProps) => {
   return (
     <Container>
-      <Title>지금 뜨는 인기 답변</Title>
       <StyledSwiper
         slidesPerView={2}
         spaceBetween={20}
@@ -48,17 +41,6 @@ export default PopularPostSlider;
 
 const Container = styled.div`
   width: 100%;
-  padding: 20px 0;
-`;
-
-const Title = styled.h1`
-  font-family: ${theme.typography.header1.fontFamily.korean};
-  font-size: 20px;
-  color: ${theme.colors.primary};
-  font-weight: bold;
-  text-align: left;
-  margin-bottom: 20px;
-  margin-left: 20px;
 `;
 
 const StyledSwiper = styled(Swiper)`
@@ -71,5 +53,4 @@ const StyledSwiper = styled(Swiper)`
   .swiper-pagination {
     display: none;
   }
-  border: 1px solid red;
 `;

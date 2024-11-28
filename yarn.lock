@@ -2775,7 +2775,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:^11":
+"@emotion/react@npm:^11.13.5":
   version: 11.13.5
   resolution: "@emotion/react@npm:11.13.5"
   dependencies:
@@ -11072,7 +11072,8 @@ __metadata:
     "@chromatic-com/storybook": "npm:^3.2.2"
     "@commitlint/cli": "npm:^19.6.0"
     "@commitlint/config-conventional": "npm:^19.6.0"
-    "@emotion/react": "npm:^11"
+    "@emotion/babel-plugin": "npm:^11.13.5"
+    "@emotion/react": "npm:^11.13.5"
     "@emotion/styled": "npm:^11"
     "@storybook/addon-essentials": "npm:^8.4.5"
     "@storybook/addon-interactions": "npm:^8.4.5"

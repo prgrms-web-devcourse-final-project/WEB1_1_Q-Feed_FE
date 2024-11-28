@@ -62,38 +62,23 @@ export const ProfileSlider = ({ initialProfiles }: ProfileSliderProps) => {
   };
 
   return (
-    <Container>
-      <Title>친구 추천</Title>
-      <StyledSwiper
-        modules={[Navigation, Pagination]}
-        spaceBetween={20}
-        slidesPerView={1000}
-        navigation
-        pagination={{ clickable: true }}
-        direction="horizontal"
-      >
-        {profiles.map((profile) => (
-          <SwiperSlide key={profile.id}>
-            <ProfileCard {...profile} onClickClose={() => handleDelete(profile.id)} />
-          </SwiperSlide>
-        ))}
-      </StyledSwiper>
-    </Container>
+    <StyledSwiper
+      modules={[Navigation, Pagination]}
+      spaceBetween={20}
+      slidesPerView={1000}
+      navigation
+      pagination={{ clickable: true }}
+      direction="horizontal"
+    >
+      {profiles.map((profile) => (
+        <SwiperSlide key={profile.id}>
+          <ProfileCard {...profile} onClickClose={() => handleDelete(profile.id)} />
+        </SwiperSlide>
+      ))}
+    </StyledSwiper>
   );
 };
 
-const Container = styled.div`
-  margin-left: 20px;
-`;
-
-const Title = styled.h1`
-  font-family: ${theme.typography.header1.fontFamily.korean};
-  font-size: 20px;
-  color: ${theme.colors.primary};
-  font-weight: bold;
-  text-align: left;
-  margin-bottom: 20px;
-`;
 const StyledSwiper = styled(Swiper)`
   width: 100%;
   padding: 20px 0;

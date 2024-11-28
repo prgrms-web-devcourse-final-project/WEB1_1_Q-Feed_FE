@@ -1,81 +1,20 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
+import theme from '@/styles/theme';
 import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
 import Header from '@/components/common/Header';
 import { QuestionCard } from '@/pages/Main/components/QuestionCard/QuestionCard';
 import { AnswerCard } from '@/pages/Main/components/AnswerCard/AnswerCard';
 import { PopularPostSlider } from '@/pages/Main/components/PopularPostSlider/PopularPostSlider';
-import theme from '@/styles/theme';
 import { ProfileSlider } from '@/pages/Main/components/ProfileSlider/ProfileSlider';
 import { CommentList } from '@/components/ui/CommentList/CommentList';
 import { dummyComments } from '@/pages/Main/type/dummyComments';
-
-const categories = ['여행', '스포츠', '패션', '문화', '맛집', '기타'];
-
-const dummyData = [
-  { post: '나는 국내 여행으로도 만족이야', src: null },
-  {
-    post: '따끈한 일본 온천으로 놀러가고싶어',
-    src: 'https://cdn.traveltimes.co.kr/news/photo/202411/410169_35552_1437.jpg',
-  },
-  {
-    post: '여행은 무슨 집이 최고야야',
-    src: 'https://i.namu.wiki/i/_VR5WHEDuh8GTDefHS5Q9hRraEwIEwHVMMFNwzr3uDAgXeQ-2ht67CM8tj4KtttckiCj7-VOdzeOQnpSz7ks8w.webp',
-  },
-  {
-    post: '태국 망고 먹고싶어',
-    src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrSHVl8viXH3OPR1UyFBqVdeF80pdytyDieQ&s',
-  },
-  {
-    post: '대만가서 딤섬 먹고싶다',
-    src: 'https://i.namu.wiki/i/VJ3wVc3XFU2ksCFrU3TFUeG4vpB6SG0MivSNHN3jRM2SuAaM5MD018FNBV3QKQj9mKsvzL3Dnu17M0g_z35Wdg.webp',
-  },
-  {
-    post: '라스베가스에 가서 잭팟을 노리겠어',
-    src: 'https://static.hanatour.com/product/2019/02/01/0055e0rtfv/default.jpg',
-  },
-];
-
-const userProfileData = [
-  {
-    id: 1,
-    name: '홍길동',
-    imgsrc: '',
-    followerName: '철수',
-    followerNum: 100,
-  },
-  {
-    id: 2,
-    name: '영희',
-    imgsrc: '',
-    followerName: '둘리',
-    followerNum: 3,
-  },
-  {
-    id: 3,
-    name: '순자',
-    imgsrc: '',
-    followerName: '토마토',
-    followerNum: 1,
-  },
-  {
-    id: 4,
-    name: '올라프',
-    imgsrc: '',
-    followerName: '엘사',
-    followerNum: 13,
-  },
-  {
-    id: 5,
-    name: '산타',
-    imgsrc: '',
-    followerName: '루돌프',
-    followerNum: 1,
-  },
-];
+import { dummyData } from '@/pages/Main/type/dummyPosts';
+import { userProfileData } from '@/pages/Main/type/dummyUserProfiles';
+import { categories } from '@/pages/Main/type/category';
 
 export const Main = () => {
-  const [activeCategory, setActiveCategory] = useState('여행');
+  const [activeCategory, setActiveCategory] = useState(categories[0]);
 
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
@@ -112,18 +51,26 @@ export const Main = () => {
           date="2024.11.28"
           question="오늘 당장 해외여행을 떠날수 있다면 어디로 갈건가요!?"
         />
-
         <AnswerCard answer="독일 크리스마스 마켓 구경하고싶어요🎄" />
-        <PopularPostSlider popularPosts={dummyData} />
+
+        <PostWrapper>
+          <Title>지금 뜨는 인기 답변</Title>
+          <PopularPostSlider popularPosts={dummyData} />
+        </PostWrapper>
+
         <ProfileSlideWrapper>
+          <Title>친구 추천</Title>
           <ProfileSlider initialProfiles={userProfileData} />
         </ProfileSlideWrapper>
 
-        <CommentList
-          comments={dummyComments}
-          onLikeComment={handleLikeComment}
-          onReplyClick={handleReplyClick}
-        />
+        <CommentListWrapper>
+          <Title>최근 등록된 답변</Title>
+          <CommentList
+            comments={dummyComments}
+            onLikeComment={handleLikeComment}
+            onReplyClick={handleReplyClick}
+          />
+        </CommentListWrapper>
       </Body>
     </Container>
   );
@@ -132,24 +79,10 @@ export const Main = () => {
 export default Main;
 
 const Container = styled.div`
-  border: 1px solid red;
   background: ${theme.colors.background};
-  align-items: center;
-  justify-content: center;
-  padding-bottom: 84px; //footer-height
+  padding-bottom: 5.25rem; //footer-height
   min-height: 100vh;
   position: relative;
-`;
-
-const Body = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  margin-top: 20px;
-  width: 100%;
-  padding: 0 16px;
 `;
 
 const CategorySection = styled.div`
@@ -164,6 +97,37 @@ const CategoryList = styled.div`
   padding: 0 1rem;
 `;
 
+const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.25rem;
+  width: 100%;
+  overflow-x: hidden;
+`;
+
+const PostWrapper = styled.div`
+  width: 100%;
+  margin-left: 40px;
+`;
+
 const ProfileSlideWrapper = styled.div`
   width: 100%;
+  padding: 0 25px;
+`;
+
+const Title = styled.h1`
+  width: 100%;
+  font-family: ${theme.typography.header1.fontFamily};
+  color: ${theme.colors.primary};
+  font-size: 20px;
+  font-weight: bold;
+  text-align: left;
+`;
+
+const CommentListWrapper = styled.div`
+  width: 100%;
+  padding: 0 25px;
 `;

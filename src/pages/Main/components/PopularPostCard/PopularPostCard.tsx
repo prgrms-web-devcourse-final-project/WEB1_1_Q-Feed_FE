@@ -21,6 +21,15 @@ type ContainerProps = {
   src: string;
 };
 
+const PostText = styled.h1`
+  font-family: ${theme.typography.fontFamily.korean};
+  font-size: 12px;
+  color: ${theme.colors.white};
+  text-align: center;
+  position: relative;
+  z-index: 1;
+`;
+
 const Container = styled.div<ContainerProps>`
   width: 208px;
   height: 152px;
@@ -33,6 +42,7 @@ const Container = styled.div<ContainerProps>`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 
   &::after {
     content: '';
@@ -42,15 +52,16 @@ const Container = styled.div<ContainerProps>`
     width: 100%;
     height: 100%;
     border-radius: 15px;
-    background-color: rgba(0, 0, 0, 0.4); // 검은색 오버레이, 0.5는 투명도
+    background-color: rgba(0, 0, 0, 0.4);
   }
-`;
+  &:hover {
+    &::after {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
 
-const PostText = styled.h1`
-  font-family: ${theme.typography.fontFamily.korean};
-  font-size: 12px;
-  color: ${theme.colors.white};
-  text-align: center;
-  position: relative;
-  z-index: 1;
+    ${PostText} {
+      transition: color 0.3s ease;
+      font-weight: bold;
+    }
+  }
 `;
