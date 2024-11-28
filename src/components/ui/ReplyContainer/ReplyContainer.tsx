@@ -1,3 +1,4 @@
+import theme from '@/styles/theme';
 import styled from '@emotion/styled';
 import { BiComment } from 'react-icons/bi';
 
@@ -27,11 +28,11 @@ const Container = styled.div`
 `;
 
 const ReplyIcon = styled(BiComment)`
-  font-size: 1rem;
-  color: #666;
+  font-size: ${theme.typography.body1.size};
+  color: ${theme.colors.gray[400]};
 `;
 
 const ReplyCount = styled.span`
-  font-size: 0.725rem;
-  color: #666;
+  font-size: ${theme.typography.body3.size};
+  color: ${theme.colors.gray[400]};
 `;

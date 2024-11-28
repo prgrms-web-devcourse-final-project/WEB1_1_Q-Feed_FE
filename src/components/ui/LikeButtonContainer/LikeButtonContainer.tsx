@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import theme from '@/styles/theme';
 
 export interface LikeButtonProps {
   initialLiked?: boolean;
@@ -75,10 +76,10 @@ const ButtonContainer = styled.button<{ isLiked: boolean; disabled?: boolean }>`
 const IconWrapper = styled.div<{ isLiked: boolean }>`
   display: flex;
   align-items: center;
-  color: ${(props) => (props.isLiked ? '#ef4444' : '#6b7280')};
+  color: ${(props) => (props.isLiked ? theme.colors.notice : theme.colors.gray[400])};
 `;
 
 const Count = styled.span<{ isLiked: boolean }>`
-  font-size: 0.725rem;
-  color: #6b7280;
+  font-size: ${theme.typography.body3.size};
+  color: ${theme.colors.gray[400]};
 `;

@@ -1,29 +1,34 @@
-import { IoSearch } from 'react-icons/io5';
-import { HiOutlineBell } from 'react-icons/hi';
-import styled from '@emotion/styled';
-import theme from '@/styles/theme';
-import Logo from '@/assets/qfeed-logo.svg?react';
+import { IoSearch } from "react-icons/io5";
+import { HiOutlineBell } from "react-icons/hi";
+import styled from "@emotion/styled";
+import { useNavigate } from "react-router-dom"; // React Router의 useNavigate 가져오기
+import theme from "@/styles/theme";
+import Logo from "@/assets/qfeed-logo.svg?react";
 
 interface HeaderProps {
   onSearchClick?: () => void;
-  onNotificationClick?: () => void;
-  onProfileClick?: () => void;
   onLogoClick?: () => void;
   profileImage?: string;
   className?: string;
 }
 
-const Header = ({ onSearchClick, onNotificationClick, onLogoClick, className }: HeaderProps) => {
+const Header = ({ onSearchClick, onLogoClick, className }: HeaderProps) => {
+  const navigate = useNavigate();
+
+  const handleNotificationClick = () => {
+    navigate("/alarm");
+  };
+
   return (
     <StyledHeader className={className}>
       <LogoWrapper onClick={onLogoClick}>
         <Logo />
       </LogoWrapper>
       <RightSection>
-        <IconButton onClick={onSearchClick} aria-label='검색'>
+        <IconButton onClick={onSearchClick} aria-label="검색">
           <IoSearch size={24} />
         </IconButton>
-        <IconButton onClick={onNotificationClick} aria-label='알림'>
+        <IconButton onClick={handleNotificationClick} aria-label="알림">
           <HiOutlineBell size={28} />
         </IconButton>
       </RightSection>
