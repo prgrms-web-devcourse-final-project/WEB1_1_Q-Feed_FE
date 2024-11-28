@@ -1,38 +1,37 @@
-import RootLayout from "@/components/RootLayout";
-import Login from "@/pages/Login";
-import ChatList from "@/pages/ChatList";
-import Main from "@/pages/Main";
-import MyPage from "@/pages/MyPage";
-import QSpaceMainPage from "@/pages/QSpaceMain";
-import CategorySelectPage from "@/pages/QSpacePost/CategorySelectPage";
-import NotificationPage from "@/pages/Alarm";
+import RootLayout from '@/components/RootLayout';
+import Login from '@/pages/Login';
+import ChatList from '@/pages/ChatList';
+import Main from '@/pages/Main';
+import MyPage from '@/pages/MyPage';
+import QSpaceMainPage from '@/pages/QSpaceMain';
+import CategorySelectPage from '@/pages/QSpacePost/CategorySelectPage';
+import NotificationPage from '@/pages/Alarm';
 import PostGroupPage from '@/pages/QSpacePost/PostGroupPage';
-import { createBrowserRouter } from "react-router-dom";
-
+import { createBrowserRouter } from 'react-router-dom';
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <RootLayout />,
     children: [
       {
-        path: "",
+        path: '',
         element: <Main />,
       },
       {
-        path: "/chat", // 채팅 목록
+        path: '/chat', // 채팅 목록
         element: <ChatList />,
       },
       {
-        path: "/mypage", // 마이페이지
+        path: '/mypage', // 마이페이지
         element: <MyPage />,
       },
       {
-        path: "/qspace",
+        path: '/qspace',
         element: <QSpaceMainPage />,
       },
       {
-        path: "/qspace/category",
+        path: '/qspace/category',
         element: <CategorySelectPage />,
       },
       {
@@ -44,7 +43,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: "/Alarm",
+        path: '/Alarm',
         element: <NotificationPage />,
       },
     ],
