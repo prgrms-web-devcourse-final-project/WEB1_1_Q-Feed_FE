@@ -54,15 +54,15 @@ export const Default: Story = {
       description: {
         story: '기본적인 형태의 로그인 버튼입니다. 너비가 100%인 상태로 표시됩니다.',
       },
-    }
-  }
+    },
+  },
 };
 
 // 사이즈 지정
 export const WithFixedWidth: Story = {
   args: {
     text: '로그인',
-    width : '200px',
+    width: '200px',
     onClick: () => alert('로그인 버튼 클릭'),
   },
   parameters: {
@@ -70,11 +70,9 @@ export const WithFixedWidth: Story = {
       description: {
         story: 'String 형식으로 너비 값을 지정할 수 있습니다',
       },
-    }
-  }
+    },
+  },
 };
-
-
 
 // 다른 텍스트를 가진 버튼
 export const WithDifferentText: Story = {
@@ -87,6 +85,6 @@ export const WithDifferentText: Story = {
       description: {
         story: '버튼에 들어갈 텍스트 문구를 지정할 수 있습니다',
       },
-    }
-  }
+    },
+  },
 };

@@ -17,7 +17,8 @@ const meta: Meta<typeof SearchInput> = {
   parameters: {
     docs: {
       description: {
-        component: '검색어를 입력하고 Enter 키를 누르거나 돋보기 아이콘을 클릭하여 검색할 수 있는 입력 컴포넌트입니다.',
+        component:
+          '검색어를 입력하고 Enter 키를 누르거나 돋보기 아이콘을 클릭하여 검색할 수 있는 입력 컴포넌트입니다.',
       },
     },
   },

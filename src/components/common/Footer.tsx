@@ -37,25 +37,25 @@ const Footer = ({ maxWidth = '425px' }: FooterProps) => {
       path: '/',
       label: '홈',
       icon: HomeIcon,
-      activeIcon: HomeIconClicked
+      activeIcon: HomeIconClicked,
     },
     {
       path: '/qspace',
       label: '큐스페이스',
       icon: GroupIcon,
-      activeIcon: GroupIconClicked
+      activeIcon: GroupIconClicked,
     },
     {
       path: '/chat',
       label: '채팅',
       icon: ChatIcon,
-      activeIcon: ChatIconClicked
+      activeIcon: ChatIconClicked,
     },
     {
       path: '/mypage',
       label: '마이',
       icon: MyPageIcon,
-      activeIcon: MyPageIconClicked
+      activeIcon: MyPageIconClicked,
     },
   ];
 
@@ -73,17 +73,24 @@ const Footer = ({ maxWidth = '425px' }: FooterProps) => {
               key={item.path}
               value={item.path}
               onMouseEnter={() => setHoveredPath(item.path)}
-              onMouseLeave={() => setHoveredPath(null)}>
-              <BottomNavigationIcon as={() => (
-                <IconWrapper>
-                  <img
-                    src={value === item.path || hoveredPath === item.path ? item.activeIcon : item.icon}
-                    alt={item.label}
-                    width="24"
-                    height="24"
-                  />
-                </IconWrapper>
-              )} />
+              onMouseLeave={() => setHoveredPath(null)}
+            >
+              <BottomNavigationIcon
+                as={() => (
+                  <IconWrapper>
+                    <img
+                      src={
+                        value === item.path || hoveredPath === item.path
+                          ? item.activeIcon
+                          : item.icon
+                      }
+                      alt={item.label}
+                      width="24"
+                      height="24"
+                    />
+                  </IconWrapper>
+                )}
+              />
               <StyledLabel isActive={value === item.path || hoveredPath === item.path}>
                 {item.label}
               </StyledLabel>
@@ -103,14 +110,14 @@ const FooterWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  height : 5.25rem; //84px
-  padding : 0;
-  margin : 0;
+  height: 5.25rem; //84px
+  padding: 0;
+  margin: 0;
 `;
 
 const Container = styled.div<{ maxWidth: string }>`
   width: 100%;
-  max-width: ${props => props.maxWidth};
+  max-width: ${(props) => props.maxWidth};
   background-color: ${theme.colors.white};
   overflow: hidden;
   position: relative;
@@ -124,7 +131,7 @@ const StyledNavigationItem = styled(BottomNavigationItem)`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width : 100%;
+  width: 100%;
   height: 100%;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -138,10 +145,10 @@ const IconWrapper = styled.div`
 `;
 
 const StyledLabel = styled(BottomNavigationLabel)<{ isActive: boolean }>`
- font-family: ${theme.typography.fontFamily};
+  font-family: ${theme.typography.fontFamily};
   font-size: ${theme.typography.body2.size};
   font-weight: ${theme.typography.body2.weight};
-  color: ${props => props.isActive ? theme.colors.primary : theme.colors.gray[300]};
+  color: ${(props) => (props.isActive ? theme.colors.primary : theme.colors.gray[300])};
   margin-top: 4px;
   text-align: center;
   transition: color 0.2s ease-in-out;
@@ -149,11 +156,11 @@ const StyledLabel = styled(BottomNavigationLabel)<{ isActive: boolean }>`
 
 const StyledBottomNavigation = styled(BottomNavigation)`
   width: 100%;
-  height: 5.25rem;   //84px
+  height: 5.25rem; //84px
   max-width: inherit;
   position: relative;
   left: 0;
-  bottom : 0;
+  bottom: 0;
   right: 0;
   display: flex;
   align-items: center;

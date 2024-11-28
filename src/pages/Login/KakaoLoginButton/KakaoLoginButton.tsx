@@ -34,7 +34,7 @@ type KakaoLoginButtonProps = {
 export const KakaoLoginButton = ({ text = '카카오 로그인', onClick }: KakaoLoginButtonProps) => {
   return (
     <StyledButton
-      leftIcon={<RiKakaoTalkFill size='20px' />}
+      leftIcon={<RiKakaoTalkFill size="20px" />}
       backgroundColor={theme.colors.kakao}
       _hover={{
         backgroundColor: theme.colors.kakao,

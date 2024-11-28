@@ -11,14 +11,16 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: '로그인 폼 컴포넌트입니다. 이메일과 비밀번호 입력, 유효성 검사 기능을 포함합니다.',
+        component:
+          '로그인 폼 컴포넌트입니다. 이메일과 비밀번호 입력, 유효성 검사 기능을 포함합니다.',
       },
     },
   },
   argTypes: {
     onSubmit: {
-      description: '로그인 폼 제출 시 호출되는 콜백 함수입니다. 이메일과 비밀번호 데이터를 파라미터로 전달받습니다.',
-    }
+      description:
+        '로그인 폼 제출 시 호출되는 콜백 함수입니다. 이메일과 비밀번호 데이터를 파라미터로 전달받습니다.',
+    },
   },
   decorators: [
     (Story) => (
@@ -38,6 +40,6 @@ const mockSubmit = action('onSubmit');
 
 export const Default: Story = {
   args: {
-    onSubmit: mockSubmit
+    onSubmit: mockSubmit,
   },
 };

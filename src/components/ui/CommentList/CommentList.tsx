@@ -44,7 +44,7 @@ export const CommentList = ({ comments, onLikeComment, onReplyClick }: CommentLi
     <Container>
       {comments.map((comment) => (
         <CommentItem key={comment.id}>
-          <StyledAvatar src={comment.author.profileImage} name={comment.author.name} size='sm' />
+          <StyledAvatar src={comment.author.profileImage} name={comment.author.name} size="sm" />
           <CommentContent>
             <AuthorInfo>
               <AuthorName>{comment.author.name}</AuthorName>
@@ -53,12 +53,15 @@ export const CommentList = ({ comments, onLikeComment, onReplyClick }: CommentLi
             <Content>{comment.content}</Content>
             <ActionButtons>
               <LikeButtonContainer
-                size='small'
+                size="small"
                 initialCount={comment.likes}
                 initialLiked={comment.isLiked}
                 onLikeChange={(isLiked, count) => onLikeComment?.(comment.id, isLiked, count)}
               />
-              <ReplyContainer replyCount={comment.replyCount} onReplyClick={() => onReplyClick?.(comment.id)} />
+              <ReplyContainer
+                replyCount={comment.replyCount}
+                onReplyClick={() => onReplyClick?.(comment.id)}
+              />
             </ActionButtons>
           </CommentContent>
         </CommentItem>

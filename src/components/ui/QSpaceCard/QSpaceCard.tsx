@@ -26,7 +26,9 @@ export const QSpaceCard = ({
           <Image src={imageUrl} alt={title} />
         </ImageContainer>
         <TextContainer>
-          <RecruitingStatus isRecruiting={isRecruiting}>{isRecruiting ? '모집중' : '모집 완료'}</RecruitingStatus>
+          <RecruitingStatus isRecruiting={isRecruiting}>
+            {isRecruiting ? '모집중' : '모집 완료'}
+          </RecruitingStatus>
           <Title>{title}</Title>
           <Description>{description}</Description>
         </TextContainer>
@@ -34,7 +36,7 @@ export const QSpaceCard = ({
       <Divider />
       <Footer>
         <Members>
-          <CiUser size='1rem' />
+          <CiUser size="1rem" />
           <MemberCount>{memberCount}</MemberCount>
         </Members>
         <LastUpdated>{lastUpdated}</LastUpdated>
@@ -86,7 +88,8 @@ const RecruitingStatus = styled.span<{ isRecruiting: boolean }>`
   font-size: 0.75rem;
   font-weight: bold;
   color: ${({ isRecruiting }) => (isRecruiting ? theme.colors.textYellow : theme.colors.gray[300])};
-  background-color: ${({ isRecruiting }) => (isRecruiting ? theme.colors.yellow : theme.colors.gray[100])};
+  background-color: ${({ isRecruiting }) =>
+    isRecruiting ? theme.colors.yellow : theme.colors.gray[100]};
   width: fit-content;
 `;
 

@@ -12,7 +12,8 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: '로그인 페이지에서 사용되는 입력 폼 컴포넌트입니다. 이메일과 비밀번호 입력에 사용됩니다.',
+        component:
+          '로그인 페이지에서 사용되는 입력 폼 컴포넌트입니다. 이메일과 비밀번호 입력에 사용됩니다.',
       },
     },
   },
@@ -90,7 +91,8 @@ export const InvalidEmailInput = () => {
 InvalidEmailInput.parameters = {
   docs: {
     description: {
-      story: '유효하지 않은 이메일이 입력되었을 때의 상태입니다. 에러 메시지가 표시되고 테두리가 빨간색으로 변경됩니다.',
+      story:
+        '유효하지 않은 이메일이 입력되었을 때의 상태입니다. 에러 메시지가 표시되고 테두리가 빨간색으로 변경됩니다.',
     },
   },
 };
@@ -112,7 +114,8 @@ export const InvalidPasswordInput = () => {
 InvalidPasswordInput.parameters = {
   docs: {
     description: {
-      story: '유효하지 않은 비밀번호가 입력되었을 때의 상태입니다. 비밀번호 길이가 8자 미만일 경우 에러 메시지가 표시됩니다.',
+      story:
+        '유효하지 않은 비밀번호가 입력되었을 때의 상태입니다. 비밀번호 길이가 8자 미만일 경우 에러 메시지가 표시됩니다.',
     },
   },
 };

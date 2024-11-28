@@ -43,7 +43,7 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: '/Alarm',
+        path: '/alarm',
         element: <NotificationPage />,
       },
     ],

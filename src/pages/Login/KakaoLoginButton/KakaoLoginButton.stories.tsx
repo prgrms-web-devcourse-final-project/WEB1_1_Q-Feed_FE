@@ -9,7 +9,8 @@ const meta = {
     layout: 'centered',
     docs: {
       description: {
-        component: '카카오 로그인을 위한 버튼 컴포넌트입니다. 왼쪽에 카카오톡 아이콘이 고정되어 있습니다.',
+        component:
+          '카카오 로그인을 위한 버튼 컴포넌트입니다. 왼쪽에 카카오톡 아이콘이 고정되어 있습니다.',
       },
     },
   },
@@ -43,4 +44,3 @@ export const Default: Story = {
     onClick: () => alert('카카오 로그인 버튼 클릭'),
   },
 };
-

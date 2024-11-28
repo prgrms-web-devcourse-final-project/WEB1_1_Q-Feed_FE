@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React, { useState } from "react";
-import { CiSearch } from "react-icons/ci";
+import { css } from '@emotion/react';
+import React, { useState } from 'react';
+import { CiSearch } from 'react-icons/ci';
 
 interface SearchInputProps {
   placeholder?: string; // 검색창 플레이스홀더
@@ -9,17 +9,17 @@ interface SearchInputProps {
 }
 
 const SearchInput: React.FC<SearchInputProps> = ({
-  placeholder = "사용자의 닉네임을 검색해보세요.", // 기본 플레이스홀더
+  placeholder = '사용자의 닉네임을 검색해보세요.', // 기본 플레이스홀더
   onSearch,
 }) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && onSearch) {
+    if (e.key === 'Enter' && onSearch) {
       onSearch(value); // Enter 키를 누르면 검색 이벤트 실행
     }
   };

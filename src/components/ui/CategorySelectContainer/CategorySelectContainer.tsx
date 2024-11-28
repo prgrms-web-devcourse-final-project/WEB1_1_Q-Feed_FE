@@ -52,7 +52,7 @@ const CategorySelectContainer = ({ onCategorySelect }: CategorySelectContainerPr
             </IconWrapper>
             <TextContainer>
               <KoreanName>{category.koreanName}</KoreanName>
-              <EnglishName className='en'>{category.englishName}</EnglishName>
+              <EnglishName className="en">{category.englishName}</EnglishName>
             </TextContainer>
           </CategoryCard>
         ))}

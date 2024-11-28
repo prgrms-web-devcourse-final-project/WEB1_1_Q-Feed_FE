@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
-import React from "react";
-import { GoPerson } from "react-icons/go";
+import { css } from '@emotion/react';
+import React from 'react';
+import { GoPerson } from 'react-icons/go';
 
 // Props 타입 정의
 interface ProfileImageProps {
@@ -14,8 +14,8 @@ interface ProfileImageProps {
 const ProfileImage: React.FC<ProfileImageProps> = ({
   src,
   size = 50, // 기본 크기 50px
-  bgColor = "#d3cdcd", // 기본 배경색
-  alt = "Profile Image", // 기본 대체 텍스트
+  bgColor = '#d3cdcd', // 기본 배경색
+  alt = 'Profile Image', // 기본 대체 텍스트
 }) => {
   return (
     <div css={containerStyle(size, bgColor)}>

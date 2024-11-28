@@ -23,7 +23,8 @@ const StyledTag = styled.button<{ isSelected?: boolean }>`
   flex-shrink: 0;
 
   &:hover {
-    background-color: ${(props) => (props.isSelected ? theme.colors.primary : theme.colors.gray[100])};
+    background-color: ${(props) =>
+      props.isSelected ? theme.colors.primary : theme.colors.gray[100]};
   }
 `;
 
@@ -41,7 +42,7 @@ const CategoryButton = ({ label, initialSelected = false, onChange }: CategoryTa
   };
 
   return (
-    <StyledTag isSelected={isSelected} onClick={handleClick} type='button'>
+    <StyledTag isSelected={isSelected} onClick={handleClick} type="button">
       {label}
     </StyledTag>
   );
