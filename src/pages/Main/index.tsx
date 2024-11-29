@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
@@ -15,6 +15,10 @@ import { categories } from '@/pages/Main/type/category';
 
 export const Main = () => {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const categoryRef = useRef<HTMLDivElement>(null);
 
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
@@ -30,10 +34,44 @@ export const Main = () => {
     console.log(`Reply clicked for comment ${commentId}`);
   };
 
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    if (categoryRef.current) {
+      setStartX(e.pageX - categoryRef.current.offsetLeft);
+      setScrollLeft(categoryRef.current.scrollLeft);
+    }
+  };
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    if (categoryRef.current) {
+      const x = e.pageX - categoryRef.current.offsetLeft;
+      const walk = x - startX;
+      categoryRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(false);
+    console.log(e);
+  };
+
+  const handleMouseUp = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(false);
+    console.log(e);
+  };
+
   return (
     <Container>
       <Header />
-      <CategorySection>
+      <CategorySection
+        ref={categoryRef}
+        onMouseDown={handleMouseDown}
+        onMouseLeave={handleMouseLeave}
+        onMouseUp={handleMouseUp}
+        onMouseMove={handleMouseMove}
+      >
         <CategoryList>
           {categories.map((category) => (
             <CategoryButton
@@ -89,6 +127,18 @@ const CategorySection = styled.div`
   padding: 1rem 0;
   overflow-x: auto;
   white-space: nowrap;
+  cursor: grab;
+  user-select: none;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 const CategoryList = styled.div`
@@ -111,6 +161,9 @@ const Body = styled.div`
 const PostWrapper = styled.div`
   width: 100%;
   margin-left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
 
 const ProfileSlideWrapper = styled.div`
@@ -130,4 +183,7 @@ const Title = styled.h1`
 const CommentListWrapper = styled.div`
   width: 100%;
   padding: 0 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 `;
