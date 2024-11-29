@@ -63,6 +63,7 @@ const Container = styled.div`
   padding: 1rem;
   width: 100%;
   gap: 1rem;
+  border-top: 1px solid ${theme.colors.gray[200]};
   background-color: ${theme.colors.background};
 `;
 

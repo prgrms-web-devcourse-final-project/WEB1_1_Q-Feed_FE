@@ -5,7 +5,7 @@ export const mockDiscussionData = {
     creator: '맛집탐방자네트워크',
     profileImage: 'https://via.placeholder.com/40',
     content:
-      '제주도의 숨은 맛집 얘기해요!\n로컬 주민 및 상생 동동 어바구자워벙구\n제주도의 숨은 맛집 얘기해요!',
+      '제주도의 숨은 맛집 얘기해요!\n로컬 주민 및 상생 등등 어쩌구저쩌구\n제주도의 숨은 맛집 얘기해요!',
     memberCount: 27,
     lastChatTime: new Date(),
     isRecruiting: true,
@@ -18,7 +18,7 @@ export const mockDiscussionData = {
         profileImage: 'https://via.placeholder.com/40',
       },
       content:
-        '본인기를 먹어 보는 것 같아요. 가게 분위기나 인테리어 같은? 분위기를 많이 보는 것...',
+        '분위기를 많이 보는 것 같아요. 가게 분위기나 인테리어 같은? 분위기를 많이 보는 것...',
       createdAt: new Date().toISOString(),
       likes: 16,
       isLiked: false,

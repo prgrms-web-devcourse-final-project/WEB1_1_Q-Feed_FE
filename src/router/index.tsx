@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         element: <PostGroupPage />,
       },
       {
-        path: '/qspace/details/:id',
+        path: '/qspace/details',
         element: <QSpaceDetailPage />,
       },
       {
