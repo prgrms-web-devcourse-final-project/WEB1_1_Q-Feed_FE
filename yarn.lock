@@ -2775,7 +2775,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/react@npm:^11":
+"@emotion/react@npm:^11.13.5":
   version: 11.13.5
   resolution: "@emotion/react@npm:11.13.5"
   dependencies:
@@ -3860,6 +3860,17 @@ __metadata:
   peerDependencies:
     storybook: ^8.4.5
   checksum: 10c0/14f3993aa88a33035a048ea00713d936f0025055eb205c3033a65e5d885012c54b77a7363f994faeaefa362e6f88aad1f174bf01a1f6b0c85b3f96fbe8332772
+  languageName: node
+  linkType: hard
+
+"@storybook/addon-themes@npm:^8.4.5":
+  version: 8.4.5
+  resolution: "@storybook/addon-themes@npm:8.4.5"
+  dependencies:
+    ts-dedent: "npm:^2.0.0"
+  peerDependencies:
+    storybook: ^8.4.5
+  checksum: 10c0/91e271e85bc3137d6f9b465a8c173084a7dbf2f7e12ebe05d94c6ad2dc591abb1932a2b3bcd25ba94de48c6c8f6b599915a0a756902cf4cafcd65c13532da537
   languageName: node
   linkType: hard
 
@@ -10372,6 +10383,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"swiper@npm:^11.1.15":
+  version: 11.1.15
+  resolution: "swiper@npm:11.1.15"
+  checksum: 10c0/3faabc5b33c0663513e8e41c4ef7920d4c9a1ca6b988848f2e51e1db0d01471a1bae22fce3177b9d3ab2c128fc6df23074415ae7957bd0f8542fd7387fa5263d
+  languageName: node
+  linkType: hard
+
 "tar-fs@npm:^2.0.0":
   version: 2.1.1
   resolution: "tar-fs@npm:2.1.1"
@@ -11054,11 +11072,13 @@ __metadata:
     "@chromatic-com/storybook": "npm:^3.2.2"
     "@commitlint/cli": "npm:^19.6.0"
     "@commitlint/config-conventional": "npm:^19.6.0"
-    "@emotion/react": "npm:^11"
+    "@emotion/babel-plugin": "npm:^11.13.5"
+    "@emotion/react": "npm:^11.13.5"
     "@emotion/styled": "npm:^11"
     "@storybook/addon-essentials": "npm:^8.4.5"
     "@storybook/addon-interactions": "npm:^8.4.5"
     "@storybook/addon-links": "npm:^8.4.5"
+    "@storybook/addon-themes": "npm:^8.4.5"
     "@storybook/blocks": "npm:^8.4.5"
     "@storybook/react": "npm:^8.4.5"
     "@storybook/react-vite": "npm:^8.4.5"
@@ -11095,6 +11115,7 @@ __metadata:
     signal-exit: "npm:^4.1.0"
     socket.io: "npm:^4.8.1"
     storybook: "npm:^8.4.5"
+    swiper: "npm:^11.1.15"
     typescript: "npm:^5.6.3"
     vite: "npm:^5.4.11"
     vite-plugin-pwa: "npm:^0.20.0"

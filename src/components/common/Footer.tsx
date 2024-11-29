@@ -113,6 +113,7 @@ const FooterWrapper = styled.div`
   height: 5.25rem; //84px
   padding: 0;
   margin: 0;
+  z-index: 300;
 `;
 
 const Container = styled.div<{ maxWidth: string }>`

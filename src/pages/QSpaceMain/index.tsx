@@ -15,7 +15,6 @@ const QSpaceMainPage = () => {
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
       setActiveCategory(category);
-      console.log('Selected category:', category);
     }
   };
 

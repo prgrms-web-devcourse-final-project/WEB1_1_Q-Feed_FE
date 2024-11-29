@@ -73,12 +73,17 @@ export const CommentList = ({ comments, onLikeComment, onReplyClick }: CommentLi
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
 `;
 
 const CommentItem = styled.div`
   display: flex;
   gap: 1rem;
+  border-bottom: 1px solid ${theme.colors.gray[300]};
+  cursor: pointer;
+  &:hover {
+    background: ${theme.colors.sub};
+  }
+  padding: 0.75rem 0;
 `;
 
 const StyledAvatar = styled(Avatar)`
