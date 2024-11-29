@@ -108,7 +108,7 @@ export default NotificationPage;
 const containerStyle = css`
   display: flex;
   flex-direction: column;
-  height: 773px;
+  height: 100vh;
   background-color: #f9f4ef;
 `;
 
