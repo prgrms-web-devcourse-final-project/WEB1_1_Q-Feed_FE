@@ -1,3 +1,4 @@
+import { BrowserRouter } from 'react-router-dom';
 import type { Meta, StoryObj } from '@storybook/react';
 import BackButton from './BackButton';
 
@@ -8,6 +9,13 @@ const meta = {
     layout: 'centered',
   },
   tags: ['autodocs'],
+  decorators: [
+    (Story) => (
+      <BrowserRouter>
+        <Story />
+      </BrowserRouter>
+    ),
+  ],
 } satisfies Meta<typeof BackButton>;
 
 export default meta;
