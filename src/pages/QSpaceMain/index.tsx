@@ -18,7 +18,9 @@ const QSpaceMainPage = () => {
     }
   };
 
-  // const handleRecruitingChange = (isChecked: boolean) => {};
+  const handleRecruitingChange = (isChecked: boolean) => {
+    console.log('Recruiting filter:', isChecked);
+  };
 
   // 임시 데이터
   const spaces = [
