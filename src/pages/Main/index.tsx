@@ -8,10 +8,10 @@ import { AnswerCard } from '@/pages/Main/components/AnswerCard/AnswerCard';
 import { PopularPostSlider } from '@/pages/Main/components/PopularPostSlider/PopularPostSlider';
 import { ProfileSlider } from '@/pages/Main/components/ProfileSlider/ProfileSlider';
 import { CommentList } from '@/components/ui/CommentList/CommentList';
-import { dummyComments } from '@/pages/Main/type/dummyComments';
-import { dummyData } from '@/pages/Main/type/dummyPosts';
-import { userProfileData } from '@/pages/Main/type/dummyUserProfiles';
+import { dummyComments } from '@/mocks/dummyComments';
 import { categories } from '@/pages/Main/type/category';
+import { dummyData } from '@/mocks/dummyPosts';
+import { userProfileData } from '@/mocks/dummyUserProfiles';
 
 export const Main = () => {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
