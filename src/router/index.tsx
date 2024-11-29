@@ -9,6 +9,7 @@ import NotificationPage from '@/pages/Alarm';
 import PostGroupPage from '@/pages/QSpacePost/PostGroupPage';
 import { createBrowserRouter } from 'react-router-dom';
 import { LandingPage } from '@/pages/Landing';
+import QSpaceDetailPage from '@/pages/QSpaceDetail';
 
 const router = createBrowserRouter([
   {
@@ -28,10 +29,10 @@ const router = createBrowserRouter([
         element: <MyPage />,
       },
       {
-      {
         path: '/landing', //랜딩페이지
         element: <LandingPage />,
       },
+      {
         path: '/qspace',
         element: <QSpaceMainPage />,
       },
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: '/qspace/post',
         element: <PostGroupPage />,
+      },
+      {
+        path: '/qspace/details/:id',
+        element: <QSpaceDetailPage />,
       },
       {
         path: '/login',
