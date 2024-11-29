@@ -19,7 +19,7 @@ const TextDate = styled.h1`
   width: 100%;
   font-family: 'Open Sans';
   font-size: ${theme.typography.body1.size};
-  font-weight: semibold;
+  font-weight: ${theme.typography.weights.semiBold};
   color: ${theme.colors.primary};
   text-align: center;
 `;
@@ -28,7 +28,7 @@ const TextQuestion = styled.h2`
   width: 100%;
   font-family: 'GyeonggiBatang';
   font-size: ${theme.typography.title1.size};
-  font-weight: bold;
+  font-weight: ${theme.typography.weights.bold};
   color: ${theme.colors.primary};
   text-align: center;
   word-wrap: break-word;
