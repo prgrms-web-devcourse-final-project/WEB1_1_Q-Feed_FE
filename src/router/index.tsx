@@ -28,10 +28,10 @@ const router = createBrowserRouter([
         element: <MyPage />,
       },
       {
-      {
         path: '/landing', //랜딩페이지
         element: <LandingPage />,
       },
+      {
         path: '/qspace',
         element: <QSpaceMainPage />,
       },
