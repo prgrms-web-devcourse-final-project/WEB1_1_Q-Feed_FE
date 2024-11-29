@@ -105,7 +105,7 @@ const chatListContainerStyle = css`
   height: 773px;
 `;
 const chatListStyle = css`
-  height: 773px;
+  height: 100vh;
   background-color: #f3ebe0;
   border-bottom: 1px solid #ccc;
 `;
