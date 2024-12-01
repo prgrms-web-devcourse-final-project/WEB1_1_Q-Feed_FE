@@ -7,17 +7,19 @@ import { QuestionCard } from '@/pages/Main/components/QuestionCard/QuestionCard'
 import { AnswerCard } from '@/pages/Main/components/AnswerCard/AnswerCard';
 import { PopularPostSlider } from '@/pages/Main/components/PopularPostSlider/PopularPostSlider';
 import { ProfileSlider } from '@/pages/Main/components/ProfileSlider/ProfileSlider';
-import { CommentList } from '@/components/ui/CommentList/CommentList';
 import { dummyComments } from '@/pages/Main/type/dummyComments';
 import { dummyData } from '@/pages/Main/type/dummyPosts';
 import { userProfileData } from '@/pages/Main/type/dummyUserProfiles';
 import { categories } from '@/pages/Main/type/category';
+import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
+import { useNavigate } from 'react-router-dom';
 
 export const Main = () => {
   const [activeCategory, setActiveCategory] = useState(categories[0]);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const navigate = useNavigate();
   const categoryRef = useRef<HTMLDivElement>(null);
 
   const handleCategoryChange = (category: string, isSelected: boolean) => {
@@ -32,6 +34,7 @@ export const Main = () => {
 
   const handleReplyClick = (commentId: string) => {
     console.log(`Reply clicked for comment ${commentId}`);
+    navigate(`/post/${commentId}`);
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -103,7 +106,7 @@ export const Main = () => {
 
         <CommentListWrapper>
           <Title>최근 등록된 답변</Title>
-          <CommentList
+          <CommentItemList
             comments={dummyComments}
             onLikeComment={handleLikeComment}
             onReplyClick={handleReplyClick}

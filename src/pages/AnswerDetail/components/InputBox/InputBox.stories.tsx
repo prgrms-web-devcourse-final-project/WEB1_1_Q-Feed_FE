@@ -1,23 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { InputBox } from './InputBox';
 
-/**
- * `InputBox`는 메시지 입력을 위한 컴포넌트입니다.
- *
- * - 둥근 테두리와 placeholder를 가진 입력 필드
- * - 포커스 시 테두리 색상과 텍스트 색상 변경
- * - 100% 너비를 가지며 64px 높이의 컨테이너
- *
- * @component
- * @example
- * ```tsx
- * <InputBox
- *   value={message}
- *   onChange={(e) => setMessage(e.target.value)}
- * />
- * ```
- */
-
 const meta = {
   title: 'Pages/AnswerDetail/components/InputBox',
   component: InputBox,

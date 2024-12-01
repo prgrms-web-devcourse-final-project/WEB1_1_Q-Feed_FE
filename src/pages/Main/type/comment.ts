@@ -11,4 +11,6 @@ export interface Comment {
   likes: number;
   isLiked: boolean;
   replyCount: number;
+  replies?: Comment[];
+  parentId?: string;
 }

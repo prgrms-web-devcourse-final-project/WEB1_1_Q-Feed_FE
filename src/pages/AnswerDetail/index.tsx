@@ -1,12 +1,24 @@
-import styled from '@emotion/styled';
-import theme from '@/styles/theme';
 import BackButton from '@/components/ui/BackButton/BackButton';
 import { QuestionCard } from '@/pages/Main/components/QuestionCard/QuestionCard';
 import { CommentItem } from '@/pages/AnswerDetail/components/CommentItem/CommentItem';
-import { CommentList } from '@/components/ui/CommentList/CommentList';
-import { dummyComments } from '@/pages/Main/type/dummyComments';
 import { MessageBox } from '@/pages/AnswerDetail/components/MessageBox/MessageBox';
 import { useState } from 'react';
+import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
+import { dummyCommentList } from '@/pages/Main/type/dummyCommentList';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import {
+  Body,
+  CommentHeader,
+  CommentListWrapper,
+  Container,
+  Header,
+  MessageBoxWrapper,
+  PostWrapper,
+  TextComment,
+  TextCommentCount,
+  Title,
+} from '@/pages/AnswerDetail/styles';
 
 const dummyComment = {
   id: '2',
@@ -15,31 +27,30 @@ const dummyComment = {
   createdAt: '2024-11-28T09:30:00',
   likes: 8,
   isLiked: true,
-  replyCount: 1,
-};
-
-const dummyTest = {
-  commentCount: 7,
+  replyCount: 27,
 };
 
 export const PostDetailPage = () => {
-  const [comments, setComments] = useState(dummyComments);
+  const [comments, setComments] = useState(dummyCommentList);
+  const location = useLocation();
   const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
     console.log(commentId, isLiked, count);
-    // 여기에 좋아요 처리 로직 추가
+    //좋아요 처리
   };
 
   const handleReplyClick = (commentId: string) => {
     console.log(commentId);
-    // 여기에 답글 클릭 처리 로직 추가
+    // 답글 클릭 처리
   };
 
   const handleMessage = (message: string) => {
+    // 댓글 입력 (API 연동 필요)
     const newComment = {
-      id: String(Date.now()), // 유니크한 ID 생성
+      id: String(Date.now()),
       author: {
-        name: '사용자', // 현재 로그인한 사용자 정보로 대체 가능
-        profileImage: 'https://i.pravatar.cc/150?img=1',
+        name: '김감자',
+        profileImage:
+          'https://img.freepik.com/premium-photo/funny-potato-character-isolated-empty-background_168310-123.jpg',
       },
       content: message,
       createdAt: new Date().toISOString(),
@@ -50,6 +61,13 @@ export const PostDetailPage = () => {
 
     setComments((prevComments) => [newComment, ...prevComments]);
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }, 0);
+  }, [location]);
 
   return (
     <Container>
@@ -71,10 +89,10 @@ export const PostDetailPage = () => {
         </PostWrapper>
         <CommentHeader>
           <TextComment>댓글</TextComment>
-          <TextCommentCount>({dummyTest.commentCount})</TextCommentCount>
+          <TextCommentCount>({comments.length})</TextCommentCount>
         </CommentHeader>
         <CommentListWrapper>
-          <CommentList
+          <CommentItemList
             comments={comments}
             onLikeComment={handleLikeComment}
             onReplyClick={handleReplyClick}
@@ -88,86 +106,3 @@ export const PostDetailPage = () => {
   );
 };
 export default PostDetailPage;
-
-const Container = styled.div`
-  padding-bottom: calc(5.25rem + 84px); // footer-height + MessageBox height
-  min-height: 100vh;
-  position: relative;
-`;
-const Header = styled.div`
-  width: 100%;
-  height: 48px;
-  display: flex;
-  background-color: ${theme.colors.white};
-`;
-
-const Title = styled.h1`
-  font-family: ${theme.typography.header2.fontFamily.korean};
-  font-size: ${theme.typography.header2.size};
-  font-weight: ${theme.typography.header2.weight};
-  line-height: ${theme.typography.header2.lineHeight};
-  color: ${theme.colors.black};
-  text-align: center;
-  justify-items: center;
-  align-items: center;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-
-const PostWrapper = styled.div`
-  margin-top: 40px;
-`;
-
-const Body = styled.div`
-  width: 100%;
-  background-color: ${theme.colors.background};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding-top: 20px;
-`;
-
-const CommentHeader = styled.div`
-  display: flex;
-  width: 100%;
-  padding: 0.9375rem 1.5625rem;
-  border-bottom: 1px solid ${theme.colors.gray[300]};
-  background-color: ${theme.colors.white};
-`;
-
-const TextComment = styled.p`
-  font-family: ${theme.typography.fontFamily.korean};
-  font-weight: ${theme.typography.weights.regular};
-  font-size: 0.875rem;
-  color: ${theme.colors.gray[600]};
-`;
-
-const TextCommentCount = styled.p`
-  font-family: ${theme.typography.fontFamily.english.header};
-  font-weight: ${theme.typography.weights.regular};
-  font-size: 0.875rem;
-  color: ${theme.colors.gray[600]};
-`;
-
-const CommentListWrapper = styled.div`
-  width: 100%;
-  padding: 1.25rem;
-  background-color: ${theme.colors.white};
-`;
-
-const MessageBoxWrapper = styled.div`
-  position: fixed;
-  bottom: 5.25rem;
-  left: 0;
-  right: 0;
-  width: 100%;
-  max-width: 430px;
-  margin: 0 auto;
-  background-color: ${theme.colors.white};
-  padding: 10px 0;
-  border-top: 1px solid ${theme.colors.gray[300]};
-`;
