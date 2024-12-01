@@ -15,11 +15,11 @@ import { useNavigate } from 'react-router';
 export const Login = () => {
   const navigate = useNavigate();
   const handleLoginSubmit = () => {
-    alert('로그인 클릭');
+    navigate('/');
   };
 
   const handleKakaoLogin = () => {
-    alert('카카오 로그인 클릭');
+    navigate('/');
   };
 
   const handleFindEmail = () => {
