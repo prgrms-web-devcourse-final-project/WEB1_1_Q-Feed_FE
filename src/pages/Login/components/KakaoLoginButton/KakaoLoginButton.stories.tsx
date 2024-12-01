@@ -1,5 +1,5 @@
 // KakaoLoginButton.stories.tsx
-import KakaoLoginButton from '@/pages/Login/KakaoLoginButton/KakaoLoginButton';
+import KakaoLoginButton from '@/pages/Login/components/KakaoLoginButton/KakaoLoginButton';
 import type { Meta, StoryObj } from '@storybook/react';
 
 const meta = {

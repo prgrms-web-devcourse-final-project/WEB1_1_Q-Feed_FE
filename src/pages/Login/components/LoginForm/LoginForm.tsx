@@ -1,4 +1,4 @@
-import LoginButton from '@/pages/Login/LoginButton/LoginButton';
+import LoginButton from '@/pages/Login/components/LoginButton/LoginButton';
 import {
   FormWrapper,
   StyledFormControl,
@@ -6,7 +6,7 @@ import {
   StyledInput,
   StyledLoginButtonDiv,
   StyledStack,
-} from '@/pages/Login/LoginForm/LoginForm.styles';
+} from '@/pages/Login/components/LoginForm/LoginForm.styles';
 import theme from '@/styles/theme';
 import { FormLabel } from '@chakra-ui/react';
 import { useForm, SubmitHandler } from 'react-hook-form';

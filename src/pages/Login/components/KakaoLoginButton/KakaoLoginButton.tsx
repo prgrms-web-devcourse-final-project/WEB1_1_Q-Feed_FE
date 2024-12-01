@@ -1,4 +1,4 @@
-import { StyledButton } from '@/pages/Login/KakaoLoginButton/KakaoLoginButton.styles';
+import { StyledButton } from '@/pages/Login/components/KakaoLoginButton/KakaoLoginButton.styles';
 import theme from '@/styles/theme';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 

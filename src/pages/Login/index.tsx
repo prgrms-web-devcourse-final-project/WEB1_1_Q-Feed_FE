@@ -1,8 +1,8 @@
 import { Logo } from '@/components/ui/Logo/Logo';
-import { LoginForm } from '@/pages/Login/LoginForm/LoginForm';
+import { LoginForm } from '@/pages/Login/components/LoginForm/LoginForm';
 import { STYLES } from '@/pages/Login/Constants/styles';
 import { Container, LogoContainer, StyledHStack, TextButton, Title } from '@/pages/Login/styles';
-import KakaoLoginButton from '@/pages/Login/KakaoLoginButton/KakaoLoginButton';
+import KakaoLoginButton from '@/pages/Login/components/KakaoLoginButton/KakaoLoginButton';
 
 export const Login = () => {
   const handleLoginSubmit = () => {

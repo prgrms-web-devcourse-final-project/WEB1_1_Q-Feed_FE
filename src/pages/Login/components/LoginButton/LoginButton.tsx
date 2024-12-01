@@ -1,4 +1,4 @@
-import { StyledButton } from '@/pages/Login/LoginButton/LoginButton.styles';
+import { StyledButton } from '@/pages/Login/components/LoginButton/LoginButton.styles';
 import theme from '@/styles/theme';
 
 type LoginButtonProps = {

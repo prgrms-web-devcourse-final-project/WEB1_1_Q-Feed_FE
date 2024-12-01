@@ -3,7 +3,7 @@ import type { Meta } from '@storybook/react';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '@/styles/theme';
 import { useState } from 'react';
-import InputForm from '@/pages/Login/InputForm/InputForm';
+import InputForm from '@/pages/Login/components/InputForm/InputForm';
 
 const meta = {
   title: 'Pages/Login/InputForm',

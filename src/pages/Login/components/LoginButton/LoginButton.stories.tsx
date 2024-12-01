@@ -1,5 +1,5 @@
 // LoginButton.stories.tsx
-import LoginButton from '@/pages/Login/LoginButton/LoginButton';
+import LoginButton from '@/pages/Login/components/LoginButton/LoginButton';
 import type { Meta, StoryObj } from '@storybook/react';
 const meta = {
   title: 'Pages/Login/LoginButton',

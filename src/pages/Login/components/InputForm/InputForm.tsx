@@ -1,6 +1,6 @@
 import { type ReactNode } from 'react';
 import theme from '@/styles/theme';
-import { Container, StyledInput, Title } from '@/pages/Login/InputForm/InputForm.styles';
+import { Container, StyledInput, Title } from '@/pages/Login/components/InputForm/InputForm.styles';
 
 type InputFormProps = {
   title: string;
