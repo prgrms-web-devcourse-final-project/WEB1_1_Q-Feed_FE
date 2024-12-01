@@ -1,7 +1,14 @@
 import { Logo } from '@/components/ui/Logo/Logo';
 import { LoginForm } from '@/pages/Login/components/LoginForm/LoginForm';
 import { STYLES } from '@/pages/Login/Constants/styles';
-import { Container, LogoContainer, StyledHStack, TextButton, Title } from '@/pages/Login/styles';
+import {
+  Container,
+  LogoContainer,
+  StyledHStack,
+  StyledStack,
+  TextButton,
+  Title,
+} from '@/pages/Login/styles';
 import KakaoLoginButton from '@/pages/Login/components/KakaoLoginButton/KakaoLoginButton';
 
 export const Login = () => {
@@ -28,10 +35,10 @@ export const Login = () => {
         <Title>나의 취향 메이트 찾기</Title>
       </LogoContainer>
 
-      <StyledHStack>
+      <StyledStack>
         <LoginForm onSubmit={handleLoginSubmit} />
         <KakaoLoginButton onClick={handleKakaoLogin} />
-      </StyledHStack>
+      </StyledStack>
 
       <StyledHStack>
         <TextButton onClick={handleFindEmail}>이메일/비밀번호 찾기</TextButton>
