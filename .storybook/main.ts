@@ -8,6 +8,7 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
     '@emotion/babel-plugin',
+    'storybook-addon-react-router-v6',
   ],
 
   framework: {

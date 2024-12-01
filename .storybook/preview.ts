@@ -1,18 +1,20 @@
-import type { Preview } from "@storybook/react";
+import type { Preview } from '@storybook/react';
 import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 import { ThemeProvider } from '@emotion/react';
 import theme from '../src/styles/theme';
 import { GlobalStyles } from '../src/styles/GlobalStyles';
+import { withRouter } from 'storybook-addon-react-router-v6';
 
 export const decorators = [
+  withRouter,
   withThemeFromJSXProvider({
     themes: {
-      default: theme
+      default: theme,
     },
     defaultTheme: 'default',
     Provider: ThemeProvider,
-    GlobalStyles: GlobalStyles
-  })
+    GlobalStyles: GlobalStyles,
+  }),
 ];
 
 const preview: Preview = {
@@ -25,7 +27,7 @@ const preview: Preview = {
     },
   },
 
-  tags: ["autodocs", "autodocs"]
+  tags: ['autodocs', 'autodocs'],
 };
 
 export default preview;
