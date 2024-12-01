@@ -1,11 +1,11 @@
 // Header.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
-import { Header } from './Header';
+import { HeaderWithTitle } from './HeaderWithTitle';
 import { MemoryRouter } from 'react-router-dom';
 
-const meta: Meta<typeof Header> = {
-  title: 'Pages/Register/Components/Header',
-  component: Header,
+const meta: Meta<typeof HeaderWithTitle> = {
+  title: 'components/ui/HeaderWithTitle',
+  component: HeaderWithTitle,
   tags: ['autodocs'],
   decorators: [
     (Story) => (
@@ -25,7 +25,7 @@ const meta: Meta<typeof Header> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof Header>;
+type Story = StoryObj<typeof HeaderWithTitle>;
 
 export const Default: Story = {
   parameters: {

@@ -1,4 +1,3 @@
-import { Header } from '@/pages/Register/components/Header/Header';
 import { EmailForm } from '@/pages/Register/components/EmailForm/EmailForm';
 import { PasswordForm } from '@/pages/Register/components/PasswordForm/PasswordForm';
 import { Container, FormContainer, Text, TextButton, TextWrapper } from '@/pages/Register/styles';
@@ -7,6 +6,7 @@ import { FormValues } from '@/pages/Register/type/formType';
 import LoginButton from '@/pages/Login/components/LoginButton/LoginButton';
 import { ConfirmForm } from '@/pages/Register/components/ConfirmForm/ConfirmForm';
 import { useNavigate } from 'react-router';
+import { HeaderWithTitle } from '@/components/ui/HeaderWithTitle/HeaderWithTitle';
 
 export const RegisterPage = () => {
   const navigate = useNavigate();
@@ -37,7 +37,8 @@ export const RegisterPage = () => {
 
   return (
     <Container>
-      <Header />
+      <HeaderWithTitle title="회원가입" />
+
       <FormContainer onSubmit={handleSubmit(onSubmit)}>
         <EmailForm register={register} errors={errors} />
         <ConfirmForm register={register} errors={errors} onVerify={handleVerify} />
