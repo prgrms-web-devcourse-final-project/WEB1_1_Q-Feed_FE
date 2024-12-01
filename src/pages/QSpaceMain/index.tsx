@@ -2,10 +2,10 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 import GroupStateCheckBox from '@/pages/QSpaceMain/components/GroupStateCheckBox/GroupStateCheckBox';
-import { QSpaceCard } from '@/components/ui/QSpaceCard/QSpaceCard';
 import FloatingButton from '@/pages/QSpaceMain/components/FloatingButton/FloatingButton';
 import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
 import Header from '@/components/common/Header';
+import QSpaceCard from '@/components/ui/QSpaceCard/QSpaceCard';
 
 const categories = ['전체', '여행', '스포츠', '패션', '문화', '맛집', '기타'];
 

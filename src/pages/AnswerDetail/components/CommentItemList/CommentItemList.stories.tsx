@@ -17,12 +17,11 @@ const meta: Meta<typeof CommentItemList> = {
 
 export default meta;
 type Story = StoryObj<typeof CommentItemList>;
-
 const mockComments = [
   {
     id: '1',
     content: '첫 번째 댓글입니다.',
-    createdAt: new Date('2023-12-01T10:00:00'),
+    createdAt: new Date('2023-12-01T10:00:00').toISOString(),
     likes: 5,
     isLiked: false,
     replyCount: 2,
@@ -35,7 +34,7 @@ const mockComments = [
       {
         id: '1-1',
         content: '첫 번째 댓글의 답글입니다.',
-        createdAt: new Date('2023-12-01T10:30:00'),
+        createdAt: new Date('2023-12-01T10:30:00').toISOString(),
         likes: 2,
         isLiked: false,
         replyCount: 0,
@@ -50,7 +49,7 @@ const mockComments = [
   {
     id: '2',
     content: '두 번째 댓글입니다.',
-    createdAt: new Date('2023-12-01T11:00:00'),
+    createdAt: new Date('2023-12-01T11:00:00').toISOString(),
     likes: 3,
     isLiked: true,
     replyCount: 0,

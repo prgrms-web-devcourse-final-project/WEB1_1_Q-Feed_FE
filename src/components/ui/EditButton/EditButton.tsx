@@ -27,7 +27,7 @@ const StyledButton = styled(ChakraButton)<{ width?: string | number; height?: st
   }
 `;
 
-export const EditButton = ({ onClick, width = '2.5rem', height = '2.5rem' }: EditButtonProps) => {
+const EditButton = ({ onClick, width = '2.5rem', height = '2.5rem' }: EditButtonProps) => {
   return (
     <Tooltip label="수정하기" placement="top" hasArrow>
       <StyledButton variant="ghost" size="md" onClick={onClick} width={width} height={height}>
@@ -36,3 +36,5 @@ export const EditButton = ({ onClick, width = '2.5rem', height = '2.5rem' }: Edi
     </Tooltip>
   );
 };
+
+export default EditButton;

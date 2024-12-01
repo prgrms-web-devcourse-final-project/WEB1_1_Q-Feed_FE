@@ -14,7 +14,7 @@ const PostGroupPage = () => {
     console.log('Create group:', { title, description, imageFile });
   };
 
-  const handleImageUpload = (file: File) => {
+  const handleImageUpload = (file: File | null) => {
     setImageFile(file);
   };
 

@@ -27,11 +27,7 @@ const StyledButton = styled(ChakraButton)<{ width?: string | number; height?: st
   }
 `;
 
-export const DeleteButton = ({
-  onClick,
-  width = '2.5rem',
-  height = '2.5rem',
-}: DeleteButtonProps) => {
+const DeleteButton = ({ onClick, width = '2.5rem', height = '2.5rem' }: DeleteButtonProps) => {
   return (
     <Tooltip label="삭제하기" placement="top" hasArrow>
       <StyledButton variant="ghost" size="md" onClick={onClick} width={width} height={height}>
@@ -40,3 +36,5 @@ export const DeleteButton = ({
     </Tooltip>
   );
 };
+
+export default DeleteButton;

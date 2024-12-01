@@ -1,6 +1,14 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import React, { useState } from 'react';
+import {
+  iconButtonStyle,
+  iconStyle,
+  inputContainerStyle,
+  inputStyle,
+  inputWrap,
+  sendButtonStyle,
+  sendIconStyle,
+} from '@/pages/ChatRoom/component/InputBar.styles';
+import { useState } from 'react';
 import { MdOutlineAddAPhoto } from 'react-icons/md';
 
 interface InputBarProps {
@@ -59,51 +67,3 @@ const ChatInputBar: React.FC<InputBarProps> = ({
 };
 
 export default ChatInputBar;
-
-const inputWrap = css`
-  display: flex;
-  gap: 8px;
-`;
-
-const inputContainerStyle = css`
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 24px;
-  background-color: #fff;
-  gap: 8px;
-  flex: 1;
-`;
-
-const iconButtonStyle = css`
-  background: none;
-  border: none;
-  cursor: pointer;
-`;
-
-const iconStyle = css`
-  font-size: 20px;
-  color: #b3b3b3;
-`;
-
-const inputStyle = css`
-  flex: 1;
-  border: none;
-  outline: none;
-  font-size: 14px;
-  padding: 8px;
-  color: #333;
-`;
-
-const sendButtonStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`;
-
-const sendIconStyle = css`
-  width: 48px;
-  height: 48px;
-`;

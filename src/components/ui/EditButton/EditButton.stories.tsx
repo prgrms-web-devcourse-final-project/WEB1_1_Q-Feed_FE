@@ -1,6 +1,6 @@
 // DeleteButton.stories.tsx
+import EditButton from '@/components/ui/EditButton/EditButton';
 import type { Meta, StoryObj } from '@storybook/react';
-import { EditButton } from './EditButton';
 
 const meta: Meta<typeof EditButton> = {
   title: 'Components/ui/EditButton',
@@ -10,7 +10,8 @@ const meta: Meta<typeof EditButton> = {
     layout: 'centered',
     docs: {
       description: {
-        component: '수정 기능을 위한 버튼 컴포넌트입니다. 크기 조절이 가능하며 Hover 시 툴팁이 표시됩니다.',
+        component:
+          '수정 기능을 위한 버튼 컴포넌트입니다. 크기 조절이 가능하며 Hover 시 툴팁이 표시됩니다.',
       },
     },
   },

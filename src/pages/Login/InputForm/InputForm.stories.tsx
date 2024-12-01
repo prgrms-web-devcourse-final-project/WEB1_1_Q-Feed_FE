@@ -1,9 +1,9 @@
 // InputForm.stories.tsx
 import type { Meta } from '@storybook/react';
-import { InputForm } from './InputForm';
 import { ChakraProvider } from '@chakra-ui/react';
 import theme from '@/styles/theme';
 import { useState } from 'react';
+import InputForm from '@/pages/Login/InputForm/InputForm';
 
 const meta = {
   title: 'Pages/Login/InputForm',

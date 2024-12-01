@@ -1,9 +1,24 @@
 /** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoChevronBack } from 'react-icons/io5';
 import ProfileImage from '@/components/ui/ProfileImageCon/ProfileImageCon';
+import {
+  backIconStyle,
+  containerStyle,
+  headerStyle,
+  headerTitleStyle,
+  listCon,
+  listConRead,
+  listStyle,
+  markAllAsReadStyle,
+  notificationContentStyle,
+  notificationMessageStyle,
+  notificationTypeStyle,
+  readWrap,
+  timeStyle,
+  unreadCountStyle,
+} from '@/pages/Alarm/styles';
 interface NotificationItem {
   id: number;
   type: string;
@@ -11,7 +26,7 @@ interface NotificationItem {
   time: string;
 }
 
-const NotificationPage: React.FC = () => {
+const NotificationPage = () => {
   const navigate = useNavigate();
   const notifications: NotificationItem[] = [
     {
@@ -103,97 +118,3 @@ const NotificationPage: React.FC = () => {
 };
 
 export default NotificationPage;
-
-// 스타일 정의
-const containerStyle = css`
-  display: flex;
-  flex-direction: column;
-  height: 773px;
-  background-color: #f9f4ef;
-`;
-
-const headerStyle = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 10px 15px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #ccc;
-`;
-const readWrap = css`
-  display: flex;
-  text-align: center;
-  align-items: center;
-  justify-content: space-between;
-  padding-right: 12px;
-`;
-
-const backIconStyle = css`
-  position: absolute;
-  left: 15px;
-  font-size: 24px;
-  cursor: pointer;
-`;
-
-const headerTitleStyle = css`
-  font-size: 18px;
-  font-weight: bold;
-`;
-
-const markAllAsReadStyle = css`
-  font-size: 14px;
-  border-radius: 16px;
-  padding: 6px;
-  color: #b9a298;
-  background-color: #f3ebe1;
-  cursor: pointer;
-`;
-
-const unreadCountStyle = css`
-  padding: 10px 15px;
-  font-size: 14px;
-  color: #666;
-`;
-
-const listStyle = css`
-  flex: 1;
-  overflow-y: auto;
-  background-color: #f9f3ec;
-`;
-
-const listCon = css`
-  background-color: #f3ebe1;
-  padding: 8px;
-  height: 80px;
-  border-bottom: 1px solid #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
-`;
-
-const listConRead = css`
-  background-color: #f9f4ef; /* 읽음 처리된 배경 색 */
-`;
-
-const notificationContentStyle = css`
-  flex: 1;
-  margin-left: 8px;
-`;
-
-const notificationTypeStyle = css`
-  font-size: 12px;
-  color: #999;
-`;
-
-const notificationMessageStyle = css`
-  margin-top: 4px;
-  font-size: 14px;
-  color: #333;
-`;
-
-const timeStyle = css`
-  font-size: 12px;
-  color: #999;
-`;

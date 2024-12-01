@@ -1,4 +1,3 @@
-import { ReplyContainer } from '@/components/ui/ReplyContainer/ReplyContainer';
 import LikeButtonContainer from '@/components/ui/LikeButtonContainer/LikeButtonContainer';
 import { Comment } from '@/pages/Main/type/comment';
 import { useState } from 'react';
@@ -19,6 +18,7 @@ import {
   RepliesWrapper,
   StyledAvatar,
 } from '@/pages/AnswerDetail/components/CommentItem/CommentItem.styles';
+import ReplyContainer from '@/components/ui/ReplyContainer/ReplyContainer';
 
 type CommentItemProps = {
   comment: Comment;

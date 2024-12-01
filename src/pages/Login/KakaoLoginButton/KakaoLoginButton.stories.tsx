@@ -1,6 +1,6 @@
 // KakaoLoginButton.stories.tsx
+import KakaoLoginButton from '@/pages/Login/KakaoLoginButton/KakaoLoginButton';
 import type { Meta, StoryObj } from '@storybook/react';
-import { KakaoLoginButton } from './KakaoLoginButton';
 
 const meta = {
   title: 'Pages/Login/KakaoLoginButton',

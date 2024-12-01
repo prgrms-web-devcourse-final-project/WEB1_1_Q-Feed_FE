@@ -1,8 +1,16 @@
-import styled from '@emotion/styled';
-import { Avatar } from '@chakra-ui/react';
+import {
+  ActionButtons,
+  AuthorInfo,
+  AuthorName,
+  CommentContent,
+  CommentItem,
+  Container,
+  Content,
+  CreatedAt,
+  StyledAvatar,
+} from '@/components/ui/CommentList/CommentList.styles';
 import LikeButtonContainer from '@/components/ui/LikeButtonContainer/LikeButtonContainer';
-import { ReplyContainer } from '@/components/ui/ReplyContainer/ReplyContainer';
-import theme from '@/styles/theme';
+import ReplyContainer from '@/components/ui/ReplyContainer/ReplyContainer';
 
 interface Comment {
   id: string;
@@ -70,62 +78,4 @@ export const CommentList = ({ comments, onLikeComment, onReplyClick }: CommentLi
   );
 };
 
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-`;
-
-const CommentItem = styled.div`
-  display: flex;
-  gap: 1rem;
-  border-bottom: 1px solid ${theme.colors.gray[300]};
-  cursor: pointer;
-  &:hover {
-    background: ${theme.colors.sub};
-  }
-  padding: 0.75rem 0;
-`;
-
-const StyledAvatar = styled(Avatar)`
-  width: 3rem !important;
-  height: 3rem !important;
-  border-radius: 100% !important;
-
-  & > img {
-    border-radius: 100% !important;
-  }
-`;
-
-const CommentContent = styled.div`
-  flex: 1;
-`;
-
-const AuthorInfo = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.5rem;
-  margin-bottom: 0.25rem;
-`;
-
-const AuthorName = styled.span`
-  color: ${theme.colors.gray[400]};
-  font-weight: ${theme.typography.weights.medium};
-  font-size: ${theme.typography.body2.size};
-`;
-
-const CreatedAt = styled.span`
-  color: ${theme.colors.gray[200]};
-  font-size: ${theme.typography.body3.size};
-`;
-
-const Content = styled.p`
-  color: ${theme.colors.black};
-  font-size: ${theme.typography.body2.size};
-  font-weight: ${theme.typography.weights.regular};
-`;
-
-const ActionButtons = styled.div`
-  display: flex;
-  margin-top: 0.5rem;
-`;
+export default CommentList;

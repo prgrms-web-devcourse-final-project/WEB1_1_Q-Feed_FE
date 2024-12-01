@@ -15,8 +15,6 @@ const queryClient = new QueryClient({
       refetchOnWindowFocus: false,
       refetchOnMount: false,
       retry: 1,
-      staleTime: 5 * 60 * 1000,
-      gcTime: 30 * 60 * 1000,
     },
   },
 });
@@ -31,7 +29,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <ThemeProvider theme={theme}>
-        <ChakraProvider theme = {chakraTheme}>
+        <ChakraProvider theme={chakraTheme}>
           <GlobalStyles />
           <RouterProvider router={router} />
         </ChakraProvider>

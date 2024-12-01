@@ -27,21 +27,21 @@ const meta: Meta<typeof VerticalHeartButton> = {
       control: 'boolean',
       description: '초기 좋아요 상태를 지정합니다.',
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' }, // 문자열로 변경
       },
     },
     initialCount: {
       control: 'number',
       description: '초기 좋아요 수를 지정합니다.',
       table: {
-        defaultValue: { summary: 0 },
+        defaultValue: { summary: '0' }, // 문자열로 변경
       },
     },
     disabled: {
       control: 'boolean',
       description: '버튼의 비활성화 상태를 지정합니다.',
       table: {
-        defaultValue: { summary: false },
+        defaultValue: { summary: 'false' }, // 문자열로 변경
       },
     },
     onLikeChange: {

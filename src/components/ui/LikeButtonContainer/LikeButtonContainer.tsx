@@ -1,7 +1,10 @@
 import { useState } from 'react';
-import styled from '@emotion/styled';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
-import theme from '@/styles/theme';
+import {
+  ButtonContainer,
+  Count,
+  IconWrapper,
+} from '@/components/ui/LikeButtonContainer/LikeButtonContainer.styles';
 
 export interface LikeButtonProps {
   initialLiked?: boolean;
@@ -60,26 +63,3 @@ const LikeButtonContainer = ({
 };
 
 export default LikeButtonContainer;
-
-const ButtonContainer = styled.button<{ isLiked: boolean; disabled?: boolean }>`
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  padding: 0;
-  border: none;
-  background: none;
-  transition: all 0.3s ease;
-  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
-  opacity: ${(props) => (props.disabled ? 0.6 : 1)};
-`;
-
-const IconWrapper = styled.div<{ isLiked: boolean }>`
-  display: flex;
-  align-items: center;
-  color: ${(props) => (props.isLiked ? theme.colors.notice : theme.colors.gray[400])};
-`;
-
-const Count = styled.span<{ isLiked: boolean }>`
-  font-size: ${theme.typography.body3.size};
-  color: ${theme.colors.gray[400]};
-`;

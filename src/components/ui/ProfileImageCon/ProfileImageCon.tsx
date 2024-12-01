@@ -1,6 +1,9 @@
 /** @jsxImportSource @emotion/react */
-import theme from '@/styles/theme';
-import { css } from '@emotion/react';
+import {
+  containerStyle,
+  iconStyle,
+  imageStyle,
+} from '@/components/ui/ProfileImageCon/ProfileImageCon.styles';
 import { IoPerson } from 'react-icons/io5';
 
 // Props 타입 정의
@@ -23,31 +26,5 @@ const ProfileImage = ({
     </div>
   );
 };
-
-// 컨테이너 스타일
-const containerStyle = (size: number, bgColor: string) => css`
-  width: ${size}px;
-  height: ${size}px;
-  background-color: ${bgColor};
-  border-radius: 50%; /* 동그란 모양 */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-`;
-
-// 이미지 스타일
-const imageStyle = (size: number) => css`
-  width: ${size}px;
-  height: ${size}px;
-  object-fit: cover;
-`;
-
-// 아이콘 스타일
-const iconStyle = () => css`
-  width: 80%;
-  height: 80%;
-  color: ${theme.colors.gray[100]};
-`;
 
 export default ProfileImage;

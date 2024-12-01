@@ -8,8 +8,13 @@ import CategorySelectPage from '@/pages/QSpacePost/CategorySelectPage';
 import NotificationPage from '@/pages/Alarm';
 import PostGroupPage from '@/pages/QSpacePost/PostGroupPage';
 import { createBrowserRouter } from 'react-router-dom';
-import { LandingPage } from '@/pages/Landing';
+import ChatRoom from '@/pages/ChatRoom';
+import QSpaceDetailPage from '@/pages/QSpaceDetail';
+import QuestionPage from '@/pages/Question';
+import ProfilePage from '@/pages/Profile';
+import HobbySelectPage from '@/pages/HobbySelect';
 import { PostDetailPage } from '@/pages/AnswerDetail';
+import LandingPage from '@/pages/Landing';
 
 const router = createBrowserRouter([
   {
@@ -45,12 +50,32 @@ const router = createBrowserRouter([
         element: <PostGroupPage />,
       },
       {
+        path: '/qspace/details',
+        element: <QSpaceDetailPage />,
+      },
+      {
         path: '/login',
         element: <Login />,
       },
       {
         path: '/alarm',
         element: <NotificationPage />,
+      },
+      {
+        path: '/chatroom/:id',
+        element: <ChatRoom />,
+      },
+      {
+        path: '/question/:category',
+        element: <QuestionPage />,
+      },
+      {
+        path: '/select',
+        element: <HobbySelectPage />,
+      },
+      {
+        path: '/profile/:id',
+        element: <ProfilePage />,
       },
       {
         path: '/post/:id',

@@ -1,5 +1,5 @@
+import SelectableHobbyTags from '@/components/ui/HobbyTag/SelectableHobbyTags';
 import { Meta, StoryObj } from '@storybook/react';
-import { SelectableHobbyTags } from './SelectableHobbyTags';
 
 const meta: Meta<typeof SelectableHobbyTags> = {
   title: 'Components/ui/SelectableHobbyTags',

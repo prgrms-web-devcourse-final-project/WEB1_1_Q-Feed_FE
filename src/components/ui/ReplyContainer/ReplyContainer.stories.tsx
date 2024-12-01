@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { ReplyContainer } from './ReplyContainer';
 import { action } from '@storybook/addon-actions';
+import ReplyContainer from '@/components/ui/ReplyContainer/ReplyContainer';
 
 const meta = {
   title: 'Components/ui/ReplyContainer',

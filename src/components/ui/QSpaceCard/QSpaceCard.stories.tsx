@@ -1,5 +1,5 @@
+import QSpaceCard from '@/components/ui/QSpaceCard/QSpaceCard';
 import { Meta, StoryObj } from '@storybook/react';
-import { QSpaceCard } from './QSpaceCard';
 
 const meta: Meta<typeof QSpaceCard> = {
   title: 'Components/ui/QSpaceCard',

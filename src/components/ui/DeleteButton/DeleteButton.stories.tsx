@@ -1,7 +1,6 @@
-// DeleteButton.stories.tsx
-import type { Meta, StoryObj } from '@storybook/react';
-import { DeleteButton } from './DeleteButton';
+import DeleteButton from '@/components/ui/DeleteButton/DeleteButton';
 
+import type { Meta, StoryObj } from '@storybook/react';
 const meta: Meta<typeof DeleteButton> = {
   title: 'Components/ui/DeleteButton',
   component: DeleteButton,
@@ -10,7 +9,8 @@ const meta: Meta<typeof DeleteButton> = {
     layout: 'centered',
     docs: {
       description: {
-        component: '삭제 기능을 위한 버튼 컴포넌트입니다. 크기 조절이 가능하며 Hover 시 툴팁이 표시됩니다.',
+        component:
+          '삭제 기능을 위한 버튼 컴포넌트입니다. 크기 조절이 가능하며 Hover 시 툴팁이 표시됩니다.',
       },
     },
   },
