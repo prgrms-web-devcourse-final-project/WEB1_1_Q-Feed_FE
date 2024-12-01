@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import Header from '@/pages/MyPage/components/Header';
-import QuestionCard from '@/pages/MyPage/components/QuestionCard';
-import Button from '@/pages/MyPage/components/Button';
-import MyProfile from '@/pages/MyPage/components/MyProfile';
+import Header from '@/pages/MyPage/components/Header/Header';
+import QuestionCard from '@/pages/MyPage/components/QuestionCard/QuestionCard';
+import Button from '@/pages/MyPage/components/Button/Button';
+import MyProfile from '@/pages/MyPage/components/MyProfile/MyProfile';
 import QSpaceCard from '@/components/ui/QSpaceCard/QSpaceCard';
 import {
   ButtonGroup,

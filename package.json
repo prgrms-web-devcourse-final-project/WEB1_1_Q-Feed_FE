@@ -28,6 +28,7 @@
     "@emotion/styled": "^11",
     "@tanstack/react-query": "^5.60.6",
     "@types/react-icons": "^3.0.0",
+    "axios": "^1.7.8",
     "chakra-ui-bottom-navigation": "^2.0.1",
     "framer-motion": "^6",
     "glob": "^11.0.0",

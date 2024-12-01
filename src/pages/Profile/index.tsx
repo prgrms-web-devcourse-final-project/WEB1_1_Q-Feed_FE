@@ -1,9 +1,9 @@
 import theme from '@/styles/theme';
-import Header from '@/pages/MyPage/components/Header';
+import Header from '@/pages/MyPage/components/Header/Header';
 import ProfileImage from '@/components/ui/ProfileImageCon/ProfileImageCon';
 import Button from '@/pages/Profile/components/Button';
 import PopularPostSlider from '@/pages/Main/components/PopularPostSlider/PopularPostSlider';
-import Tags from '@/pages/MyPage/components/Tags';
+import Tags from '@/pages/MyPage/components/Tags/Tags';
 import { IoChatbubbleEllipsesOutline } from 'react-icons/io5';
 import { FaShare } from 'react-icons/fa6';
 import {

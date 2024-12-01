@@ -1,20 +1,7 @@
 import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
-interface ButtonProps {
-  children: React.ReactNode;
-  onClick?: () => void; // 클릭 이벤트 핸들러
-}
-
-const Button: React.FC<ButtonProps> = ({ children, onClick }) => {
-  return (
-    <StyledButton onClick={onClick}>
-      {children}
-    </StyledButton>
-  );
-};
-
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   flex: 1;
   padding: 0.625rem 1rem;
   background-color: ${theme.colors.white};
@@ -32,5 +19,3 @@ const StyledButton = styled.button`
     scale: 1.025;
   }
 `;
-
-export default Button;

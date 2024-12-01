@@ -14,7 +14,7 @@ export const Tag = styled.button<{ isSelected: boolean }>`
     isSelected ? `1px solid ${theme.colors.primary}` : `1px solid ${theme.colors.gray[300]}`};
   background-color: ${({ isSelected }) => (isSelected ? theme.colors.primary : 'transparent')};
   color: ${({ isSelected }) => (isSelected ? theme.colors.white : theme.colors.gray[300])};
-  font-size: 1rem;
+  font-size: 0.875rem;
   cursor: pointer;
   transition: all 0.2s;
 

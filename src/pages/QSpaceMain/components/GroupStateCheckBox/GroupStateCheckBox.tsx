@@ -1,7 +1,9 @@
 import { Checkbox } from '@chakra-ui/react';
-import styled from '@emotion/styled';
 import theme from '@/styles/theme';
-
+import {
+  StyledContainer,
+  StyledTitle,
+} from '@/pages/QSpaceMain/components/GroupStateCheckBox/GroupStateCheckBox.styles';
 interface GroupStateCheckBoxProps {
   initialChecked?: boolean;
   onChange?: (isChecked: boolean) => void;
@@ -43,17 +45,3 @@ const GroupStateCheckBox = ({ initialChecked = false, onChange }: GroupStateChec
 };
 
 export default GroupStateCheckBox;
-
-const StyledContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const StyledTitle = styled.span`
-  color: ${theme.colors.gray[400]};
-  font-family: ${theme.typography.body2.fontFamily};
-  font-size: ${theme.typography.body2.size};
-  font-weight: ${theme.typography.body2.weight};
-  line-height: ${theme.typography.body2.lineHeight};
-`;
