@@ -1,7 +1,7 @@
 import LoginButton from '@/pages/Register/components/LoginButton/LoginButton';
 import type { Meta, StoryObj } from '@storybook/react';
 const meta = {
-  title: 'Pages/Login/LoginButton',
+  title: 'Pages/Register/LoginButton/LoginButton',
   component: LoginButton,
   parameters: {
     layout: 'centered',
