@@ -29,7 +29,6 @@ export const StyledStack = styled(Stack)`
 export const StyledFormControl = styled(FormControl)`
   height: ${STYLES.FORM.CONTROL_HEIGHT};
   position: relative;
-  margin-bottom: ${STYLES.FORM.MARGIN_BOTTOM};
 `;
 
 export const StyledFormErrorMessage = styled(FormErrorMessage)`

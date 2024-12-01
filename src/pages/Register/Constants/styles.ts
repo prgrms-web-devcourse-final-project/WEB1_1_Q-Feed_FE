@@ -4,7 +4,6 @@ export const STYLES = {
     MIN_HEIGHT: '48.3125rem', //773px
     PADDING: '1.5rem', //24px
     GAP: '1rem',
-    TITLE_MARGIN_TOP: '2.5rem',
   },
   LOGO: {
     WIDTH: '5.375rem', //86px
@@ -26,7 +25,7 @@ export const STYLES = {
   FORM: {
     MAX_WIDTH: '26.5625rem', // 425px
     MIN_HEIGHT: '11.625rem', // 170px
-    CONTROL_HEIGHT: '6.5rem', // 72px
+    CONTROL_HEIGHT: '6.5rem', // 72px ===> 6.5rem(104px)으로 바꾸면 가능
     MARGIN_BOTTOM: '1rem', // 16px
   },
   BUTTONLOGINFORM: {

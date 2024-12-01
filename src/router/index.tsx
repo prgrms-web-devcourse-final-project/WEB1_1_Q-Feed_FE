@@ -14,6 +14,7 @@ import QuestionPage from '@/pages/Question';
 import ProfilePage from '@/pages/Profile';
 import LandingPage from '@/pages/Landing';
 import HobbySelectPage from '@/pages/HobbySelect';
+import { RegisterPage } from '@/pages/Register';
 
 const router = createBrowserRouter([
   {
@@ -75,6 +76,10 @@ const router = createBrowserRouter([
       {
         path: '/profile/:id',
         element: <ProfilePage />,
+      },
+      {
+        path: '/register',
+        element: <RegisterPage />,
       },
     ],
   },

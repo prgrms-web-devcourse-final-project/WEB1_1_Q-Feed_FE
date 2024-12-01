@@ -10,8 +10,10 @@ import {
   Title,
 } from '@/pages/Login/styles';
 import KakaoLoginButton from '@/pages/Login/components/KakaoLoginButton/KakaoLoginButton';
+import { useNavigate } from 'react-router';
 
 export const Login = () => {
+  const navigate = useNavigate();
   const handleLoginSubmit = () => {
     alert('로그인 클릭');
   };
@@ -25,7 +27,7 @@ export const Login = () => {
   };
 
   const handleRegister = () => {
-    alert('회원가입 클릭');
+    navigate('/register');
   };
 
   return (

@@ -35,7 +35,6 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// 모든 스토리에서 공통으로 사용할 onSubmit 함수
 const mockSubmit = action('onSubmit');
 
 export const Default: Story = {
