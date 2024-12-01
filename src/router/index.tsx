@@ -16,6 +16,9 @@ import LandingPage from '@/pages/Landing';
 import HobbySelectPage from '@/pages/HobbySelect';
 import ProfileEditPage from '@/pages/ProfileEdit';
 import { RegisterPage } from '@/pages/Register';
+import { PasswordRecoveryPage } from '@/pages/PasswordRecovery';
+import { ResetPasswordPage } from '@/pages/ResetPassword';
+import { IDRecoveryPage } from '@/pages/IDRecovery';
 
 const router = createBrowserRouter([
   {
@@ -85,6 +88,18 @@ const router = createBrowserRouter([
       {
         path: '/register',
         element: <RegisterPage />,
+      },
+      {
+        path: '/account-recovery/password',
+        element: <PasswordRecoveryPage />,
+      },
+      {
+        path: '/account-reset/password',
+        element: <ResetPasswordPage />,
+      },
+      {
+        path: '/account-recovery/id',
+        element: <IDRecoveryPage />,
       },
     ],
   },

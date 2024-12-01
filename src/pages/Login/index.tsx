@@ -23,7 +23,11 @@ export const Login = () => {
   };
 
   const handleFindEmail = () => {
-    alert('이메일/비밀번호 찾기 클릭');
+    navigate('/account-recovery/id');
+  };
+
+  const handleFindPassword = () => {
+    navigate('/account-recovery/password');
   };
 
   const handleRegister = () => {
@@ -43,7 +47,8 @@ export const Login = () => {
       </StyledStack>
 
       <StyledHStack>
-        <TextButton onClick={handleFindEmail}>이메일/비밀번호 찾기</TextButton>
+        <TextButton onClick={handleFindEmail}>이메일 찾기</TextButton>
+        <TextButton onClick={handleFindPassword}>비밀번호 찾기</TextButton>
         <TextButton onClick={handleRegister}>회원가입</TextButton>
       </StyledHStack>
     </Container>
