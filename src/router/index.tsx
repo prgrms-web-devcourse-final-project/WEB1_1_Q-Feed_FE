@@ -15,6 +15,14 @@ import ProfilePage from '@/pages/Profile';
 import HobbySelectPage from '@/pages/HobbySelect';
 import { PostDetailPage } from '@/pages/AnswerDetail';
 import LandingPage from '@/pages/Landing';
+import ProfileEditPage from '@/pages/ProfileEdit';
+import { RegisterPage } from '@/pages/Register';
+import { PasswordRecoveryPage } from '@/pages/PasswordRecovery';
+import { ResetPasswordPage } from '@/pages/ResetPassword';
+import { IDRecoveryPage } from '@/pages/IDRecovery';
+import QSpaceMemberPage from '@/pages/QSpaceMember';
+import EventPage from '@/pages/Event';
+import FollowerFollowingPage from '@/pages/Follower';
 
 const router = createBrowserRouter([
   {
@@ -44,6 +52,10 @@ const router = createBrowserRouter([
       {
         path: '/qspace/category',
         element: <CategorySelectPage />,
+      },
+      {
+        path: '/qspace/member',
+        element: <QSpaceMemberPage />,
       },
       {
         path: '/qspace/post',
@@ -80,6 +92,34 @@ const router = createBrowserRouter([
       {
         path: '/post/:id',
         element: <PostDetailPage />,
+      },
+      {
+        path: '/profile/edit',
+        element: <ProfileEditPage />,
+      },
+      {
+        path: '/register',
+        element: <RegisterPage />,
+      },
+      {
+        path: '/account-recovery/password',
+        element: <PasswordRecoveryPage />,
+      },
+      {
+        path: '/account-reset/password',
+        element: <ResetPasswordPage />,
+      },
+      {
+        path: '/account-recovery/id',
+        element: <IDRecoveryPage />,
+      },
+      {
+        path: '/followers',
+        element: <FollowerFollowingPage />,
+      },
+      {
+        path: '/event',
+        element: <EventPage />,
       },
     ],
   },

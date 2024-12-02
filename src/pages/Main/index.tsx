@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
 import Header from '@/components/common/Header';
 import { QuestionCard } from '@/pages/Main/components/QuestionCard/QuestionCard';
@@ -23,6 +24,7 @@ import {
 } from '@/pages/Main/styles';
 
 const Main = () => {
+  const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState(categories[0]);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -34,6 +36,7 @@ const Main = () => {
     if (isSelected) {
       setActiveCategory(category);
       console.log('Selected category:', category);
+      navigate(`/question/${category}`);
     }
   };
   const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {

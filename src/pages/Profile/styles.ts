@@ -49,6 +49,7 @@ export const InfoItem = styled.div`
   font-size: 1rem;
   gap: 0.5rem;
   color: ${theme.colors.gray[300]};
+  cursor: pointer;
 `;
 
 export const ButtonGroup = styled.div`

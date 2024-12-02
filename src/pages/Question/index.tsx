@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { IoLockClosed, IoLockOpen } from 'react-icons/io5';
 import { ImageUpload } from '@/components/ui/ImageUpload/ImageUpload';
 import Header from '@/components/common/Header';
@@ -14,10 +15,12 @@ import {
   Question,
   SubmitButton,
   Title,
+  Date,
   TitleContainer,
 } from '@/pages/Question/styles';
 
 const QuestionPage = () => {
+  const navigate = useNavigate();
   const [answer, setAnswer] = useState('');
   const [isPrivate, setIsPrivate] = useState(true);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
@@ -31,9 +34,10 @@ const QuestionPage = () => {
   };
 
   const handleSubmit = () => {
-    alert(
+    console.log(
       `답변: ${answer}\n공개 여부: ${isPrivate ? '비공개' : '공개'}\n이미지: ${uploadedImage ? uploadedImage.name : '없음'}`
     );
+    navigate('/');
   };
 
   return (

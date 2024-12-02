@@ -20,6 +20,7 @@ import {
   otherMessageStyle,
   timeStyleLeft,
   timeStyleRight,
+  inputBarStyle,
 } from '@/pages/ChatRoom/styles';
 
 const ChatRoom = () => {
@@ -86,7 +87,6 @@ const ChatRoom = () => {
         {messages.map((msg) => (
           <div key={msg.id} css={msg.isMine ? myMessageStyle : otherMessageStyle}>
             {!msg.isMine && <ProfileImageCon src="" size={30} />}
-            {/* 삼항연산자로 메시지 구조 분리 */}
             {msg.isMine ? (
               <>
                 <span css={timeStyleLeft}>{msg.time}</span>
@@ -107,7 +107,7 @@ const ChatRoom = () => {
       </div>
 
       {/* Input Bar */}
-      <div>
+      <div css={inputBarStyle}>
         <ChatInputBar
           placeholder="메시지를 입력하세요."
           onSend={handleSendMessage} // 메시지 보내기 핸들러 전달

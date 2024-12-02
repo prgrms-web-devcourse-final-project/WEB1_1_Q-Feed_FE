@@ -1,11 +1,18 @@
 import { useState } from 'react';
-import styled from '@emotion/styled';
-import theme from '@/styles/theme';
 import GroupStateCheckBox from '@/pages/QSpaceMain/components/GroupStateCheckBox/GroupStateCheckBox';
 import FloatingButton from '@/pages/QSpaceMain/components/FloatingButton/FloatingButton';
 import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
 import Header from '@/components/common/Header';
 import QSpaceCard from '@/components/ui/QSpaceCard/QSpaceCard';
+import {
+  Body,
+  CategoryList,
+  CategorySection,
+  Container,
+  FilterSection,
+  QSpaceList,
+  Title,
+} from '@/pages/QSpaceMain/styles';
 
 const categories = ['전체', '여행', '스포츠', '패션', '문화', '맛집', '기타'];
 
@@ -88,47 +95,5 @@ const QSpaceMainPage = () => {
     </Container>
   );
 };
-
-const Container = styled.div`
-  margin: 0 auto;
-`;
-
-const Body = styled.div`
-  padding: 0 1rem;
-  background-color: ${theme.colors.background};
-  height: 100vh;
-`;
-
-const CategorySection = styled.div`
-  padding: 1rem 0;
-  overflow-x: auto;
-  white-space: nowrap;
-`;
-
-const CategoryList = styled.div`
-  display: flex;
-  gap: 0.5rem;
-  padding: 0 1rem;
-`;
-
-const FilterSection = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0;
-`;
-
-const Title = styled.h2`
-  font-size: 1.25rem;
-  font-weight: bold;
-  margin: 1rem 0;
-  color: ${theme.colors.black};
-`;
-
-const QSpaceList = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
 
 export default QSpaceMainPage;

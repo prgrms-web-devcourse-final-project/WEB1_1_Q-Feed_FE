@@ -12,6 +12,7 @@ export const StyledHeader = styled.header`
 
 export const LogoWrapper = styled.div`
   display: flex;
+  flex-direction: column;
   align-items: center;
   cursor: pointer;
 `;

@@ -12,7 +12,7 @@ export const Container = styled.div`
   background-image: ${theme.colors.background};
 `;
 
-export const LogoWraper = styled.div`
+export const LogoWrapper = styled.div`
   margin-top: ${STYLE.LOGO.MARGIN_TOP};
   display: flex;
   flex-direction: column;
@@ -21,7 +21,17 @@ export const LogoWraper = styled.div`
 `;
 
 export const Title = styled.h1`
-  font-family: ${theme.typography.fontFamily.korean};
+  font-family: ${theme.typography.header1.fontFamily.korean};
+  font-size: ${theme.typography.header1.size};
+  font-weight: ${theme.typography.header1.weight};
+  line-height: ${theme.typography.header1.lineHeight};
+  color: ${theme.colors.primary};
+  cursor: pointer;
+  margin-top: 1.25rem;
+
+  &:hover {
+    color: ${theme.colors.gray[300]};
+  }
 `;
 
 export const SubTitle = styled.h2`

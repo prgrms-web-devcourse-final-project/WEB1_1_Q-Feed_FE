@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { CiUser } from 'react-icons/ci';
 import {
   Container,
@@ -16,12 +17,13 @@ import {
 } from '@/components/ui/QSpaceCard/QSpaceCard.styles';
 
 interface QSpaceCardProps {
-  imageUrl: string; // 이미지 URL
-  title: string; // 제목
-  description: string; // 소개글
-  memberCount: number; // 멤버 수
-  isRecruiting: boolean; // 모집 상태
-  lastUpdated: string; // 마지막 업데이트 시간
+  imageUrl: string;
+  title: string;
+  description: string;
+  memberCount: number;
+  isRecruiting: boolean;
+  lastUpdated: string;
+  id?: string; // 카드의 고유 ID 추가 (선택적)
 }
 
 const QSpaceCard = ({
@@ -31,9 +33,17 @@ const QSpaceCard = ({
   memberCount,
   isRecruiting,
   lastUpdated,
+  id,
 }: QSpaceCardProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    // id가 있으면 해당 id를 포함한 경로로, 없으면 기본 경로로 이동
+    navigate(id ? `/qspace/details/${id}` : '/qspace/details');
+  };
+
   return (
-    <Container>
+    <Container onClick={handleClick}>
       <Content>
         <ImageContainer>
           <Image src={imageUrl} alt={title} />

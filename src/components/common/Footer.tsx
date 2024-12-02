@@ -56,7 +56,6 @@ const Footer = ({ maxWidth = '425px' }: FooterProps) => {
   const navigate = useNavigate();
   const [value, setValue] = useState<string>('/');
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);
-
   const handleNavigation = (newValue: string) => {
     setValue(newValue);
     navigate(newValue);

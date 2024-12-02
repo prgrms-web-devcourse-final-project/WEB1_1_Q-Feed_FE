@@ -16,7 +16,7 @@ export const UploadBox = styled.div<{ hasPreview: boolean }>`
   width: 100%;
   height: 16.25rem;
   border: ${({ hasPreview }) => (hasPreview ? '0.125rem solid' : '0.125rem dashed')};
-  ${theme.colors.primary};
+  color: ${theme.colors.primary};
   border-radius: 1rem;
   background-color: #efe7de;
   position: relative;
