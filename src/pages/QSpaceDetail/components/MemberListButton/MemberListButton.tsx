@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { Button } from '@/pages/QSpaceDetail/components/MemberListButton/MemberListButton.styles';
 
 interface MemberListButtonProps {
@@ -5,9 +6,15 @@ interface MemberListButtonProps {
   className?: string;
 }
 
-const MemberListButton = ({ onClick, className }: MemberListButtonProps) => {
+const MemberListButton = ({ className }: MemberListButtonProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate('/qspace/member');
+  };
+
   return (
-    <Button onClick={onClick} className={className}>
+    <Button onClick={handleClick} className={className}>
       멤버 관리
     </Button>
   );

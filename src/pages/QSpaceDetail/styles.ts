@@ -29,7 +29,7 @@ export const KebabMenuWrapper = styled.div`
   padding-right: 1rem;
 `;
 export const ImageContainer = styled.div`
-  width: 80%;
+  width: 90%;
   height: 320px;
   background-color: ${theme.colors.gray[100]};
   overflow: hidden;
