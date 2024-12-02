@@ -10,17 +10,19 @@ import {
 } from '@/components/common/Header.styles';
 
 interface HeaderProps {
-  onSearchClick?: () => void;
   onLogoClick?: () => void;
   profileImage?: string;
   className?: string;
 }
 
-const Header = ({ onSearchClick, onLogoClick, className }: HeaderProps) => {
+const Header = ({ onLogoClick, className }: HeaderProps) => {
   const navigate = useNavigate();
 
   const handleNotificationClick = () => {
     navigate('/alarm');
+  };
+  const handleSearchClick = () => {
+    navigate('/search');
   };
 
   return (
@@ -29,7 +31,7 @@ const Header = ({ onSearchClick, onLogoClick, className }: HeaderProps) => {
         <Logo />
       </LogoWrapper>
       <RightSection>
-        <IconButton onClick={onSearchClick} aria-label="검색">
+        <IconButton onClick={handleSearchClick} aria-label="검색">
           <IoSearch size={24} />
         </IconButton>
         <IconButton onClick={handleNotificationClick} aria-label="알림">

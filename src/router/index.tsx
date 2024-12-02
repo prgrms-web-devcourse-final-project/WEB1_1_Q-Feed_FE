@@ -22,7 +22,7 @@ import { IDRecoveryPage } from '@/pages/IDRecovery';
 import QSpaceMemberPage from '@/pages/QSpaceMember';
 import FollowerFollowingPage from '@/pages/follower';
 import EventPage from '@/pages/Event';
-
+import SearchResultPage from '@/pages/Search';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -115,6 +115,10 @@ const router = createBrowserRouter([
       {
         path: '/event',
         element: <EventPage />,
+      },
+      {
+        path: '/search',
+        element: <SearchResultPage />, // 검색 결과 페이지 컴포넌트
       },
     ],
   },
