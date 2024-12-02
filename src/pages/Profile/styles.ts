@@ -6,7 +6,6 @@ export const Container = styled.div`
   background-color: ${theme.colors.background};
   min-height: calc(100vh - 3rem);
   margin-bottom: 5.25rem;
-  overflow: hidden;
 `;
 
 export const ProfileSection = styled.div`
