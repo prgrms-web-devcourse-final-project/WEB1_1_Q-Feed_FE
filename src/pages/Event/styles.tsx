@@ -4,7 +4,7 @@ import theme from '@/styles/theme';
 export const Container = styled.div`
   padding: 1.5rem 2rem;
   background-color: ${theme.colors.background};
-  min-height: calc(100vh - 8rem);
+  min-height: calc(100vh - 3rem);
   margin-bottom: 5.25rem;
   display: flex;
   flex-direction: column;
@@ -55,6 +55,11 @@ export const AnswerText = styled.span`
   font-weight: bold;
   font-family: ${theme.typography.header1.fontFamily.korean};
   `;
+
+export const ImageUploadContainer = styled.div`
+  width: 100%;
+  margin-bottom: 1rem;
+`;
 
 export const AnswerContainer = styled.div`
     width: 100%;
