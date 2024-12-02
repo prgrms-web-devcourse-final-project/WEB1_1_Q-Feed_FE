@@ -9,7 +9,6 @@ import { dummyComments } from '@/mocks/dummyComments';
 import { categories } from '@/pages/Main/type/category';
 import { dummyData } from '@/mocks/dummyPosts';
 import { userProfileData } from '@/mocks/dummyUserProfiles';
-import { useNavigate } from 'react-router-dom';
 import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
 import AnswerCard from '@/pages/Main/components/AnswerCard/AnswerCard';
 import {
@@ -29,7 +28,6 @@ const Main = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
-  const navigate = useNavigate();
   const categoryRef = useRef<HTMLDivElement>(null);
 
   const handleCategoryChange = (category: string, isSelected: boolean) => {

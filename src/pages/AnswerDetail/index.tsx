@@ -4,7 +4,6 @@ import { CommentItem } from '@/pages/AnswerDetail/components/CommentItem/Comment
 import { MessageBox } from '@/pages/AnswerDetail/components/MessageBox/MessageBox';
 import { useState } from 'react';
 import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
-import { dummyCommentList } from '@/pages/Main/type/dummyCommentList';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import {
@@ -19,6 +18,7 @@ import {
   TextCommentCount,
   Title,
 } from '@/pages/AnswerDetail/styles';
+import { dummyCommentList } from '@/mocks/dummyCommentList';
 
 const dummyComment = {
   id: '2',

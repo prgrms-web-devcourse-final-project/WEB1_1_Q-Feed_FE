@@ -48,7 +48,7 @@ const QuestionPage = () => {
           <Title>오늘의 질문</Title>
           <Date>D+32</Date>
         </TitleContainer>
-        <Question>맛집을 고르는 기준은 무엇인가요?</Question>
+        <Question>오늘 당장 해외여행을 떠날수 있다면 어디로 갈건가요!?</Question>
         <ImageUploadContainer>
           <ImageUpload onImageUpload={handleImageUpload} />
         </ImageUploadContainer>
