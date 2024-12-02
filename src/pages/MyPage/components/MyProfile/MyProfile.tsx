@@ -1,5 +1,6 @@
 import ProfileImage from '@/components/ui/ProfileImageCon/ProfileImageCon';
 import Tags from '@/pages/MyPage/components/Tags/Tags';
+import { useNavigate } from 'react-router-dom';
 import {
   ProfileSection,
   ProfileImageWrapper,
@@ -13,7 +14,7 @@ import {
   DetailLabel,
   DetailValue,
   Bio,
-} from '@/pages/MyPage/components/MyProfile/MyProfile.styles'
+} from '@/pages/MyPage/components/MyProfile/MyProfile.styles';
 
 interface MyProfileProps {
   profile: {
@@ -28,7 +29,7 @@ interface MyProfileProps {
 }
 
 const MyProfile = ({ profile }: MyProfileProps) => {
-
+  const navigate = useNavigate();
   return (
     <ProfileSection>
       <ProfileImageWrapper>
@@ -45,11 +46,11 @@ const MyProfile = ({ profile }: MyProfileProps) => {
         </NameAndId>
         <DetailsAndTags>
           <Details>
-            <DetailItem>
+            <DetailItem onClick={() => navigate('/followers?tab=follower')}>
               <DetailLabel>팔로워</DetailLabel>
               <DetailValue>{profile.followers}</DetailValue>
             </DetailItem>
-            <DetailItem>
+            <DetailItem onClick={() => navigate('/followers?tab=following')}>
               <DetailLabel>팔로잉</DetailLabel>
               <DetailValue>{profile.following}</DetailValue>
             </DetailItem>

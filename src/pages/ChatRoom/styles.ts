@@ -1,5 +1,5 @@
 import { css } from '@emotion/react';
-
+import theme from '@/styles/theme';
 // 스타일 정의
 export const iconButtonStyle = css`
   background: none;
@@ -27,7 +27,7 @@ export const headerStyle = css`
 
 export const headerTitle = css`
   margin-left: 10px;
-  font-size: 18px;
+  font-family: ${theme.typography.header2.fontFamily.korean};
   font-weight: bold;
 `;
 export const backIconStyle = css`
@@ -39,7 +39,7 @@ export const messageListStyle = css`
   flex: 1;
   padding: 10px;
   overflow-y: auto;
-  background-color: #f9f3ec;
+  background-color: ${theme.colors.background};
 `;
 
 export const otherMessageStyle = css`
@@ -58,7 +58,7 @@ export const myMessageStyle = css`
 
 export const messageContentStyle = css`
   max-width: 70%;
-  background-color: #ffffff;
+  background-color: ${theme.colors.white};
   border-radius: 10px;
   padding: 10px;
   font-size: 14px;
@@ -67,14 +67,18 @@ export const messageContentStyle = css`
 
 export const timeStyleLeft = css`
   font-size: 12px;
-  color: #999999;
+  color: ${theme.colors.gray[300]};
   align-self: flex-end;
   margin-left: 10px; /* 메시지와 시간 간 간격 */
 `;
 
 export const timeStyleRight = css`
   font-size: 12px;
-  color: #999999;
+  color: ${theme.colors.gray[300]};
   align-self: flex-end;
   margin-right: 10px; /* 메시지와 시간 간 간격 */
+`;
+
+export const inputBarStyle = css`
+  margin: 8px;
 `;

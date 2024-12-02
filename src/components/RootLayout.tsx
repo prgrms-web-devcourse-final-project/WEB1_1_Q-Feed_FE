@@ -1,13 +1,15 @@
 import Footer from '@/components/common/Footer';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 
 const RootLayout = () => {
+  const location = useLocation();
+  const isFooterHidden = location.pathname.startsWith('/chatroom');
   return (
     <div>
       <main className='container'>
         <Outlet />
       </main>
-      <Footer />
+      {!isFooterHidden && <Footer />}
     </div>
   );
 };

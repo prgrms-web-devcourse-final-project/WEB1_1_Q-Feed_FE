@@ -20,6 +20,8 @@ import { PasswordRecoveryPage } from '@/pages/PasswordRecovery';
 import { ResetPasswordPage } from '@/pages/ResetPassword';
 import { IDRecoveryPage } from '@/pages/IDRecovery';
 import QSpaceMemberPage from '@/pages/QSpaceMember';
+import FollowerFollowingPage from '@/pages/follower';
+import EventPage from '@/pages/Event';
 
 const router = createBrowserRouter([
   {
@@ -105,6 +107,14 @@ const router = createBrowserRouter([
       {
         path: '/account-recovery/id',
         element: <IDRecoveryPage />,
+      },
+      {
+        path: '/followers',
+        element: <FollowerFollowingPage />,
+      },
+      {
+        path: '/event',
+        element: <EventPage />,
       },
     ],
   },

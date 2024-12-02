@@ -1,3 +1,4 @@
+import theme from '@/styles/theme';
 import { css } from '@emotion/react';
 
 // 스타일 정의
@@ -5,7 +6,7 @@ export const containerStyle = css`
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background-color: #f9f4ef;
+  background-color: ${theme.colors.background};
 `;
 
 export const headerStyle = css`
@@ -13,7 +14,7 @@ export const headerStyle = css`
   display: flex;
   align-items: center;
   padding: 16px 8px;
-  background-color: #ffffff;
+  background-color: ${theme.colors.white};
   border-bottom: 1px solid #ccc;
 `;
 
@@ -34,14 +35,14 @@ export const tabStyle = css`
   text-align: center;
   font-size: 16px;
   cursor: pointer;
-  background-color: #f9f4ef;
+  background-color: ${theme.colors.background};
   border: none;
   border-bottom: 2px solid transparent;
 `;
 
 export const activeTabStyle = css`
   font-weight: bold;
-  border-bottom: 2px solid #b9a298;
+  border-bottom: 2px solid ${theme.colors.primary};
 `;
 
 export const listContainerStyle = css`
@@ -70,8 +71,8 @@ export const buttonGroupStyle = css`
 `;
 
 export const ButtonStyle = css`
-  background-color: #ffffff;
-  color: #9d6f70;
+  background-color: ${theme.colors.white};
+  color: ${theme.colors.primary};
   border: none;
   border-radius: 16px;
   padding: 6px 12px;
