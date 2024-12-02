@@ -6,7 +6,6 @@ export const Container = styled.div`
   background-color: ${theme.colors.background};
   min-height: calc(100vh - 3rem);
   margin-bottom: 5.25rem;
-  overflow: hidden;
 `;
 
 export const ProfileSection = styled.div`
@@ -49,6 +48,7 @@ export const InfoItem = styled.div`
   font-size: 1rem;
   gap: 0.5rem;
   color: ${theme.colors.gray[300]};
+  cursor: pointer;
 `;
 
 export const ButtonGroup = styled.div`

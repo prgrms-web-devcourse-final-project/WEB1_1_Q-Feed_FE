@@ -55,6 +55,7 @@ export const DetailItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  cursor: pointer;
 `;
 
 export const DetailLabel = styled.span`

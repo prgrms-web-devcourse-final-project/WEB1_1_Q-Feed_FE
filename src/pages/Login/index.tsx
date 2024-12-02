@@ -15,11 +15,11 @@ import { useNavigate } from 'react-router';
 export const Login = () => {
   const navigate = useNavigate();
   const handleLoginSubmit = () => {
-    navigate('/');
+    navigate('/question/:category');
   };
 
   const handleKakaoLogin = () => {
-    navigate('/');
+    navigate('/question/:category');
   };
 
   const handleFindEmail = () => {

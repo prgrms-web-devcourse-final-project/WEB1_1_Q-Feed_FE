@@ -12,17 +12,19 @@ import ChatRoom from '@/pages/ChatRoom';
 import QSpaceDetailPage from '@/pages/QSpaceDetail';
 import QuestionPage from '@/pages/Question';
 import ProfilePage from '@/pages/Profile';
-import LandingPage from '@/pages/Landing';
 import HobbySelectPage from '@/pages/HobbySelect';
+import { PostDetailPage } from '@/pages/AnswerDetail';
+import LandingPage from '@/pages/Landing';
 import ProfileEditPage from '@/pages/ProfileEdit';
 import { RegisterPage } from '@/pages/Register';
 import { PasswordRecoveryPage } from '@/pages/PasswordRecovery';
 import { ResetPasswordPage } from '@/pages/ResetPassword';
 import { IDRecoveryPage } from '@/pages/IDRecovery';
 import QSpaceMemberPage from '@/pages/QSpaceMember';
-import FollowerFollowingPage from '@/pages/follower';
 import EventPage from '@/pages/Event';
 import SearchResultPage from '@/pages/Search';
+import FollowerFollowingPage from '@/pages/Following';
+
 const router = createBrowserRouter([
   {
     path: '/',
@@ -87,6 +89,10 @@ const router = createBrowserRouter([
       {
         path: '/profile/:id',
         element: <ProfilePage />,
+      },
+      {
+        path: '/post/:id',
+        element: <PostDetailPage />,
       },
       {
         path: '/profile/edit',

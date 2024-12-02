@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoChevronBack } from 'react-icons/io5';
 import ProfileImageCon from '@/components/ui/ProfileImageCon/ProfileImageCon';
@@ -15,9 +15,9 @@ import {
   nameStyle,
   tabContainerStyle,
   tabStyle,
-} from '@/pages/follower/styles';
+} from '@/pages/Following/styles';
 
-const FollowerFollowingPage: React.FC = () => {
+const FollowerFollowingPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);

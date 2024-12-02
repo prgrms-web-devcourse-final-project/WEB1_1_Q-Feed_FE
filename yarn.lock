@@ -9482,6 +9482,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-slidedown@npm:^2.4.7":
+  version: 2.4.7
+  resolution: "react-slidedown@npm:2.4.7"
+  dependencies:
+    tslib: "npm:^2.0.0"
+  peerDependencies:
+    react: ^16.3.0 || 17
+    react-dom: ^16.3.0 || 17
+  checksum: 10c0/e270a229035564f9aab6e9dd4abf440f75fa1b2872475fa1a2c211be71578aa97f97807ef315f3ced585ac0bb0985a48d2bff4086b73e08f622f6a1668fea892
+  languageName: node
+  linkType: hard
+
 "react-style-singleton@npm:^2.2.1":
   version: 2.2.1
   resolution: "react-style-singleton@npm:2.2.1"
@@ -11243,6 +11255,7 @@ __metadata:
     react-icons: "npm:^5.3.0"
     react-router: "npm:^7.0.1"
     react-router-dom: "npm:^7.0.1"
+    react-slidedown: "npm:^2.4.7"
     rimraf: "npm:^6.0.1"
     rollup: "npm:^4.27.4"
     signal-exit: "npm:^4.1.0"

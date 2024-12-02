@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import ProfileImage from '@/components/ui/ProfileImageCon/ProfileImageCon';
 import SelectableHobbyTags from '@/components/ui/HobbyTag/SelectableHobbyTags';
 import Header from '@/pages/MyPage/components/Header/Header';
+import { dummyProfile } from '@/mocks/dunmyMyProfile';
 import {
   Container,
   ProfileSection,
@@ -20,9 +22,10 @@ import {
 } from '@/pages/ProfileEdit/styles';
 
 const ProfileEditPage: React.FC = () => {
-  const [name, setName] = useState('정주연');
-  const [bio, setBio] = useState('안녕하세요, 여러분! 현재 푸드 칼럼리스트로 활동하고 있는 작가, 정주연입니다. 만나서 반가워요 꾸준히 소통해요 :)');
-  const [hobbyTags, setHobbyTags] = useState<string[]>(['여행', '맛집']);
+  const navigate = useNavigate();
+  const [name, setName] = useState(dummyProfile.name);
+  const [bio, setBio] = useState(dummyProfile.bio);
+  const [hobbyTags, setHobbyTags] = useState<string[]>(dummyProfile.tags);
   const availableTags = ['여행', '스포츠', '패션', '문화', '맛집', '기타'];
 
   const handleTagSelectionChange = (selectedTags: string[]) => {
@@ -31,6 +34,7 @@ const ProfileEditPage: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    navigate('/mypage');
   };
 
   return (
