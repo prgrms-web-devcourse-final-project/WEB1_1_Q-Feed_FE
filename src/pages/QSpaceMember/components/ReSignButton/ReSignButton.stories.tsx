@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 import ReSignButton from './ReSignButton';
 
 const meta: Meta<typeof ReSignButton> = {
-  title: 'Components/ReSignButton',
+  title: 'Components/QSpaceMember/ReSignButton',
   component: ReSignButton,
   parameters: {
     layout: 'centered',

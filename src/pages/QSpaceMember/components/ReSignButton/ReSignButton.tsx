@@ -1,4 +1,4 @@
-import { StyledButton } from '@/pages/QSpaceMemberList/components/ReSignButton/ReSignButton.styles';
+import { StyledButton } from '@/pages/QSpaceMember/components/ReSignButton/ReSignButton.styles';
 
 interface ReSignButtonProps {
   onClick?: () => void;
