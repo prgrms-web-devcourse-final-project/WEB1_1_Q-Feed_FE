@@ -10,6 +10,15 @@ export const Container = styled.div`
   background-color: ${theme.colors.white};
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   gap: 0.5rem;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
 `;
 
 export const Content = styled.div`
