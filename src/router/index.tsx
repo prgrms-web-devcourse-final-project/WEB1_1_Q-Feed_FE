@@ -24,11 +24,13 @@ import QSpaceMemberPage from '@/pages/QSpaceMember';
 import EventPage from '@/pages/Event';
 import SearchResultPage from '@/pages/Search';
 import FollowerFollowingPage from '@/pages/Following';
+import ErrorPage from '@/pages/Error';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '',
