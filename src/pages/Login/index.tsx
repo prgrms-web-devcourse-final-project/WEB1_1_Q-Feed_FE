@@ -10,30 +10,13 @@ import {
   Title,
 } from '@/pages/Login/styles';
 import KakaoLoginButton from '@/pages/Login/components/KakaoLoginButton/KakaoLoginButton';
-import { useNavigate } from 'react-router';
+import { useNavigation } from '@/hooks/useNavigation';
+import { useKakaoLogin } from '@/pages/Login/hooks/useKakaoLogin';
 
 export const Login = () => {
-  const navigate = useNavigate();
-  const handleLoginSubmit = () => {
-    navigate('/question/:category');
-  };
-
-  const handleKakaoLogin = () => {
-    navigate('/question/:category');
-  };
-
-  const handleFindEmail = () => {
-    navigate('/account-recovery/id');
-  };
-
-  const handleFindPassword = () => {
-    navigate('/account-recovery/password');
-  };
-
-  const handleRegister = () => {
-    navigate('/register');
-  };
-
+  const { goToFindEmail, gotoQuestionPage, gotoPasswordRecoveryPage, gotoProfileRegister } =
+    useNavigation();
+  const { handleKakaoLogin } = useKakaoLogin();
   return (
     <Container>
       <LogoContainer>
@@ -42,14 +25,14 @@ export const Login = () => {
       </LogoContainer>
 
       <StyledStack>
-        <LoginForm onSubmit={handleLoginSubmit} />
+        <LoginForm onSubmit={gotoQuestionPage} />
         <KakaoLoginButton onClick={handleKakaoLogin} />
       </StyledStack>
 
       <StyledHStack>
-        <TextButton onClick={handleFindEmail}>이메일 찾기</TextButton>
-        <TextButton onClick={handleFindPassword}>비밀번호 찾기</TextButton>
-        <TextButton onClick={handleRegister}>회원가입</TextButton>
+        <TextButton onClick={goToFindEmail}>이메일 찾기</TextButton>
+        <TextButton onClick={gotoPasswordRecoveryPage}>비밀번호 찾기</TextButton>
+        <TextButton onClick={gotoProfileRegister}>회원가입</TextButton>
       </StyledHStack>
     </Container>
   );
