@@ -26,7 +26,7 @@ const ErrorPage = () => {
         width="100%"
         height="3rem"
         borderRadius="1rem"
-        marginBottom={4}
+        marginBottom={16}
       >
         홈으로 돌아가기
       </Button>
