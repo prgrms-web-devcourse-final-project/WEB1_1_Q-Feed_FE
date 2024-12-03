@@ -20,9 +20,10 @@ export const HeaderSection = styled.header`
 `;
 
 export const ContentSection = styled.main`
-  flex: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 1rem;
   margin-top: 2rem;
 `;

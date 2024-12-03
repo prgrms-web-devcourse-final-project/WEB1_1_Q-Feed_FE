@@ -27,11 +27,13 @@ import FollowerFollowingPage from '@/pages/Following';
 import { KakaoCallback } from '@/pages/KakaoCallback/KakaoCallback';
 import ProfileRegisterPage from '@/pages/ProfileRegister';
 import { ROUTES } from '@/constants/routes';
+import ErrorPage from '@/pages/Error';
 
 const router = createBrowserRouter([
   {
     path: ROUTES.ROOT,
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: ROUTES.MAIN,
@@ -136,6 +138,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.PROFILE_REGISTER,
         element: <ProfileRegisterPage />,
+      },
+      {
+        path: ROUTES.ERROR,
+        element: <EventPage />,
       },
     ],
   },

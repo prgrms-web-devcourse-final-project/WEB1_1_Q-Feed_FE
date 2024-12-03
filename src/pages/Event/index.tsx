@@ -43,7 +43,7 @@ const EventPage = () => {
 
   return (
     <>
-      <Header title='이벤트' />
+      <Header title="이벤트" />
       <Container>
         <Title>Special Question</Title>
         <Question>다가오는 크리스마스, 주연님의 크리스마스 계획은?</Question>

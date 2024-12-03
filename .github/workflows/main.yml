@@ -1,5 +1,4 @@
 name: Code Review
-
 on:
   pull_request:
     types: [opened, synchronize]
@@ -10,17 +9,32 @@ jobs:
   review:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
+          
       - name: AI Code Review
         uses: se0kcess/ai-code-reviewer@main
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           MODEL: 'gpt-3.5-turbo'
-          LANGUAGE: Korean
-          MAX_FILES: 5
+          LANGUAGE: 'ko'
+          MAX_FILES: 6
           REVIEW_COMMENT_PREFIX: '🤖 코드 리뷰 의견'
-          PROMPT: "You are a senior frontend developer. Please review the code in Korean language only. Focus on the following aspects:\n\n1. Code quality and maintainability\n2. React and TypeScript best practices\n3. Performance improvements\n4. Clear suggestions for improvements\n5. Positive feedback\n\nPlease structure your review in Korean as follows:\n\n## 전반적인 검토 의견\n\n## 구체적인 개선 제안\n\n## 잘된 점"
+          PROMPT: |
+            당신은 시니어 프론트엔드 개발자입니다. 다음 측면에 중점을 두어 코드를 리뷰해 주세요:
+
+            1. 코드 품질 및 유지보수성
+            2. React와 TypeScript 모범 사례
+            3. 성능 개선
+            4. 명확한 개선 제안
+            5. 긍정적인 피드백
+
+            다음 구조로 리뷰를 작성해 주세요:
+
+            ## 전반적인 검토 의견
+
+            ## 구체적인 개선 제안
+
+            ## 잘된 점

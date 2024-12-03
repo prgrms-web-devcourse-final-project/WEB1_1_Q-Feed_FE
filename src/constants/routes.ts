@@ -26,4 +26,5 @@ export const ROUTES = {
   SEARCH: '/search',
   KAKAO_CALLBACK: '/ouath/callback/kakao',
   PROFILE_REGISTER: '/profile/register',
+  ERROR: '/error',
 };
