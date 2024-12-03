@@ -67,8 +67,6 @@ export const Title = styled.h1`
 
 export const CommentListWrapper = styled.div`
   width: 100%;
-  padding: 0 25px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
 `;
