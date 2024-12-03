@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
 export const Container = styled.div`
-  min-height: calc(100vh - 5rem);
   margin: 0 auto;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
