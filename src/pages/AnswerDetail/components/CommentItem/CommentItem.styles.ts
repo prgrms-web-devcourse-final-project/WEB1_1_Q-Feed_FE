@@ -11,8 +11,8 @@ export const CommentWrapper = styled.div`
 export const Container = styled.div<{ depth: number; isCommentButtonExist: boolean }>`
   display: flex;
   gap: 1rem;
-  border-bottom: 1px solid ${theme.colors.gray[300]};
-  padding: 0.75rem 1.5625rem;
+  border-bottom: 1px solid ${theme.colors.gray[100]};
+  padding: 0.75rem 1rem;
   margin-left: ${(props) => props.depth * 2}rem;
   width: ${(props) => `calc(100% - ${props.depth * 2}rem)`};
 

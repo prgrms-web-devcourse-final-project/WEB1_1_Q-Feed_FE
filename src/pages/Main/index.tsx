@@ -111,10 +111,10 @@ const Main = () => {
         <ProfileSlideWrapper>
           <Title>친구 추천</Title>
           <ProfileSlider initialProfiles={userProfileData} />
+          <Title>최근 등록된 답변</Title>
         </ProfileSlideWrapper>
 
         <CommentListWrapper>
-          <Title>최근 등록된 답변</Title>
           <CommentItemList
             comments={dummyComments}
             onLikeComment={handleLikeComment}
