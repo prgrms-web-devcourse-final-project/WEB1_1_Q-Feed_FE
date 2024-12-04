@@ -78,6 +78,7 @@
     "eslint-plugin-storybook": "^0.11.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
+    "msw": "^2.6.6",
     "prettier": "^3.4.1",
     "signal-exit": "^4.1.0",
     "storybook": "^8.4.5",
@@ -91,5 +92,10 @@
     "sharp": "0.32.6",
     "sharp-ico": "0.1.5"
   },
-  "packageManager": "yarn@4.5.1"
+  "packageManager": "yarn@4.5.1",
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
 }
