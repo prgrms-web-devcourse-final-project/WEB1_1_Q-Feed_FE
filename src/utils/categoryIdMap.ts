@@ -1,0 +1,11 @@
+import { GROUP_KEYS } from '@/api/queryKeys';
+
+export const categoryIdMap: Record<string, number> = {
+  전체: GROUP_KEYS.CATEGORIES.ALL,
+  여행: GROUP_KEYS.CATEGORIES.TRAVEL,
+  스포츠: GROUP_KEYS.CATEGORIES.SPORTS,
+  패션: GROUP_KEYS.CATEGORIES.FASHION,
+  문화: GROUP_KEYS.CATEGORIES.CULTURE,
+  맛집: GROUP_KEYS.CATEGORIES.FOOD,
+  기타: GROUP_KEYS.CATEGORIES.OTHER,
+};
