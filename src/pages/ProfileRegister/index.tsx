@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { AiFillEdit } from 'react-icons/ai';
 import ProfileImage from '@/components/ui/ProfileImageCon/ProfileImageCon';
 import SelectableHobbyTags from '@/components/ui/HobbyTag/SelectableHobbyTags';
@@ -20,6 +19,8 @@ import {
   SubmitButton,
 } from '@/pages/ProfileRegister/styles';
 import axios from 'axios';
+import { HobbyTag } from '@/constants/hobbytag';
+import { useNavigation } from '@/hooks/useNavigation';
 
 interface KakaoUserInfo {
   email: string;
@@ -28,8 +29,8 @@ interface KakaoUserInfo {
 }
 
 const ProfileRegisterPage: React.FC = () => {
-  const navigate = useNavigate();
-  const availableTags = ['여행', '스포츠', '패션', '문화', '맛집', '기타'];
+  const { gotoSelectCategory } = useNavigation();
+  const availableTags = HobbyTag;
   const [profileImageSrc, setProfileImageSrc] = useState<string>(defaultProfile);
   const [name, setName] = useState<string>('');
   const [bio, setBio] = useState<string>('');
@@ -54,8 +55,39 @@ const ProfileRegisterPage: React.FC = () => {
   };
 
   const onClickSubmit = (): void => {
-    console.log(name, hobbyTags, bio, profileImageSrc);
-    navigate('/select');
+    if (!name.trim()) {
+      alert('닉네임을 입력해주세요.');
+      return;
+    }
+
+    if (name.length < 2 || name.length > 10) {
+      alert('닉네임은 2자 이상 10자 이하로 입력해주세요.');
+      return;
+    }
+
+    if (!bio.trim()) {
+      alert('한 줄 소개를 입력해주세요.');
+      return;
+    }
+
+    if (bio.length > 100) {
+      alert('한 줄 소개는 100자를 초과할 수 없습니다.'); //임시
+      return;
+    }
+
+    if (hobbyTags.length === 0) {
+      alert('하나 이상의 취미 태그를 선택해주세요.');
+      return;
+    }
+
+    // console.log('프로필 정보:', {
+    //   name,
+    //   bio,
+    //   hobbyTags,
+    //   profileImageSrc,
+    // });
+
+    gotoSelectCategory();
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -102,8 +134,6 @@ const ProfileRegisterPage: React.FC = () => {
       setProfileImageSrc(profileImage || defaultProfile);
 
       const userInfo: KakaoUserInfo = { email, name, profileImage };
-
-      console.log('test', userInfo);
 
       storeUserInfoInLocalStorage(userInfo);
     } catch (error) {

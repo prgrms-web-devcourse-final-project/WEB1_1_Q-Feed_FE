@@ -1,3 +1,4 @@
+import { APIURL } from '@/constants/api';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +16,7 @@ export const KakaoCallback = () => {
 
     if (code) {
       // 테스트용: 카카오 토큰 받기
-      fetch(`https://kauth.kakao.com/oauth/token`, {
+      fetch(APIURL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -43,8 +44,6 @@ export const KakaoCallback = () => {
                 profileImage: userInfo.properties.profile_image,
               };
 
-              console.log('test:', kakaoUserInfo.email, ',', kakaoUserInfo.nickname);
-
               // 프로필 등록 페이지로 이동
               navigate('/profile/register', {
                 state: { kakaoUserInfo },
@@ -58,5 +57,5 @@ export const KakaoCallback = () => {
     }
   }, [navigate]);
 
-  return <div>처리중...</div>;
+  return <div>loading...</div>;
 };

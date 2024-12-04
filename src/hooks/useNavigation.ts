@@ -18,7 +18,7 @@ export const useNavigation = () => {
   const gotoAlarm = () => navigate(ROUTES.ALARM);
   const gotoChatRoom = () => navigate(ROUTES.CHATROOM);
   const gotoQuestionPage = () => navigate(ROUTES.QUESTION);
-  const goToSelectCategory = () => navigate(ROUTES.SELECT);
+  const gotoSelectCategory = () => navigate(ROUTES.SELECT);
   const gotoProfilePage = () => navigate(ROUTES.PROFILE);
   const gotoDetailPage = () => navigate(ROUTES.POST_DETAIL);
   const gotoProfileEditPage = () => navigate(ROUTES.PROFILE_EDIT);
@@ -47,7 +47,7 @@ export const useNavigation = () => {
     gotoAlarm,
     gotoChatRoom,
     gotoQuestionPage,
-    goToSelectCategory,
+    gotoSelectCategory,
     gotoProfilePage,
     gotoDetailPage,
     gotoProfileEditPage,

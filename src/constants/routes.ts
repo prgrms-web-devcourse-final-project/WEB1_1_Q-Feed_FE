@@ -24,7 +24,7 @@ export const ROUTES = {
   FOLLOWERS: '/followers',
   EVENT: '/event',
   SEARCH: '/search',
-  KAKAO_CALLBACK: '/ouath/callback/kakao',
+  KAKAO_CALLBACK: '/oauth/callback/kakao',
   PROFILE_REGISTER: '/profile/register',
   ERROR: '/error',
 };

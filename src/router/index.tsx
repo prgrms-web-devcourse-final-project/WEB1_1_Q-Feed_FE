@@ -141,7 +141,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTES.ERROR,
-        element: <EventPage />,
+        element: <ErrorPage />,
       },
     ],
   },
