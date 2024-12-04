@@ -30,6 +30,7 @@
     "@types/react-icons": "^3.0.0",
     "axios": "^1.7.8",
     "chakra-ui-bottom-navigation": "^2.0.1",
+    "firebase": "^11.0.2",
     "framer-motion": "^6",
     "glob": "^11.0.0",
     "react": "^18.3.1",
@@ -77,6 +78,7 @@
     "eslint-plugin-storybook": "^0.11.1",
     "husky": "^9.1.7",
     "lint-staged": "^15.2.10",
+    "msw": "^2.6.6",
     "prettier": "^3.4.1",
     "signal-exit": "^4.1.0",
     "storybook": "^8.4.5",
@@ -90,5 +92,10 @@
     "sharp": "0.32.6",
     "sharp-ico": "0.1.5"
   },
-  "packageManager": "yarn@4.5.1"
+  "packageManager": "yarn@4.5.1",
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
 }

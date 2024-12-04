@@ -24,16 +24,39 @@ const chakraTheme = extendTheme({
     BottomNavigation,
   },
 });
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker
+    .register('/firebase-messaging-sw.js')
+    .then((registration) => {
+      console.log('Service Worker 등록 성공:', registration);
+    })
+    .catch((error) => {
+      console.error('Service Worker 등록 실패:', error);
+    });
+}
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={theme}>
-        <ChakraProvider theme={chakraTheme}>
-          <GlobalStyles />
-          <RouterProvider router={router} />
-        </ChakraProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
-  </React.StrictMode>
-);
+async function enableMocking() {
+  if (process.env.NODE_ENV !== 'development') {
+    return;
+  }
+
+  const { worker } = await import('./mocks/browser');
+  return worker.start({
+    onUnhandledRequest: 'bypass', // 모킹되지 않은 요청은 그대로 통과
+  });
+}
+
+enableMocking().then(() => {
+  ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={theme}>
+          <ChakraProvider theme={chakraTheme}>
+            <GlobalStyles />
+            <RouterProvider router={router} />
+          </ChakraProvider>
+        </ThemeProvider>
+      </QueryClientProvider>
+    </React.StrictMode>
+  );
+});

@@ -24,109 +24,124 @@ import QSpaceMemberPage from '@/pages/QSpaceMember';
 import EventPage from '@/pages/Event';
 import SearchResultPage from '@/pages/Search';
 import FollowerFollowingPage from '@/pages/Following';
+import { KakaoCallback } from '@/pages/KakaoCallback/KakaoCallback';
+import ProfileRegisterPage from '@/pages/ProfileRegister';
+import { ROUTES } from '@/constants/routes';
 import ErrorPage from '@/pages/Error';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: ROUTES.ROOT,
     element: <RootLayout />,
     errorElement: <ErrorPage />,
     children: [
       {
-        path: '',
+        path: ROUTES.MAIN,
         element: <Main />,
       },
       {
-        path: '/chat', // 채팅 목록
+        path: ROUTES.CHAT, // 채팅 목록
         element: <ChatList />,
       },
       {
-        path: '/mypage', // 마이페이지
+        path: ROUTES.MYPAGE, // 마이페이지
         element: <MyPage />,
       },
       {
-        path: '/landing', //랜딩페이지
+        path: ROUTES.LANDING, //랜딩페이지
         element: <LandingPage />,
       },
       {
-        path: '/qspace',
+        path: ROUTES.QSPACE,
         element: <QSpaceMainPage />,
       },
       {
-        path: '/qspace/category',
+        path: ROUTES.QSPACE_CATEGORY,
         element: <CategorySelectPage />,
       },
       {
-        path: '/qspace/member',
+        path: ROUTES.QSPACE_MEMBER,
         element: <QSpaceMemberPage />,
       },
       {
-        path: '/qspace/post',
+        path: ROUTES.QSPACE_GROUP,
         element: <PostGroupPage />,
       },
       {
-        path: '/qspace/details',
+        path: ROUTES.QSPACE_DETAIL,
         element: <QSpaceDetailPage />,
       },
       {
-        path: '/login',
+        path: ROUTES.LOGIN,
         element: <Login />,
       },
       {
-        path: '/alarm',
+        path: ROUTES.ALARM,
         element: <NotificationPage />,
       },
       {
-        path: '/chatroom/:id',
+        path: ROUTES.CHATROOM,
         element: <ChatRoom />,
       },
       {
-        path: '/question/:category',
+        path: ROUTES.QUESTION,
         element: <QuestionPage />,
       },
       {
-        path: '/select',
+        path: ROUTES.SELECT,
         element: <HobbySelectPage />,
       },
       {
-        path: '/profile/:id',
+        path: ROUTES.PROFILE,
         element: <ProfilePage />,
       },
       {
-        path: '/post/:id',
+        path: ROUTES.POST_DETAIL,
         element: <PostDetailPage />,
       },
       {
-        path: '/profile/edit',
+        path: ROUTES.PROFILE_EDIT,
         element: <ProfileEditPage />,
       },
       {
-        path: '/register',
+        path: ROUTES.REGISTER,
         element: <RegisterPage />,
       },
       {
-        path: '/account-recovery/password',
+        path: ROUTES.PASSWORD_RECOVERY,
         element: <PasswordRecoveryPage />,
       },
       {
-        path: '/account-reset/password',
+        path: ROUTES.RESET_PASSWORD,
         element: <ResetPasswordPage />,
       },
       {
-        path: '/account-recovery/id',
+        path: ROUTES.ID_RECOVERY,
         element: <IDRecoveryPage />,
       },
       {
-        path: '/followers',
+        path: ROUTES.FOLLOWERS,
         element: <FollowerFollowingPage />,
       },
       {
-        path: '/event',
+        path: ROUTES.EVENT,
         element: <EventPage />,
       },
       {
-        path: '/search',
+        path: ROUTES.SEARCH,
         element: <SearchResultPage />, // 검색 결과 페이지 컴포넌트
+      },
+      {
+        path: ROUTES.KAKAO_CALLBACK,
+        element: <KakaoCallback />,
+      },
+      {
+        path: ROUTES.PROFILE_REGISTER,
+        element: <ProfileRegisterPage />,
+      },
+      {
+        path: ROUTES.ERROR,
+        element: <ErrorPage />,
       },
     ],
   },

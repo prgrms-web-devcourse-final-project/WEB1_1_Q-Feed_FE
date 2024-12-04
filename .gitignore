@@ -33,3 +33,5 @@ dev-dist
 !.yarn/sdks
 !.yarn/versions
 *storybook.log
+
+.env
