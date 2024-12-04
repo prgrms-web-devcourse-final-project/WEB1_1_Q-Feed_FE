@@ -9,6 +9,15 @@ export const GROUP_KEYS = {
     DETAIL: 'detail',
     ACTIVITIES: 'activities',
   },
+  CATEGORIES: {
+    ALL: 0,
+    TRAVEL: 1,
+    SPORTS: 2,
+    FASHION: 3,
+    CULTURE: 4,
+    FOOD: 5,
+    OTHER: 6,
+  },
 } as const;
 
 export const USER_KEYS = {
