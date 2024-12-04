@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import ProfileImageCon from '../../components/ui/ProfileImageCon/ProfileImageCon';
@@ -43,6 +43,8 @@ const ChatRoom = () => {
     },
   ]);
 
+  const messageListRef = useRef<HTMLDivElement>(null); // 메시지 리스트 컨테이너 참조
+
   const handleSendMessage = (message: string) => {
     const currentTime = new Date().toLocaleTimeString([], {
       hour: '2-digit',
@@ -61,6 +63,13 @@ const ChatRoom = () => {
       },
     ]);
   };
+
+  useEffect(() => {
+    // 메시지 리스트가 업데이트되면 항상 아래로 스크롤
+    if (messageListRef.current) {
+      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    }
+  }, [messages]); // 메시지가 변경될 때마다 실행
 
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(true);
   const toggleNotification = () => {
@@ -83,7 +92,7 @@ const ChatRoom = () => {
       </div>
 
       {/* Message List */}
-      <div css={messageListStyle}>
+      <div css={messageListStyle} ref={messageListRef}>
         {messages.map((msg) => (
           <div key={msg.id} css={msg.isMine ? myMessageStyle : otherMessageStyle}>
             {!msg.isMine && <ProfileImageCon src="" size={30} />}
