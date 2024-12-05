@@ -1,7 +1,5 @@
 import Cookies from 'js-cookie';
 
-export const ACCESS_TOKEN_KEY = 'accessToken';
-
 interface CookieOptions {
   expires?: number | Date;
   path?: string;
