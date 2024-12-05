@@ -7,26 +7,22 @@ import {
   StyledLoginButtonDiv,
   StyledStack,
 } from '@/pages/Login/components/LoginForm/LoginForm.styles';
+import { LoginRequest } from '@/pages/Login/types/auth';
 import theme from '@/styles/theme';
 import { FormLabel } from '@chakra-ui/react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-export interface LoginFormValues {
-  email: string;
-  password: string;
-}
-
 interface LoginFormProps {
-  onSubmit: (data: LoginFormValues) => void;
+  onSubmit: (data: LoginRequest) => void;
 }
 export const LoginForm = ({ onSubmit }: LoginFormProps) => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormValues>();
+  } = useForm<LoginRequest>();
 
-  const handleFormSubmit: SubmitHandler<LoginFormValues> = (data) => {
+  const handleFormSubmit: SubmitHandler<LoginRequest> = (data) => {
     onSubmit(data);
   };
 
