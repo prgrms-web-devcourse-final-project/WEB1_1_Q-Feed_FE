@@ -15,6 +15,10 @@ export const CategorySection = styled.div`
   padding: 1rem 0;
   overflow-x: auto;
   white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const CategoryList = styled.div`
