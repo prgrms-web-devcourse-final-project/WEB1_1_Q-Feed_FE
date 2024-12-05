@@ -11,7 +11,9 @@ export interface Group {
 export interface CreateGroupRequest {
   groupName: string;
   description: string;
-  isOpen: boolean;
+  categoryId: number;
+  url: string;
+  isOpen: true;
 }
 
 export interface UpdateGroupRequest extends Partial<CreateGroupRequest> {
