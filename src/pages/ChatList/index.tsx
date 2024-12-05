@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchChatList } from '@/pages/ChatList/api/fetchChatList';
-import { ChatData } from '@/pages/ChatList/type/ChatList';
+import { ChatData } from '@/pages/ChatList/type/chatListType';
 import ProfileImageCon from '../../components/ui/ProfileImageCon/ProfileImageCon';
 import InputBar from '../../components/ui/InputBar/InputBar';
 import Header from '@/components/common/Header';
@@ -43,7 +43,9 @@ const ChatItem = ({
         </div>
         <div css={lastMessageStyle}>
           <span>{lastMessageContent}</span>
-          {unreadMessageCount && unreadMessageCount > 0 && <span css={unreadCountStyle}>{unreadMessageCount}</span>}
+          {unreadMessageCount && unreadMessageCount > 0 && (
+            <span css={unreadCountStyle}>{unreadMessageCount}</span>
+          )}
         </div>
       </div>
     </div>
@@ -62,7 +64,9 @@ const ChatList = () => {
 
   // 검색어를 기준으로 채팅 리스트 필터링
   const filteredChatData = Array.isArray(chatData)
-    ? chatData.filter((chat) => chat.otherUserNickname.toLowerCase().includes(searchTerm.toLowerCase()))
+    ? chatData.filter((chat) =>
+        chat.otherUserNickname.toLowerCase().includes(searchTerm.toLowerCase())
+      )
     : [];
 
   const handleSearchChange = (value: string) => {

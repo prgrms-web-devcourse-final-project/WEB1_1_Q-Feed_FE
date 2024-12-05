@@ -1,5 +1,5 @@
 import { apiClient } from '@/api/fetch';
-import { ChatData } from '@/pages/ChatList/type/ChatList';
+import { ChatData } from '@/pages/ChatList/type/chatListType';
 
 export const chatAPI = {
   // 채팅방 목록 가져오기
