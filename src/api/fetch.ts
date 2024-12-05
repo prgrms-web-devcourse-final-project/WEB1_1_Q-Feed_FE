@@ -1,16 +1,32 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { APIResponse } from '@/types/response';
+import { ACCESS_TOKEN_KEY, getCookie } from '@/utils/cookies';
 
 export class APIClient {
   private client: AxiosInstance;
 
   constructor() {
     this.client = axios.create({
-      baseURL: process.env.CLIENT_URL,
+      baseURL: '/api',
       headers: {
         'Content-Type': 'application/json',
       },
+      withCredentials: true,
     });
+
+    // 요청 인터셉터
+    this.client.interceptors.request.use(
+      (config) => {
+        const token = getCookie(ACCESS_TOKEN_KEY);
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
 
     // 응답 인터셉터: 모든 응답을 표준 형식으로 변환
     this.client.interceptors.response.use(

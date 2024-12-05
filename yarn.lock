@@ -5206,6 +5206,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/js-cookie@npm:^3.0.6":
+  version: 3.0.6
+  resolution: "@types/js-cookie@npm:3.0.6"
+  checksum: 10c0/173afaf5ea9d86c22395b9d2a00b6adb0006dcfef165d6dcb0395cdc32f5a5dcf9c3c60f97194119963a15849b8f85121e1ae730b03e40bc0c29b84396ba22f9
+  languageName: node
+  linkType: hard
+
 "@types/lodash.mergewith@npm:4.6.7":
   version: 4.6.7
   resolution: "@types/lodash.mergewith@npm:4.6.7"
@@ -8887,6 +8894,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"js-cookie@npm:^3.0.5":
+  version: 3.0.5
+  resolution: "js-cookie@npm:3.0.5"
+  checksum: 10c0/04a0e560407b4489daac3a63e231d35f4e86f78bff9d792011391b49c59f721b513411cd75714c418049c8dc9750b20fcddad1ca5a2ca616c3aca4874cce5b3a
+  languageName: node
+  linkType: hard
+
 "js-tokens@npm:^3.0.0 || ^4.0.0, js-tokens@npm:^4.0.0":
   version: 4.0.0
   resolution: "js-tokens@npm:4.0.0"
@@ -12255,6 +12269,7 @@ __metadata:
     "@svgr/rollup": "npm:^8.1.0"
     "@tanstack/eslint-plugin-query": "npm:4"
     "@tanstack/react-query": "npm:^5.60.6"
+    "@types/js-cookie": "npm:^3.0.6"
     "@types/node": "npm:^22.9.0"
     "@types/react": "npm:^18.3.12"
     "@types/react-dom": "npm:^18.3.1"
@@ -12274,6 +12289,7 @@ __metadata:
     framer-motion: "npm:^6"
     glob: "npm:^11.0.0"
     husky: "npm:^9.1.7"
+    js-cookie: "npm:^3.0.5"
     lint-staged: "npm:^15.2.10"
     msw: "npm:^2.6.6"
     prettier: "npm:^3.4.1"
