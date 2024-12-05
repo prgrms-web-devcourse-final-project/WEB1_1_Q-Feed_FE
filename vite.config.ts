@@ -56,7 +56,7 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: import.meta.env.VITE_API_URL,
+        target: 'http://43.203.125.140:8080',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
