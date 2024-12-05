@@ -14,7 +14,7 @@ import { useNavigation } from '@/hooks/useNavigation';
 import { useKakaoLogin } from '@/pages/Login/hooks/useKakaoLogin';
 
 export const Login = () => {
-  const { goToFindEmail, gotoQuestionPage, gotoPasswordRecoveryPage, gotoProfileRegister } =
+  const { goToFindEmail, gotoQuestionPage, gotoPasswordRecoveryPage, gotoRegisterPage } =
     useNavigation();
   const { handleKakaoLogin } = useKakaoLogin();
   return (
@@ -32,7 +32,7 @@ export const Login = () => {
       <StyledHStack>
         <TextButton onClick={goToFindEmail}>이메일 찾기</TextButton>
         <TextButton onClick={gotoPasswordRecoveryPage}>비밀번호 찾기</TextButton>
-        <TextButton onClick={gotoProfileRegister}>회원가입</TextButton>
+        <TextButton onClick={gotoRegisterPage}>회원가입</TextButton>
       </StyledHStack>
     </Container>
   );
