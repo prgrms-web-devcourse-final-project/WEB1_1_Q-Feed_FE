@@ -1,6 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { APIResponse } from '@/types/response';
-import { ACCESS_TOKEN_KEY, getCookie } from '@/utils/cookies';
+import { getCookie } from '@/utils/cookies';
+import { ACCESS_TOKEN_KEY } from '@/constants/token';
 
 export class APIClient {
   private client: AxiosInstance;
