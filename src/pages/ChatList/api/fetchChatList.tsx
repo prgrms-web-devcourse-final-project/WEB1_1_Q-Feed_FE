@@ -3,12 +3,7 @@ import { ChatData } from '@/pages/ChatList/type/chatListType';
 
 export const chatAPI = {
   // 채팅방 목록 가져오기
-  getChatList: () =>
-    apiClient.get<ChatData[]>('/chats', {
-      headers: {
-        Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzMzNTg3NTEsImV4cCI6MTczMzQ0NTE1MX0.4EA651yU8gk_y9OB5Tel0xRt0IGZyHKvmGNhTbv49d8`, // 토큰 직접 입력
-      },
-    }),
+  getChatList: () => apiClient.get<ChatData[]>('/chats'),
 };
 
 export const fetchChatList = async (): Promise<ChatData[]> => {
