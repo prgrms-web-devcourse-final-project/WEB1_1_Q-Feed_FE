@@ -1,5 +1,5 @@
 export type ActionResponse<T = null> = {
-  success: boolean;
+  success?: boolean;
   data?: T;
   error?: {
     message: string;

@@ -6,7 +6,7 @@ export class APIClient {
 
   constructor() {
     this.client = axios.create({
-      baseURL: process.env.CLIENT_URL,
+      baseURL: import.meta.env.VITE_API_URL,
       headers: {
         'Content-Type': 'application/json',
       },
