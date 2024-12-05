@@ -15,6 +15,10 @@ export const CategorySection = styled.div`
   padding: 1rem 0;
   overflow-x: auto;
   white-space: nowrap;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const CategoryList = styled.div`
@@ -41,4 +45,5 @@ export const QSpaceList = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  padding-bottom: 6rem;
 `;
