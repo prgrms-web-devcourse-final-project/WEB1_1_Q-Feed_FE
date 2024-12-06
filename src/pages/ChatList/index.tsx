@@ -43,9 +43,9 @@ const ChatItem = ({
         </div>
         <div css={lastMessageStyle}>
           <span>{lastMessageContent}</span>
-          {unreadMessageCount && unreadMessageCount > 0 && (
+          {unreadMessageCount && unreadMessageCount > 0 ? (
             <span css={unreadCountStyle}>{unreadMessageCount}</span>
-          )}
+          ) : null}
         </div>
       </div>
     </div>
