@@ -1,8 +1,9 @@
-import { useState } from 'react';
 import { Input, Textarea } from '@chakra-ui/react';
+
 import theme from '@/styles/theme';
 import BackButton from '@/components/ui/BackButton/BackButton';
 import { ImageUpload } from '@/components/ui/ImageUpload/ImageUpload';
+
 import {
   CharCount,
   Container,
@@ -11,22 +12,19 @@ import {
   Header,
   InputWrapper,
   Label,
-} from '@/pages/QSpace/QSpacePost/PostGroupPage.styles';
-import { useNavigate } from 'react-router';
+} from './PostGroupPage.styles';
+
+import { createGroup } from '@/pages/QSpace/utils/createGroup';
+import { useGroupForm } from '@/pages/QSpace/hooks/usePostGroupForm';
 
 const PostGroupPage = () => {
-  const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const navigate = useNavigate();
+  const { formData, formActions, formState, toast, navigate } = useGroupForm();
+  const { title, description } = formData;
+  const { setTitle, setDescription, setImageFile } = formActions;
+  const { isPending, setIsPending } = formState;
 
   const handleCreateGroup = () => {
-    navigate('/qspace');
-  };
-
-  const handleImageUpload = (file: File | null) => {
-    console.log('Uploading image:', imageFile);
-    setImageFile(file);
+    createGroup({ formData, setIsPending, toast, navigate });
   };
 
   return (
@@ -46,6 +44,7 @@ const PostGroupPage = () => {
             borderRadius={12}
             maxLength={24}
             bg="white"
+            placeholder="방 제목을 입력해주세요"
           />
           <CharCount>{title.length}/24</CharCount>
         </InputWrapper>
@@ -61,13 +60,14 @@ const PostGroupPage = () => {
             borderRadius={12}
             bg="white"
             resize="none"
+            placeholder="그룹에 대한 설명을 입력해주세요"
           />
           <CharCount>{description.length}/300</CharCount>
         </InputWrapper>
 
         <InputWrapper>
           <Label>사진을 등록해주세요</Label>
-          <ImageUpload onImageUpload={handleImageUpload} />
+          <ImageUpload onImageUpload={setImageFile} />
         </InputWrapper>
 
         <CreateButton
@@ -77,8 +77,14 @@ const PostGroupPage = () => {
           width="100%"
           height="3.5rem"
           onClick={handleCreateGroup}
+          isPending={isPending}
+          isDisabled={!title || !description || isPending}
+          _disabled={{
+            bg: theme.colors.gray[300],
+            cursor: 'not-allowed',
+          }}
         >
-          방 만들기
+          {isPending ? '생성 중...' : '방 만들기'}
         </CreateButton>
       </Content>
     </Container>

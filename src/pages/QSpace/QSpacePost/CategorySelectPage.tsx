@@ -21,7 +21,7 @@ const CategorySelectPage = () => {
   };
 
   const handleNext = () => {
-    navigate('/qspace/post');
+    navigate('/qspace/post', { state: { categoryId: selectedCategory } });
   };
 
   return (

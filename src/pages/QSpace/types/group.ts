@@ -1,3 +1,5 @@
+import { useToast } from '@chakra-ui/react';
+import { NavigateFunction } from 'react-router';
 export interface Group {
   groupId: number;
   url: string;
@@ -13,9 +15,42 @@ export interface CreateGroupRequest {
   description: string;
   categoryId: number;
   url: string;
-  isOpen: true;
+  isOpen: boolean;
+}
+
+export interface UploadResponse {
+  imageUrl: string;
 }
 
 export interface UpdateGroupRequest extends Partial<CreateGroupRequest> {
   groupId: number;
+}
+
+export interface GroupFormData {
+  title: string;
+  description: string;
+  imageFile: File | null;
+  categoryId: number;
+}
+
+export interface CreateGroupParams {
+  formData: GroupFormData;
+  setIsPending: (value: boolean) => void;
+  toast: ReturnType<typeof useToast>;
+  navigate: NavigateFunction;
+}
+
+export interface UseGroupFormReturn {
+  formData: GroupFormData;
+  formActions: {
+    setTitle: (value: string) => void;
+    setDescription: (value: string) => void;
+    setImageFile: (file: File | null) => void;
+  };
+  formState: {
+    isPending: boolean;
+    setIsPending: (value: boolean) => void;
+  };
+  toast: ReturnType<typeof useToast>;
+  navigate: NavigateFunction;
 }
