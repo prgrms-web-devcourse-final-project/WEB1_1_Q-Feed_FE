@@ -1,12 +1,10 @@
 /** @jsxImportSource @emotion/react */
-import { useState, useEffect, useRef } from 'react';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import ProfileImageCon from '../../components/ui/ProfileImageCon/ProfileImageCon';
-import { HiOutlineBell } from 'react-icons/hi2';
-import { HiOutlineBellSlash } from 'react-icons/hi2';
+import { useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { IoChevronBack } from 'react-icons/io5';
+import { HiOutlineBell, HiOutlineBellSlash } from 'react-icons/hi2';
 import ChatInputBar from '@/pages/ChatRoom/component/InputBar';
+import MessageList from '@/pages/ChatRoom/component/MessageList';
 import {
   backIconStyle,
   chatRoomContainer,
@@ -14,66 +12,20 @@ import {
   headerTitle,
   iconButtonStyle,
   iconStyle,
-  messageContentStyle,
-  messageListStyle,
-  myMessageStyle,
-  otherMessageStyle,
-  timeStyleLeft,
-  timeStyleRight,
   inputBarStyle,
-} from '@/pages/ChatRoom/styles';
+} from './styles';
 
 const ChatRoom = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id: chatRoomId } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [messages, setMessages] = useState([
-    {
-      id: 1,
-      sender: '백종원',
-      text: '제주도 국밥 존맛',
-      time: '13:16',
-      isMine: false,
-    },
-    {
-      id: 2,
-      sender: '나',
-      text: '함덕 해장국이 ㄹㅇ 펜',
-      time: '13:18',
-      isMine: true,
-    },
-  ]);
-
-  const messageListRef = useRef<HTMLDivElement>(null); // 메시지 리스트 컨테이너 참조
-
-  const handleSendMessage = (message: string) => {
-    const currentTime = new Date().toLocaleTimeString([], {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false,
-    });
-
-    setMessages((prevMessages) => [
-      ...prevMessages,
-      {
-        id: Date.now(),
-        sender: '나',
-        text: message,
-        time: currentTime,
-        isMine: true,
-      },
-    ]);
-  };
-
-  useEffect(() => {
-    // 메시지 리스트가 업데이트되면 항상 아래로 스크롤
-    if (messageListRef.current) {
-      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
-    }
-  }, [messages]); // 메시지가 변경될 때마다 실행
-
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(true);
+
   const toggleNotification = () => {
     setIsNotificationEnabled((prevState) => !prevState);
+  };
+
+  const handleSendMessage = (message: string) => {
+    console.log('메시지 전송:', message); // 메시지 전송 로직 추가
   };
 
   return (
@@ -81,7 +33,7 @@ const ChatRoom = () => {
       {/* Header */}
       <div css={headerStyle}>
         <IoChevronBack css={backIconStyle} onClick={() => navigate(-1)} />
-        <span css={headerTitle}>{id} 백종원</span>
+        <span css={headerTitle}>채팅방 ID: {chatRoomId}</span>
         <button css={iconButtonStyle} onClick={toggleNotification}>
           {isNotificationEnabled ? (
             <HiOutlineBell css={iconStyle} />
@@ -92,34 +44,13 @@ const ChatRoom = () => {
       </div>
 
       {/* Message List */}
-      <div css={messageListStyle} ref={messageListRef}>
-        {messages.map((msg) => (
-          <div key={msg.id} css={msg.isMine ? myMessageStyle : otherMessageStyle}>
-            {!msg.isMine && <ProfileImageCon src="" size={30} />}
-            {msg.isMine ? (
-              <>
-                <span css={timeStyleLeft}>{msg.time}</span>
-                <div css={messageContentStyle}>
-                  <p>{msg.text}</p>
-                </div>
-              </>
-            ) : (
-              <>
-                <div css={messageContentStyle}>
-                  <p>{msg.text}</p>
-                </div>
-                <span css={timeStyleRight}>{msg.time}</span>
-              </>
-            )}
-          </div>
-        ))}
-      </div>
+      <MessageList chatRoomId={chatRoomId || ''} />
 
       {/* Input Bar */}
       <div css={inputBarStyle}>
         <ChatInputBar
           placeholder="메시지를 입력하세요."
-          onSend={handleSendMessage} // 메시지 보내기 핸들러 전달
+          onSend={handleSendMessage} // 메시지 전송 핸들러 전달
         />
       </div>
     </div>
