@@ -70,3 +70,13 @@ export const ChatInputWrapper = styled.div`
   margin: 0 auto;
   z-index: 10;
 `;
+
+export const JoinButtonContainer = styled.div`
+  padding: 16px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: ${({ theme }) => theme.colors.white};
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+`;

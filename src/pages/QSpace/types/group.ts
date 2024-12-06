@@ -1,15 +1,52 @@
 import { useToast } from '@chakra-ui/react';
 import { NavigateFunction } from 'react-router';
-export interface Group {
+
+// Base Types
+export interface BaseGroup {
   groupId: number;
-  url: string;
   groupName: string;
   description: string;
   isOpen: boolean;
   createdAt: string;
-  membersCount: number;
+  memberCount: number;
 }
 
+// API Response Types
+export interface Group extends BaseGroup {
+  url: string;
+}
+
+export interface GroupDetail extends BaseGroup {
+  imageUrl: string;
+  creator: {
+    id: string;
+    nickname: string;
+    profileImage: string;
+  };
+  lastChatTime: string;
+  tags: string[];
+  isRecruiting: boolean;
+}
+
+export interface GroupMember {
+  userId: string;
+  nickname: string;
+  profileImage: string;
+  joinedAt: string;
+}
+
+export interface Comment {
+  commentId: number;
+  userId: string;
+  nickname: string;
+  profileImage: string;
+  content: string;
+  likeCount: number;
+  isLiked: boolean;
+  createdAt: string;
+}
+
+// API Request Types
 export interface CreateGroupRequest {
   groupName: string;
   description: string;
@@ -18,19 +55,22 @@ export interface CreateGroupRequest {
   isOpen: boolean;
 }
 
-export interface UploadResponse {
-  imageUrl: string;
-}
-
 export interface UpdateGroupRequest extends Partial<CreateGroupRequest> {
   groupId: number;
 }
 
+// Response Types
+export interface UploadResponse {
+  imageUrl: string;
+}
+
+// Form Types
 export interface GroupFormData {
-  title: string;
+  groupName: string;
   description: string;
   imageFile: File | null;
   categoryId: number;
+  isOpen: boolean;
 }
 
 export interface CreateGroupParams {
@@ -43,9 +83,11 @@ export interface CreateGroupParams {
 export interface UseGroupFormReturn {
   formData: GroupFormData;
   formActions: {
-    setTitle: (value: string) => void;
+    setGroupName: (value: string) => void;
     setDescription: (value: string) => void;
     setImageFile: (file: File | null) => void;
+    setIsOpen: (value: boolean) => void;
+    setCategoryId: (value: number) => void;
   };
   formState: {
     isPending: boolean;

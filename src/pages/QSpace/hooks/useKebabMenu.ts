@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { useToast } from '@chakra-ui/react';
 import { Group } from '@/pages/QSpace/types/group';
-import { groupAPI } from '@/pages/QSpace/api/fetchGroups';
+import { groupAPI } from '@/pages/QSpace/api/groupAPI';
 
 interface UseKebabMenuProps {
   group: Group;
