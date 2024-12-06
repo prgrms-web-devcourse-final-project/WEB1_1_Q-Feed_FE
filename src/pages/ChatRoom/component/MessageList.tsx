@@ -13,9 +13,10 @@ import { fetchMessages } from '@/pages/ChatRoom/api/fetchChatRoom';
 import { MessageType } from '@/pages/ChatRoom/type/messageType';
 interface MessageListProps {
   chatRoomId: string;
+  currentUserId: string;
 }
 
-const MessageList: React.FC<MessageListProps> = ({ chatRoomId }) => {
+const MessageList: React.FC<MessageListProps> = ({ chatRoomId, currentUserId }) => {
   const {
     data: messages,
     isLoading,
@@ -38,21 +39,35 @@ const MessageList: React.FC<MessageListProps> = ({ chatRoomId }) => {
   return (
     <div css={messageListStyle}>
       {messages?.map((msg) => (
-        <div key={msg.id} css={msg.isMine ? myMessageStyle : otherMessageStyle}>
-          {!msg.isMine && <ProfileImageCon src="" size={30} />}
-          {msg.isMine ? (
+        <div
+          key={msg.messageId}
+          css={msg.userId === currentUserId ? myMessageStyle : otherMessageStyle}
+        >
+          {/* 상대방 메시지의 경우 프로필 이미지 표시 */}
+          {msg.userId !== currentUserId && <ProfileImageCon src={msg.userProfileImage} size={30} />}
+          {msg.userId === currentUserId ? (
             <>
-              <span css={timeStyleLeft}>{msg.time}</span>
+              <span css={timeStyleLeft}>
+                {new Date(msg.createdAt).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </span>
               <div css={messageContentStyle}>
-                <p>{msg.text}</p>
+                <p>{msg.content}</p>
               </div>
             </>
           ) : (
             <>
               <div css={messageContentStyle}>
-                <p>{msg.text}</p>
+                <p>{msg.content}</p>
               </div>
-              <span css={timeStyleRight}>{msg.time}</span>
+              <span css={timeStyleRight}>
+                {new Date(msg.createdAt).toLocaleTimeString([], {
+                  hour: '2-digit',
+                  minute: '2-digit',
+                })}
+              </span>
             </>
           )}
         </div>

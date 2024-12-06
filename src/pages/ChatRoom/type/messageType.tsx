@@ -1,7 +1,11 @@
 export interface MessageType {
-  id: number;
-  sender: string;
-  text: string;
-  time: string;
-  isMine: boolean;
+  messageId: number;
+  content: string;
+  createdAt: string;
+  isRead: boolean;
+  type: string;
+  url: string | null;
+  userId: string;
+  userNickName: string;
+  userProfileImage: string;
 }

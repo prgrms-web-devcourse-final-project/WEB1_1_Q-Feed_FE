@@ -44,7 +44,7 @@ const ChatRoom = () => {
       </div>
 
       {/* Message List */}
-      <MessageList chatRoomId={chatRoomId || ''} />
+      <MessageList chatRoomId={chatRoomId || ''} currentUserId="현재 유저 ID" />
 
       {/* Input Bar */}
       <div css={inputBarStyle}>
