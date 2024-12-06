@@ -1,52 +1,58 @@
 import { useToast } from '@chakra-ui/react';
 import { NavigateFunction } from 'react-router';
 
-// Base Types
-export interface BaseGroup {
+export interface Group {
   groupId: number;
+  url: string;
   groupName: string;
   description: string;
   isOpen: boolean;
   createdAt: string;
-  memberCount: number;
+  membersCount: number;
 }
 
-// API Response Types
-export interface Group extends BaseGroup {
+export interface GroupDetail {
+  groupId: number;
+  categoryName: string;
   url: string;
-}
-
-export interface GroupDetail extends BaseGroup {
-  imageUrl: string;
-  creator: {
-    id: string;
+  groupName: string;
+  description: string;
+  adminId: string;
+  createdAt: string;
+  isMember: boolean;
+  isAdmin: boolean;
+  members: {
+    groupMemberId: number;
+    userId: string;
+    userNickname: string;
+    userProfile: string;
+  }[];
+  posts: {
+    groupPostId: number;
     nickname: string;
-    profileImage: string;
-  };
-  lastChatTime: string;
-  tags: string[];
-  isRecruiting: boolean;
+    profile: string;
+    content: string;
+    createdAt: string;
+    likeCount: number;
+  }[];
 }
 
 export interface GroupMember {
+  groupMemberId: number;
   userId: string;
-  nickname: string;
-  profileImage: string;
-  joinedAt: string;
+  userNickname: string;
+  userProfile: string;
 }
 
-export interface Comment {
-  commentId: number;
-  userId: string;
+export interface GroupPost {
+  groupPostId: number;
   nickname: string;
-  profileImage: string;
+  profile: string;
   content: string;
-  likeCount: number;
-  isLiked: boolean;
   createdAt: string;
+  likeCount: number;
 }
 
-// API Request Types
 export interface CreateGroupRequest {
   groupName: string;
   description: string;
@@ -59,18 +65,11 @@ export interface UpdateGroupRequest extends Partial<CreateGroupRequest> {
   groupId: number;
 }
 
-// Response Types
-export interface UploadResponse {
-  imageUrl: string;
-}
-
-// Form Types
 export interface GroupFormData {
-  groupName: string;
+  title: string;
   description: string;
   imageFile: File | null;
   categoryId: number;
-  isOpen: boolean;
 }
 
 export interface CreateGroupParams {
@@ -83,11 +82,9 @@ export interface CreateGroupParams {
 export interface UseGroupFormReturn {
   formData: GroupFormData;
   formActions: {
-    setGroupName: (value: string) => void;
+    setTitle: (value: string) => void;
     setDescription: (value: string) => void;
     setImageFile: (file: File | null) => void;
-    setIsOpen: (value: boolean) => void;
-    setCategoryId: (value: number) => void;
   };
   formState: {
     isPending: boolean;

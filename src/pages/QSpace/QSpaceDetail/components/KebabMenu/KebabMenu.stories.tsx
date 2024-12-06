@@ -1,45 +1,47 @@
-// KebabMenu.stories.tsx
 import type { Meta, StoryObj } from '@storybook/react';
 import KebabMenu from './KebabMenu';
 
-const meta = {
-  title: 'Components/QSpaceDetail/KebabMenu',
+const meta: Meta<typeof KebabMenu> = {
+  title: 'Components/KebabMenu',
   component: KebabMenu,
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component:
+          '그룹 상세 페이지에서 사용되는 메뉴 컴포넌트입니다. 수정 및 삭제 기능을 제공합니다.',
+      },
+    },
   },
   tags: ['autodocs'],
-  argTypes: {
-    initialRecruitmentStatus: {
-      control: 'boolean',
-      description: '초기 모집 상태 (true: 모집 중, false: 모집 완료)',
-    },
-    onEditClick: {
-      action: 'edited',
-      description: '수정 버튼 클릭 핸들러',
-    },
-    onDeleteClick: {
-      action: 'deleted',
-      description: '삭제 버튼 클릭 핸들러',
-    },
-    onRecruitmentStatusChange: {
-      action: 'recruitment status changed',
-      description: '모집 상태 변경 핸들러',
-    },
-  },
-} satisfies Meta<typeof KebabMenu>;
+  decorators: [
+    (Story) => (
+      <div style={{ padding: '2rem', background: '#f5f5f5', height: '200px' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+          <Story />
+        </div>
+      </div>
+    ),
+  ],
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof KebabMenu>;
 
 export const Default: Story = {
   args: {
-    initialRecruitmentStatus: true,
+    onEditClick: () => {
+      console.log('Edit clicked');
+    },
+    onDeleteClick: () => {
+      console.log('Delete clicked');
+    },
   },
-};
-
-export const RecruitingComplete: Story = {
-  args: {
-    initialRecruitmentStatus: false,
+  parameters: {
+    docs: {
+      description: {
+        story: '기본적인 케밥 메뉴입니다. 수정과 삭제 버튼이 포함되어 있습니다.',
+      },
+    },
   },
 };

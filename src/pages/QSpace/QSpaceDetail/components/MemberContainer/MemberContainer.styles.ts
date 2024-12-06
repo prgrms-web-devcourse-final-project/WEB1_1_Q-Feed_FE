@@ -26,17 +26,20 @@ export const IconsWrapper = styled.div`
   align-items: center;
 `;
 
-export const IconContainer = styled.div<{ size: number; isStacked: boolean }>`
-  width: ${(props) => props.size}px;
-  height: ${(props) => props.size}px;
-  background-color: ${theme.colors.gray[200]};
+export const IconContainer = styled.div<{ isStacked: boolean }>`
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
+  background-color: ${({ theme }) => theme.colors.gray[100]};
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-left: ${(props) => (props.isStacked ? '-8px' : '0')};
-  border: 2px solid ${theme.colors.white};
-  color: ${theme.colors.gray[100]};
+  margin-left: ${({ isStacked }) => (isStacked ? '-8px' : '0')};
+  border: 2px solid ${({ theme }) => theme.colors.white};
+
+  svg {
+    color: ${({ theme }) => theme.colors.gray[600]};
+  }
 `;
 
 export const Count = styled.div`

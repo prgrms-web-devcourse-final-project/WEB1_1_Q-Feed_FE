@@ -10,28 +10,22 @@ import {
   StyledAvatar,
 } from '@/components/ui/CommentList/CommentList.styles';
 import LikeButtonContainer from '@/components/ui/LikeButtonContainer/LikeButtonContainer';
-import ReplyContainer from '@/components/ui/ReplyContainer/ReplyContainer';
 
 interface Comment {
-  id: string;
-  author: {
-    name: string;
-    profileImage?: string;
-  };
+  id: number; // groupPostId로 변경
   content: string;
+  author: string; // nickname으로 변경
+  profileImage: string; // profile로 변경
   createdAt: string;
-  likes: number;
-  isLiked: boolean;
-  replyCount: number;
+  likeCount: number;
 }
 
 interface CommentListProps {
   comments: Comment[];
-  onLikeComment?: (commentId: string, isLiked: boolean, count: number) => void;
-  onReplyClick?: (commentId: string) => void;
+  onLikeComment?: (commentId: number) => void; // 좋아요만 처리하도록 변경
 }
 
-export const CommentList = ({ comments, onLikeComment, onReplyClick }: CommentListProps) => {
+export const CommentList = ({ comments, onLikeComment }: CommentListProps) => {
   const formatTime = (dateString: string) => {
     const now = new Date();
     const commentDate = new Date(dateString);
@@ -52,23 +46,18 @@ export const CommentList = ({ comments, onLikeComment, onReplyClick }: CommentLi
     <Container>
       {comments.map((comment) => (
         <CommentItem key={comment.id}>
-          <StyledAvatar src={comment.author.profileImage} name={comment.author.name} size="sm" />
+          <StyledAvatar src={comment.profileImage} name={comment.author} size="sm" />
           <CommentContent>
             <AuthorInfo>
-              <AuthorName>{comment.author.name}</AuthorName>
+              <AuthorName>{comment.author}</AuthorName>
               <CreatedAt>{formatTime(comment.createdAt)}</CreatedAt>
             </AuthorInfo>
             <Content>{comment.content}</Content>
             <ActionButtons>
               <LikeButtonContainer
                 size="small"
-                initialCount={comment.likes}
-                initialLiked={comment.isLiked}
-                onLikeChange={(isLiked, count) => onLikeComment?.(comment.id, isLiked, count)}
-              />
-              <ReplyContainer
-                replyCount={comment.replyCount}
-                onReplyClick={() => onReplyClick?.(comment.id)}
+                initialCount={comment.likeCount}
+                onLikeChange={() => onLikeComment?.(comment.id)}
               />
             </ActionButtons>
           </CommentContent>

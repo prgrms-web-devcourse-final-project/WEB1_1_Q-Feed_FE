@@ -1,63 +1,50 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { CommentList } from './CommentList';
 
-const meta = {
-  title: 'Components/ui/CommentList',
+const meta: Meta<typeof CommentList> = {
+  title: 'Components/CommentList',
   component: CommentList,
   parameters: {
-    layout: 'padded',
+    layout: 'centered',
   },
-} satisfies Meta<typeof CommentList>;
+  tags: ['autodocs'],
+};
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof CommentList>;
 
-const sampleComments = [
+const mockComments = [
   {
-    id: '1',
-    author: {
-      name: '큐피드',
-      profileImage: 'https://bit.ly/dan-abramov',
-    },
-    content: '맛집을 고르려면 일단 맛이 있어야돼욥',
-    createdAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString(), // 4시간 전
-    likes: 128,
-    isLiked: false,
-    replyCount: 12,
+    id: 1,
+    content: '정말 좋은 토론이네요! 저도 참여하고 싶습니다.',
+    author: '김토론',
+    profileImage: '/api/placeholder/40/40',
+    createdAt: new Date(Date.now() - 1000 * 60 * 30).toISOString(), // 30분 전
+    likeCount: 5,
   },
   {
-    id: '2',
-    author: {
-      name: '사용자',
-    },
-    content: '완전 동의합니다! 맛있는 음식이 최고죠 😋',
-    createdAt: new Date(Date.now() - 30 * 60 * 1000).toISOString(), // 30분 전
-    likes: 5,
-    isLiked: true,
-    replyCount: 0,
+    id: 2,
+    content: '흥미로운 주제입니다. 다른 분들의 의견도 궁금하네요.',
+    author: '이의견',
+    profileImage: '/api/placeholder/40/40',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 2).toISOString(), // 2시간 전
+    likeCount: 3,
+  },
+  {
+    id: 3,
+    content: '오늘 토론 주제가 매우 시의적절한 것 같아요.',
+    author: '박토의',
+    profileImage: '/api/placeholder/40/40',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 24).toISOString(), // 1일 전
+    likeCount: 8,
   },
 ];
 
 export const Default: Story = {
   args: {
-    comments: sampleComments,
-  },
-};
-
-export const NoComments: Story = {
-  args: {
-    comments: [],
-  },
-};
-
-export const WithInteractions: Story = {
-  args: {
-    comments: sampleComments,
-    onLikeComment: (commentId, isLiked, count) => {
-      console.log('Like clicked:', { commentId, isLiked, count });
-    },
-    onReplyClick: (commentId) => {
-      console.log('Reply clicked:', commentId);
+    comments: mockComments,
+    onLikeComment: (commentId) => {
+      console.log(`Comment ${commentId} liked`);
     },
   },
 };
