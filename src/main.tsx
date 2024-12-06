@@ -9,6 +9,7 @@ import { GlobalStyles } from '@/styles/GlobalStyles';
 import theme from '@/styles/theme';
 import { BottomNavigationStyleConfig as BottomNavigation } from 'chakra-ui-bottom-navigation';
 
+// [May]: 여기 정의해두셔도 괜찮지만, 따로 파일 분리해도 좋을거같습니다..!
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -19,6 +20,7 @@ const queryClient = new QueryClient({
   },
 });
 
+// [May]: 여기 정의해두셔도 괜찮지만, 따로 파일 분리해도 좋을거같습니다..!
 const chakraTheme = extendTheme({
   components: {
     BottomNavigation,
