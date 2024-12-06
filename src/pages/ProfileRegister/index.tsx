@@ -21,12 +21,9 @@ import {
 import axios from 'axios';
 import { HobbyTag } from '@/constants/hobbytag';
 import { useNavigation } from '@/hooks/useNavigation';
-
-interface KakaoUserInfo {
-  email: string;
-  name: string;
-  profileImage: string;
-}
+import { KakaoUserInfo } from '@/pages/KakaoCallback/KakaoCallback';
+import { authAPI } from '@/pages/ProfileRegister/api/fetchUser';
+import { CATEGORIES } from '@/constants/categories';
 
 const ProfileRegisterPage: React.FC = () => {
   const { gotoSelectCategory } = useNavigation();
@@ -45,16 +42,17 @@ const ProfileRegisterPage: React.FC = () => {
     const storedInfo = localStorage.getItem('kakaoUserInfo');
     if (storedInfo) {
       const userInfo: KakaoUserInfo = JSON.parse(storedInfo);
-      setName(userInfo.name);
+      setName(userInfo.nickname);
       setProfileImageSrc(userInfo.profileImage || defaultProfile);
     }
   };
 
   const handleTagSelectionChange = (selectedTags: string[]): void => {
-    setHobbyTags(selectedTags);
+    const englishTags = selectedTags.map((tag) => CATEGORIES[tag as keyof typeof CATEGORIES]);
+    setHobbyTags(englishTags);
   };
 
-  const onClickSubmit = (): void => {
+  const onClickSubmit = async (): Promise<void> => {
     if (!name.trim()) {
       alert('닉네임을 입력해주세요.');
       return;
@@ -76,18 +74,38 @@ const ProfileRegisterPage: React.FC = () => {
     }
 
     if (hobbyTags.length === 0) {
-      alert('하나 이상의 취미 태그를 선택해주세요.');
+      alert('하나 이상의 관심사 태그를 선택해주세요.');
       return;
     }
 
-    // console.log('프로필 정보:', {
-    //   name,
-    //   bio,
-    //   hobbyTags,
-    //   profileImageSrc,
-    // });
+    try {
+      const registerEmail = localStorage.getItem('registerEmail');
+      const registerPassword = localStorage.getItem('registerPassword');
 
-    gotoSelectCategory();
+      if (!registerEmail || !registerPassword) {
+        alert('회원가입 정보가 없습니다.');
+        return;
+      }
+
+      const signUpData = {
+        email: registerEmail,
+        password: registerPassword,
+        nickname: name,
+        description: bio,
+        interestCategoryNames: hobbyTags,
+      };
+
+      const { data } = await authAPI.signUp(signUpData);
+
+      if (data?.message) {
+        localStorage.removeItem('registerEmail');
+        localStorage.removeItem('registerPassword');
+        gotoSelectCategory();
+      }
+    } catch (error) {
+      console.error('회원가입 실패:', error);
+      alert('회원가입에 실패했습니다.');
+    }
   };
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -127,13 +145,13 @@ const ProfileRegisterPage: React.FC = () => {
 
       const { id, kakao_account } = userResponse.data;
       const email = `kakao_${id}@example.com`;
-      const name = kakao_account.profile.nickname;
+      const nickname = kakao_account.profile.nickname;
       const profileImage = kakao_account.profile.profile_image_url;
 
-      setName(name);
+      setName(nickname);
       setProfileImageSrc(profileImage || defaultProfile);
 
-      const userInfo: KakaoUserInfo = { email, name, profileImage };
+      const userInfo: KakaoUserInfo = { email, nickname, profileImage };
 
       storeUserInfoInLocalStorage(userInfo);
     } catch (error) {
@@ -144,10 +162,24 @@ const ProfileRegisterPage: React.FC = () => {
   useEffect(() => {
     const code = new URL(window.location.href).searchParams.get('code');
     if (code) {
+      // 카카오 로그인 처리
       getUserInfo(code);
       window.history.replaceState({}, document.title, window.location.pathname);
     } else {
-      loadUserInfoFromLocalStorage();
+      // 로컬 스토리지에서 카카오 유저 정보 확인
+      const storedKakaoInfo = localStorage.getItem('kakaoUserInfo');
+      if (storedKakaoInfo) {
+        loadUserInfoFromLocalStorage();
+      } else {
+        // 이메일 회원가입 사용자 처리
+        const registerEmail = localStorage.getItem('registerEmail');
+        const registerPassword = localStorage.getItem('registerPassword');
+
+        if (registerEmail && registerPassword) {
+          // 이메일 회원가입 사용자는 기본 프로필 이미지만 설정
+          setProfileImageSrc(defaultProfile);
+        }
+      }
     }
   }, []);
 

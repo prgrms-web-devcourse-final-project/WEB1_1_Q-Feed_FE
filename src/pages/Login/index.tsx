@@ -12,11 +12,28 @@ import {
 import KakaoLoginButton from '@/pages/Login/components/KakaoLoginButton/KakaoLoginButton';
 import { useNavigation } from '@/hooks/useNavigation';
 import { useKakaoLogin } from '@/pages/Login/hooks/useKakaoLogin';
+import { useLogin } from '@/pages/Login/hooks/useLogin';
+import { useEffect } from 'react';
+import { LoginRequest } from '@/pages/Login/types/auth';
 
 export const Login = () => {
-  const { goToFindEmail, gotoQuestionPage, gotoPasswordRecoveryPage, gotoRegisterPage } =
+  const { goToFindEmail, gotoSelectCategory, gotoPasswordRecoveryPage, gotoRegisterPage } =
     useNavigation();
+  const { mutate: login, data, error } = useLogin();
   const { handleKakaoLogin } = useKakaoLogin();
+
+  const handleLogin = (LoginData: LoginRequest) => {
+    login(LoginData);
+  };
+
+  useEffect(() => {
+    if (data?.accessToken) {
+      gotoSelectCategory();
+    } else if (error) {
+      alert('로그인 정보가 일치하지 않아요');
+    }
+  }, [data, error, gotoSelectCategory]);
+
   return (
     <Container>
       <LogoContainer>
@@ -25,7 +42,7 @@ export const Login = () => {
       </LogoContainer>
 
       <StyledStack>
-        <LoginForm onSubmit={gotoQuestionPage} />
+        <LoginForm onSubmit={handleLogin} />
         <KakaoLoginButton onClick={handleKakaoLogin} />
       </StyledStack>
 

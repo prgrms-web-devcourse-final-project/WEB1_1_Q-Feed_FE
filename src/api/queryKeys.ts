@@ -1,6 +1,7 @@
 export type GroupKeys = typeof GROUP_KEYS;
 export type UserKeys = typeof USER_KEYS;
 export type NotificationKeys = typeof NOTIFICATION_KEYS;
+export type AuthKeys = typeof AUTH_KEYS;
 
 export const GROUP_KEYS = {
   ROOT: 'groups',
@@ -32,5 +33,15 @@ export const NOTIFICATION_KEYS = {
   ROOT: 'notifications',
   ACTIONS: {
     UNREAD: 'unread',
+  },
+} as const;
+
+export const AUTH_KEYS = {
+  ROOT: 'auth',
+  ACTIONS: {
+    LOGIN: 'login',
+    LOGOUT: 'logout',
+    REGISTER: 'register',
+    REFRESH: 'refresh',
   },
 } as const;
