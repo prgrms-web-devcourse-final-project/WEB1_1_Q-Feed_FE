@@ -36,7 +36,7 @@ const ChatRoom = () => {
         const response = await fetch(`/api/chats/${chatRoomId}/messages`, {
           headers: {
             Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM1NzYyMjEsImV4cCI6MTczMzY2MjYyMX0.jR32Pf_C2fu-hdMsMvj28IWus8sIgmeB2QWeihfrteo', // Postman에서 사용한 토큰
+              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM1OTI4MjQsImV4cCI6MTczMzY3OTIyNH0.RJwEddcsaKMFYsjiEgiCUAVzlEnCf1HBhfGtWzch74U', // Postman에서 사용한 토큰
           },
         });
 
@@ -59,12 +59,15 @@ const ChatRoom = () => {
 
     stompClient.onConnect = () => {
       console.log(`STOMP 연결 성공 (ChatRoom ID: ${chatRoomId})`);
+
+      // 메시지 구독
       const subscription = stompClient.subscribe(`/sub/chat/${chatRoomId}`, (message) => {
         const receivedMessage: MessageType = JSON.parse(message.body);
         setMessages((prevMessages) => [...prevMessages, receivedMessage]); // 실시간 메시지 추가
         console.log('새 메시지:', receivedMessage);
       });
 
+      // 컴포넌트 언마운트 시 구독 해제
       return () => subscription.unsubscribe();
     };
 
@@ -81,8 +84,8 @@ const ChatRoom = () => {
     if (!chatRoomId) return;
 
     const payload = {
-      roomId: Number(chatRoomId),
-      senderId: '83974189-a749-4a24-bd5a-8ca2577fac73', // 본인 ID
+      /* roomId: Number(chatRoomId),
+      senderId: '83974189-a749-4a24-bd5a-8ca2577fac73', // 본인 ID */
       message, // 메시지 내용
     };
 

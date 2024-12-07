@@ -50,6 +50,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  define: {
+    global: 'window', // 여기에 global을 window로 정의
+  },
   server: {
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',

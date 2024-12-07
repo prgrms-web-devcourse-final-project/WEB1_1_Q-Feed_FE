@@ -1,18 +1,19 @@
 import { Client } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
 // WebSocket URL 설정
-const SOCKET_URL = 'ws://43.203.125.140:8080/ws';
+const SOCKET_URL = 'http://43.203.125.140:8080/ws'; // SockJS 서버 URL
 
 // STOMP 클라이언트 생성
 export const stompClient = new Client({
-  brokerURL: SOCKET_URL, // WebSocket URL
+  webSocketFactory: () => new SockJS(SOCKET_URL), // SockJS를 사용하여 WebSocket 연결
   reconnectDelay: 5000, // 재연결 대기 시간 (ms)
   debug: (str) => {
     console.log('STOMP Debug:', str);
   },
   connectHeaders: {
     Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM1NzYyMjEsImV4cCI6MTczMzY2MjYyMX0.jR32Pf_C2fu-hdMsMvj28IWus8sIgmeB2QWeihfrteo', // 토큰 인증 (필요한 경우)
+      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM1OTI4MjQsImV4cCI6MTczMzY3OTIyNH0.RJwEddcsaKMFYsjiEgiCUAVzlEnCf1HBhfGtWzch74U', // 필요한 경우 토큰 설정
   },
 });
 
