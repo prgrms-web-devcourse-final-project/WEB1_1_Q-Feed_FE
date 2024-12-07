@@ -56,6 +56,10 @@ const QSpaceDetailPage = () => {
     joinGroupMutation.mutate();
   };
 
+  const handleMemberListClick = () => {
+    navigate(`/groups/${groupId}/members`);
+  };
+
   const isCurrentUserAdmin = groupDetail?.adminId === userId;
   const isCurrentUserMember =
     joinGroupMutation.isSuccess || groupDetail?.members.some((member) => member.userId === userId);
@@ -65,7 +69,12 @@ const QSpaceDetailPage = () => {
   }
 
   if (!groupDetail) {
-    return <div>토론방을 찾을 수 없습니다</div>;
+    navigate('/error', {
+      state: {
+        message: '토론방을 찾을 수 없습니다',
+      },
+    });
+    return null;
   }
 
   return (
@@ -116,7 +125,7 @@ const QSpaceDetailPage = () => {
         <MemberContainer
           memberCount={groupDetail.members.length}
           lastChatTime={groupDetail.posts[0]?.createdAt}
-          onMemberListClick={() => navigate(`/groups/${groupId}/members`)}
+          onMemberListClick={handleMemberListClick}
         />
 
         {!isCurrentUserMember && !isCurrentUserAdmin && (

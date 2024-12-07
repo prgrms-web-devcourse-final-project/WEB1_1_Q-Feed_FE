@@ -42,6 +42,7 @@ export interface GroupMember {
   userId: string;
   userNickname: string;
   userProfile: string;
+  description: string;
 }
 
 export interface GroupPost {

@@ -2,41 +2,41 @@ import ProfileImage from '@/components/ui/ProfileImageCon/ProfileImageCon';
 import theme from '@/styles/theme';
 import { Container, MemberItem, InfoContainer, Name, Role } from './MemberList.styles';
 import ReSignButton from '@/pages/QSpace/QSpaceMember/components/ReSignButton/ReSignButton';
-
-interface Member {
-  id: string;
-  name: string;
-  profileImage?: string;
-  role: string;
-}
+import { GroupMember } from '@/pages/QSpace/types/group';
 
 interface MemberListProps {
-  members: Member[];
-  onResign?: (memberId: string) => void;
+  members: GroupMember[];
+  adminId: string;
+  currentUserId: string;
+  onResign?: (memberId: number) => void;
 }
 
-const MemberList = ({ members, onResign }: MemberListProps) => {
-  const handleResign = (memberId: string) => {
+const MemberList = ({ members, adminId, currentUserId, onResign }: MemberListProps) => {
+  const handleResign = (memberId: number) => {
     if (onResign) {
       onResign(memberId);
     }
   };
 
+  const isAdmin = adminId === currentUserId;
+
   return (
     <Container>
       {members.map((member) => (
-        <MemberItem key={member.id}>
+        <MemberItem key={member.groupMemberId}>
           <ProfileImage
-            src={member.profileImage}
+            src={member.userProfile}
             size={48}
             bgColor={theme.colors.gray[200]}
-            alt={`${member.name}'s profile`}
+            alt={`${member.userNickname}'s profile`}
           />
           <InfoContainer>
-            <Name>{member.name}</Name>
-            <Role>{member.role}</Role>
+            <Name>{member.userNickname}</Name>
+            <Role>{member.description || '프로필 소개글이 없습니다'}</Role>
           </InfoContainer>
-          <ReSignButton onClick={() => handleResign(member.id)} />
+          {isAdmin && member.userId !== currentUserId && (
+            <ReSignButton onClick={() => handleResign(member.groupMemberId)} />
+          )}
         </MemberItem>
       ))}
     </Container>

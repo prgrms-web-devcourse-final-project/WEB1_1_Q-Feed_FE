@@ -3,6 +3,7 @@ import {
   CreateGroupRequest,
   Group,
   GroupDetail,
+  GroupMember,
   GroupPost,
   UpdateGroupRequest,
 } from '@/pages/QSpace/types/group';
@@ -29,6 +30,9 @@ export const groupAPI = {
 
   // 그룹 탈퇴
   leaveGroup: (groupId: number) => apiClient.delete(`/groups/${groupId}/leave`),
+
+  // 그룹 멤버리스트 조회
+  getGroupMembers: (groupId: number) => apiClient.get<GroupMember[]>(`/groups/${groupId}/members`),
 
   // 게시글 좋아요
   likePost: (postId: number) => apiClient.post(`/posts/${postId}/like`),
