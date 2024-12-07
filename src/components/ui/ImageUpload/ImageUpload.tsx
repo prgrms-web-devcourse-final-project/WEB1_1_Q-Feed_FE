@@ -12,10 +12,16 @@ import {
 } from '@/components/ui/ImageUpload/ImageUpload.styles';
 
 interface ImageUploadProps {
-  onImageUpload?: (file: File | null) => void; // 이미지 업로드 이벤트 콜백
+  onImageUpload?: (file: File | null) => void;
+  accept?: string;
+  maxSize?: number;
 }
 
-export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
+export const ImageUpload = ({
+  onImageUpload,
+  accept = 'image/*',
+  maxSize = 5 * 1024 * 1024,
+}: ImageUploadProps) => {
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -26,6 +32,12 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
       setError('이미지 파일(JPEG, PNG, GIF, WEBP)만 허용됩니다.');
       return;
     }
+
+    if (file.size > maxSize) {
+      setError(`파일 크기는 ${Math.floor(maxSize / (1024 * 1024))}MB 이하여야 합니다.`);
+      return;
+    }
+
     const reader = new FileReader();
     reader.onloadend = () => {
       setPreview(reader.result as string);
@@ -66,7 +78,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
         onClick={handleBoxClick}
         hasPreview={!!preview}
       >
-        <input type="file" accept="image/*" onChange={handleFileChange} />
+        <input type="file" accept={accept} onChange={handleFileChange} />
         {preview ? (
           <PreviewContainer>
             <PreviewImage src={preview} alt="Uploaded Preview" />
