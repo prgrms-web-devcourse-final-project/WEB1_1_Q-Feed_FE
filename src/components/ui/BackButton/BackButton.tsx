@@ -11,7 +11,7 @@ const BackButton = ({ width = '2.5rem', height = '2.5rem' }: BackButtonProps) =>
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate('/');
+    navigate(-1);
   };
 
   return (
