@@ -29,6 +29,7 @@ import {
   ChatInputWrapper,
   JoinButtonContainer,
   DiscussionImage,
+  JoinButton,
 } from './styles';
 import DetailsHeader from '@/pages/QSpace/QSpaceDetail/components/DetailsHeader/DetailsHeader';
 import KebabMenu from '@/pages/QSpace/QSpaceDetail/components/KebabMenu/KebabMenu';
@@ -48,11 +49,16 @@ const QSpaceDetailPage = () => {
   const deleteGroupMutation = useDeleteGroup(groupId);
 
   const handleJoinGroup = () => {
+    if (!userId) {
+      navigate('/login');
+      return;
+    }
     joinGroupMutation.mutate();
   };
 
   const isCurrentUserAdmin = groupDetail?.adminId === userId;
-  const isCurrentUserMember = groupDetail?.members.some((member) => member.userId === userId);
+  const isCurrentUserMember =
+    joinGroupMutation.isSuccess || groupDetail?.members.some((member) => member.userId === userId);
 
   if (isPending) {
     return <LoadingSpinner />;
@@ -115,13 +121,7 @@ const QSpaceDetailPage = () => {
 
         {!isCurrentUserMember && !isCurrentUserAdmin && (
           <JoinButtonContainer>
-            <button
-              onClick={handleJoinGroup}
-              disabled={joinGroupMutation.isPending}
-              className="w-full bg-primary text-white py-4 rounded-lg"
-            >
-              {joinGroupMutation.isPending ? '참여 중...' : '토론 참여하기'}
-            </button>
+            <JoinButton onClick={handleJoinGroup}>토론 참여하기</JoinButton>
           </JoinButtonContainer>
         )}
 
