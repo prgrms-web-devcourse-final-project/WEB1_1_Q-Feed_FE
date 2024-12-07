@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useQuery } from '@tanstack/react-query';
+import React from 'react';
 import {
   messageContentStyle,
   messageListStyle,
@@ -9,43 +9,23 @@ import {
   timeStyleRight,
 } from '@/pages/ChatRoom/styles';
 import ProfileImageCon from '@/components/ui/ProfileImageCon/ProfileImageCon';
-import { fetchMessages } from '@/pages/ChatRoom/api/fetchChatRoom';
 import { MessageType } from '@/pages/ChatRoom/type/messageType';
+
 interface MessageListProps {
-  chatRoomId: string;
-  currentUserId: string;
+  messages: MessageType[]; // 메시지 상태 전달
 }
 
-const MessageList: React.FC<MessageListProps> = ({ chatRoomId, currentUserId }) => {
-  const {
-    data: messages,
-    isLoading,
-    isError,
-  } = useQuery<MessageType[]>({
-    queryKey: ['chatMessages', chatRoomId],
-    queryFn: () => fetchMessages(chatRoomId),
-    refetchOnWindowFocus: false,
-    staleTime: 5 * 60 * 1000,
-  });
-
-  if (isLoading) {
-    return <div>메시지 로딩 중...</div>;
-  }
-
-  if (isError) {
-    return <div>메시지를 불러오는 중 오류가 발생했습니다.</div>;
-  }
-
+const MessageList: React.FC<MessageListProps> = ({ messages }) => {
   return (
     <div css={messageListStyle}>
-      {messages?.map((msg) => (
+      {messages.map((msg) => (
         <div
           key={msg.messageId}
-          css={msg.userId === currentUserId ? myMessageStyle : otherMessageStyle}
+          css={msg.isMine ? myMessageStyle : otherMessageStyle} // isMine으로 스타일 결정
         >
           {/* 상대방 메시지의 경우 프로필 이미지 표시 */}
-          {msg.userId !== currentUserId && <ProfileImageCon src={msg.userProfileImage} size={30} />}
-          {msg.userId === currentUserId ? (
+          {!msg.isMine && <ProfileImageCon src={msg.userProfileImage} size={30} />}
+          {msg.isMine ? (
             <>
               <span css={timeStyleLeft}>
                 {new Date(msg.createdAt).toLocaleTimeString([], {

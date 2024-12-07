@@ -60,6 +60,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      '/ws': {
+        target: 'ws://43.203.125.140:8080', // WebSocket 서버 URL
+        ws: true, // WebSocket 프록시 활성화
+        changeOrigin: true,
+      },
     },
   },
 });

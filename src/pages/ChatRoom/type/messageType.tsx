@@ -8,4 +8,5 @@ export interface MessageType {
   userId: string;
   userNickName: string;
   userProfileImage: string;
+  isMine: boolean;
 }
