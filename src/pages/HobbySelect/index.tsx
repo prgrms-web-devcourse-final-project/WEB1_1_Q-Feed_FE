@@ -5,7 +5,7 @@ import { CategoryContainer, Container, LogoWrapper, Title } from '@/pages/HobbyS
 
 const HobbySelectPage = () => {
   const navigate = useNavigate();
-  const handleCategorySelect = (categoryId: string) => {
+  const handleCategorySelect = (categoryId: number) => {
     //질문에 답했는데 확인 로직 추가
     navigate(`/question/${categoryId}`);
   };
