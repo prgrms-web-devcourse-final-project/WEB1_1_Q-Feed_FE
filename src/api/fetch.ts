@@ -16,7 +16,7 @@ export class APIClient {
     this.client.interceptors.request.use(
       (config) => {
         const token =
-          'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM1Njc1MjcsImV4cCI6MTczMzY1MzkyN30.eRTezHcBgXrE2JNAmDPOQ6XAsLxhtcAP3lRbrMpRgU4';
+          'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM1NzYyMjEsImV4cCI6MTczMzY2MjYyMX0.jR32Pf_C2fu-hdMsMvj28IWus8sIgmeB2QWeihfrteo';
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }

@@ -36,7 +36,7 @@ const ChatRoom = () => {
         const response = await fetch(`/api/chats/${chatRoomId}/messages`, {
           headers: {
             Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM1Njc1MjcsImV4cCI6MTczMzY1MzkyN30.eRTezHcBgXrE2JNAmDPOQ6XAsLxhtcAP3lRbrMpRgU4', // Postman에서 사용한 토큰
+              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM1NzYyMjEsImV4cCI6MTczMzY2MjYyMX0.jR32Pf_C2fu-hdMsMvj28IWus8sIgmeB2QWeihfrteo', // Postman에서 사용한 토큰
           },
         });
 
@@ -87,7 +87,7 @@ const ChatRoom = () => {
     };
 
     stompClient.publish({
-      destination: `/pub/chat/send`,
+      destination: `/pub/chat/message`,
       body: JSON.stringify(payload),
     });
 
