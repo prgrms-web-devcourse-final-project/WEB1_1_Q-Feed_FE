@@ -2,9 +2,15 @@ import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
 export const Container = styled.div`
-  padding: 1.5rem 1rem;
-  background-color: ${theme.colors.background};
-  min-height: calc(100vh - 8rem);
+  background: ${theme.colors.background};
+  height: 100vh;
+`;
+
+export const Body = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 2rem;
 `;
 
 export const ProfileSection = styled.div`
@@ -14,6 +20,7 @@ export const ProfileSection = styled.div`
   gap: 1rem;
   margin-top: 3rem;
   margin-bottom: 1.875rem;
+  padding: 0 2rem;
 `;
 
 export const ProfileImageWrapper = styled.div`
@@ -58,6 +65,11 @@ export const Form = styled.div`
   gap: 1rem;
 `;
 
+export const NickNameWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 export const FormGroup = styled.div`
   display: flex;
   align-items: flex-start;
@@ -73,14 +85,21 @@ export const Label = styled.label`
   margin-top: 0.5rem;
 `;
 
+export const ErrorMessage = styled.p`
+  size: 0.875rem;
+  color: red;
+  text-align: right;
+`;
+
 export const Input = styled.input`
   flex: 1;
   padding: 0.562rem 1rem;
-  border: 1px solid ${theme.colors.gray[300]};
+  border: 0.0625rem solid ${theme.colors.gray[300]};
   border-radius: 0.937rem;
   font-size: 0.875rem;
   color: ${theme.colors.gray[400]};
   background-color: transparent;
+  background: ${theme.colors.white};
 
   :focus {
     border: 1px solid ${theme.colors.primary};
@@ -98,10 +117,11 @@ export const TextArea = styled.textarea`
   border: 1px solid ${theme.colors.gray[300]};
   border-radius: 0.937rem;
   font-size: 0.875rem;
-  color: ${theme.colors.gray[600]};
+  color: ${theme.colors.gray[400]};
   background-color: transparent;
   resize: none;
   height: 7.5rem;
+  background-color: ${theme.colors.white};
 
   &:focus {
     border-color: ${theme.colors.primary};

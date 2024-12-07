@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import { AiFillEdit } from 'react-icons/ai';
 import ProfileImage from '@/components/ui/ProfileImageCon/ProfileImageCon';
 import SelectableHobbyTags from '@/components/ui/HobbyTag/SelectableHobbyTags';
-import Header from '@/pages/MyPage/components/Header/Header';
 import defaultProfile from '@/assets/images/profile.svg';
 import {
   Container,
@@ -17,6 +16,9 @@ import {
   TextArea,
   CharacterCount,
   SubmitButton,
+  Body,
+  ErrorMessage,
+  NickNameWrapper,
 } from '@/pages/ProfileRegister/styles';
 import axios from 'axios';
 import { HobbyTag } from '@/constants/hobbytag';
@@ -24,6 +26,8 @@ import { useNavigation } from '@/hooks/useNavigation';
 import { KakaoUserInfo } from '@/pages/KakaoCallback/KakaoCallback';
 import { authAPI } from '@/pages/ProfileRegister/api/fetchUser';
 import { CATEGORIES } from '@/constants/categories';
+import { HeaderWithTitle } from '@/components/ui/HeaderWithTitle/HeaderWithTitle';
+import { SignUpRequest } from '@/pages/ProfileRegister/type/userInfo';
 
 const ProfileRegisterPage: React.FC = () => {
   const { gotoSelectCategory } = useNavigation();
@@ -33,6 +37,48 @@ const ProfileRegisterPage: React.FC = () => {
   const [bio, setBio] = useState<string>('');
   const [hobbyTags, setHobbyTags] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isValidNickname, setIsValidNickname] = useState<boolean>(true);
+  const [nameError, setNameError] = useState<string>('');
+
+  const [debouncedName, setDebouncedName] = useState<string>('');
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedName(name);
+    }, 1000);
+
+    return () => clearTimeout(timer);
+  }, [name]);
+
+  useEffect(() => {
+    if (debouncedName.length >= 2 && debouncedName.length <= 10) {
+      checkNickname(debouncedName);
+    }
+  }, [debouncedName]);
+
+  const checkNickname = async (nickname: string) => {
+    try {
+      const response = await authAPI.checkNickname(nickname);
+      const isAvailable = response.data === true;
+      setIsValidNickname(isAvailable);
+      setNameError(isValidNickname ? '' : '사용 불가능한 닉네임입니다.');
+    } catch (error) {
+      console.error('닉네임 검증 실패:', error);
+      setIsValidNickname(false);
+      setNameError('닉네임 검증에 실패했습니다.');
+    }
+  };
+
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newName = e.target.value;
+    setName(newName);
+
+    if (newName.length <= 2 || newName.length >= 10) {
+      setNameError('닉네임은 2자 이상 10자 이하로 입력해주세요.');
+      setIsValidNickname(false);
+      return;
+    }
+  };
 
   const storeUserInfoInLocalStorage = (userInfo: KakaoUserInfo): void => {
     localStorage.setItem('kakaoUserInfo', JSON.stringify(userInfo));
@@ -87,14 +133,16 @@ const ProfileRegisterPage: React.FC = () => {
         return;
       }
 
-      const signUpData = {
+      const signUpData: SignUpRequest = {
         email: registerEmail,
         password: registerPassword,
         nickname: name,
         description: bio,
         interestCategoryNames: hobbyTags,
+        profileImageFile: fileInputRef.current?.files?.[0],
       };
 
+      // FormData로 회원가입 API 호출
       const { data } = await authAPI.signUp(signUpData);
 
       if (data?.message) {
@@ -185,57 +233,62 @@ const ProfileRegisterPage: React.FC = () => {
 
   return (
     <>
-      <Header title="프로필 등록" />
       <Container>
-        <ProfileSection>
-          <ProfileImageWrapper>
-            <ProfileImage src={profileImageSrc} size={120} />
-            <EditButton onClick={handleEditButtonClick}>
-              <AiFillEdit size={18} />
-            </EditButton>
-            <Input
-              type="file"
-              ref={fileInputRef}
-              onChange={handleImageUpload}
-              accept="image/*"
-              style={{ display: 'none' }}
-            />
-          </ProfileImageWrapper>
-        </ProfileSection>
-        <Form>
-          <FormGroup>
-            <Label htmlFor="name">닉네임</Label>
-            <Input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="닉네임을 입력하세요."
-            />
-          </FormGroup>
-          <FormGroup>
-            <Label htmlFor="bio">한 줄 소개</Label>
-            <TextAreaWrapper>
-              <TextArea
-                id="bio"
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                placeholder="한 줄로 자신을 소개해보세요."
-                maxLength={100}
+        <HeaderWithTitle title="프로필 등록" />
+        <Body>
+          <ProfileSection>
+            <ProfileImageWrapper>
+              <ProfileImage src={profileImageSrc} size={120} />
+              <EditButton onClick={handleEditButtonClick}>
+                <AiFillEdit size={18} />
+              </EditButton>
+              <Input
+                type="file"
+                ref={fileInputRef}
+                onChange={handleImageUpload}
+                accept="image/*"
+                style={{ display: 'none' }}
               />
-              <CharacterCount>{`${bio.length}/100`}</CharacterCount>
-            </TextAreaWrapper>
-          </FormGroup>
-          <FormGroup>
-            <Label>취미 태그</Label>
-            <SelectableHobbyTags
-              tags={availableTags}
-              selectedTags={hobbyTags}
-              onSelectionChange={handleTagSelectionChange}
-            />
-          </FormGroup>
-          <SubmitButton onClick={onClickSubmit}>등록하기</SubmitButton>
-        </Form>
+            </ProfileImageWrapper>
+          </ProfileSection>
+          <Form>
+            <NickNameWrapper>
+              <FormGroup>
+                <Label htmlFor="name">닉네임</Label>
+                <Input
+                  id="name"
+                  type="text"
+                  value={name}
+                  onChange={handleNameChange}
+                  placeholder="닉네임을 입력하세요."
+                />
+              </FormGroup>
+              {nameError && <ErrorMessage>{nameError}</ErrorMessage>}{' '}
+            </NickNameWrapper>
+            <FormGroup>
+              <Label htmlFor="bio">한 줄 소개</Label>
+              <TextAreaWrapper>
+                <TextArea
+                  id="bio"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  placeholder="한 줄로 자신을 소개해보세요."
+                  maxLength={100}
+                />
+                <CharacterCount>{`${bio.length}/100`}</CharacterCount>
+              </TextAreaWrapper>
+            </FormGroup>
+            <FormGroup>
+              <Label>취미 태그</Label>
+              <SelectableHobbyTags
+                tags={availableTags}
+                selectedTags={hobbyTags}
+                onSelectionChange={handleTagSelectionChange}
+              />
+            </FormGroup>
+            <SubmitButton onClick={onClickSubmit}>등록하기</SubmitButton>
+          </Form>
+        </Body>
       </Container>
     </>
   );
