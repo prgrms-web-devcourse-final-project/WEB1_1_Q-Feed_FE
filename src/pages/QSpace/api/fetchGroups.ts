@@ -9,7 +9,7 @@ export const groupAPI = {
   getGroupDetail: (groupId: number) => apiClient.get<Group>(`/groups/${groupId}`),
 
   // 새로운 그룹 생성
-  createGroup: (data: CreateGroupRequest) => apiClient.post<Group>('/groups', data),
+  createGroup: (data: CreateGroupRequest) => apiClient.post<Group>('/groups/create', data),
 
   // 그룹 정보 수정
   updateGroup: ({ groupId, ...data }: UpdateGroupRequest) =>

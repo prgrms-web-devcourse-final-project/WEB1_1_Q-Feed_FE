@@ -16,6 +16,7 @@ export default defineConfig({
     svgr(),
     VitePWA({
       registerType: 'prompt',
+      includeAssets: ['favicon.ico'],
       injectRegister: false,
 
       pwaAssets: {

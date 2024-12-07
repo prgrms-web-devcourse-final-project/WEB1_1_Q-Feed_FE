@@ -4,7 +4,7 @@ import styled from '@emotion/styled';
 
 export const Container = styled.div`
   background-color: ${theme.colors.background};
-  padding-bottom: 6rem;
+  height: 100vh;
   position: relative;
 `;
 
@@ -15,11 +15,13 @@ export const Header = styled.header`
 `;
 
 export const Content = styled.main`
+  background-color: ${theme.colors.background};
   padding: 0 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 3rem;
   margin-top: 2rem;
+  padding-bottom: 6rem;
 `;
 
 export const InputWrapper = styled.div`

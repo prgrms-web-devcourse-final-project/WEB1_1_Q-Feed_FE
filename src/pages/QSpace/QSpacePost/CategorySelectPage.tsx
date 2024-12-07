@@ -13,15 +13,15 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 
 const CategorySelectPage = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<number | null>(null);
   const navigate = useNavigate();
 
-  const handleCategorySelect = (categoryId: string) => {
+  const handleCategorySelect = (categoryId: number) => {
     setSelectedCategory(categoryId);
   };
 
   const handleNext = () => {
-    navigate('/qspace/post');
+    navigate('/qspace/post', { state: { categoryId: selectedCategory } });
   };
 
   return (
