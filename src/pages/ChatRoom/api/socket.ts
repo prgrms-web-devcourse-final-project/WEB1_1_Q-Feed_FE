@@ -1,7 +1,7 @@
 import { Client } from '@stomp/stompjs';
 
 // WebSocket URL 설정
-const SOCKET_URL = 'ws://43.203.125.140:8080/ws';
+const SOCKET_URL = 'wss://q-feed.n-e.kr/ws';
 
 // STOMP 클라이언트 생성
 export const stompClient = new Client({
@@ -11,8 +11,7 @@ export const stompClient = new Client({
     console.log('STOMP Debug:', str);
   },
   connectHeaders: {
-    Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM1NzYyMjEsImV4cCI6MTczMzY2MjYyMX0.jR32Pf_C2fu-hdMsMvj28IWus8sIgmeB2QWeihfrteo', // 토큰 인증 (필요한 경우)
+    Authorization: 'Token', // 토큰 인증 (필요한 경우)
   },
 });
 

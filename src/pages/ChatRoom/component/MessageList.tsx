@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   messageContentStyle,
   messageListStyle,
@@ -16,14 +16,22 @@ interface MessageListProps {
 }
 
 const MessageList: React.FC<MessageListProps> = ({ messages }) => {
+  const messageEndRef = useRef<HTMLDivElement | null>(null);
+
+  // 메시지가 업데이트될 때마다 스크롤 이동
+  useEffect(() => {
+    if (messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
+
   return (
     <div css={messageListStyle}>
-      {messages.map((msg) => (
+      {messages.map((msg, index) => (
         <div
-          key={msg.messageId}
-          css={msg.isMine ? myMessageStyle : otherMessageStyle} // isMine으로 스타일 결정
+          key={msg.messageId || `${msg.createdAt}-${index}`}
+          css={msg.isMine ? myMessageStyle : otherMessageStyle}
         >
-          {/* 상대방 메시지의 경우 프로필 이미지 표시 */}
           {!msg.isMine && <ProfileImageCon src={msg.userProfileImage} size={30} />}
           {msg.isMine ? (
             <>
@@ -52,6 +60,8 @@ const MessageList: React.FC<MessageListProps> = ({ messages }) => {
           )}
         </div>
       ))}
+      {/* 스크롤을 이동시키기 위한 div */}
+      <div ref={messageEndRef} />
     </div>
   );
 };

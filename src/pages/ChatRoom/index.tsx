@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { IoChevronBack } from 'react-icons/io5';
 import { HiOutlineBell, HiOutlineBellSlash } from 'react-icons/hi2';
@@ -22,10 +22,16 @@ const ChatRoom = () => {
   const navigate = useNavigate();
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(true);
   const [messages, setMessages] = useState<MessageType[]>([]); // 메시지 상태 관리
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const toggleNotification = () => {
     setIsNotificationEnabled((prevState) => !prevState);
   };
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [messages]);
 
   useEffect(() => {
     if (!chatRoomId) return;
@@ -35,8 +41,7 @@ const ChatRoom = () => {
       try {
         const response = await fetch(`/api/chats/${chatRoomId}/messages`, {
           headers: {
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM1NzYyMjEsImV4cCI6MTczMzY2MjYyMX0.jR32Pf_C2fu-hdMsMvj28IWus8sIgmeB2QWeihfrteo', // Postman에서 사용한 토큰
+            Authorization: 'Token', // Postman에서 사용한 토큰
           },
         });
 
