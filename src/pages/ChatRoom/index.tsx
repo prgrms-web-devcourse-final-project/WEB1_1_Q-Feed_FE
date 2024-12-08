@@ -24,9 +24,12 @@ const ChatRoom = () => {
   const [messages, setMessages] = useState<MessageType[]>([]); // 메시지 상태 관리
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
+  const myId = '83974189-a749-4a24-bd5a-8ca2577fac73'; // 본인 ID
+
   const toggleNotification = () => {
     setIsNotificationEnabled((prevState) => !prevState);
   };
+
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -41,14 +44,19 @@ const ChatRoom = () => {
       try {
         const response = await fetch(`/api/chats/${chatRoomId}/messages`, {
           headers: {
-            Authorization: 'Token', // Postman에서 사용한 토큰
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM2MjM0NzYsImV4cCI6MTczMzcwOTg3Nn0.MtpsuNr5MVkw15Q1OE7vzuDs7Hu0xeq0oY3nZVmGpNM', // Postman에서 사용한 토큰
           },
         });
 
         if (response.ok) {
           const data: MessageType[] = await response.json();
-          setMessages(data);
-          console.log('초기 메시지 로드:', data);
+          const updatedData = data.map((msg) => ({
+            ...msg,
+            isMine: msg.senderId === myId, // 본인의 메시지 여부 추가
+          }));
+          setMessages(updatedData);
+          console.log('초기 메시지 로드:', updatedData);
         } else {
           console.error('초기 메시지 로드 실패:', response.status, await response.text());
         }
@@ -66,8 +74,14 @@ const ChatRoom = () => {
       console.log(`STOMP 연결 성공 (ChatRoom ID: ${chatRoomId})`);
       const subscription = stompClient.subscribe(`/sub/chat/${chatRoomId}`, (message) => {
         const receivedMessage: MessageType = JSON.parse(message.body);
-        setMessages((prevMessages) => [...prevMessages, receivedMessage]); // 실시간 메시지 추가
-        console.log('새 메시지:', receivedMessage);
+
+        const newMessage = {
+          ...receivedMessage,
+          isMine: receivedMessage.senderId === myId, // 본인의 메시지 여부 추가
+        };
+
+        setMessages((prevMessages) => [...prevMessages, newMessage]); // 실시간 메시지 추가
+        console.log('새 메시지:', newMessage);
       });
 
       return () => subscription.unsubscribe();
@@ -87,9 +101,26 @@ const ChatRoom = () => {
 
     const payload = {
       roomId: Number(chatRoomId),
-      senderId: '83974189-a749-4a24-bd5a-8ca2577fac73', // 본인 ID
-      message, // 메시지 내용
+      senderId: myId, // 본인 ID
+      content: message, // 메시지 내용
     };
+
+    // 전송한 메시지를 즉시 화면에 추가
+    const newMessage: MessageType = {
+      messageId: Date.now(),
+      isMine: true,
+      userProfileImage: '', // 본인의 프로필 이미지 경로 (필요 시 설정)
+      createdAt: new Date().toISOString(),
+      content: message,
+      senderId: myId,
+      isRead: true, // 읽음 여부
+      type: 'text', // 메시지 타입 (예: 'text', 'image')
+      url: '', // 첨부된 URL이 있을 경우 설정
+      userId: myId,
+      userNickName: '내 닉네임', // 본인의 닉네임
+    };
+
+    setMessages((prevMessages) => [...prevMessages, newMessage]);
 
     stompClient.publish({
       destination: `/pub/chat/message`,
@@ -118,6 +149,9 @@ const ChatRoom = () => {
       <div css={inputBarStyle}>
         <ChatInputBar placeholder="메시지를 입력하세요." onSend={handleSendMessage} />
       </div>
+
+      {/* 스크롤 이동을 위한 참조 */}
+      <div ref={messagesEndRef} />
     </div>
   );
 };

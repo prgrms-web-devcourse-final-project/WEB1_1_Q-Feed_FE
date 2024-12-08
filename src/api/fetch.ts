@@ -15,7 +15,8 @@ export class APIClient {
     // 요청 인터셉터
     this.client.interceptors.request.use(
       (config) => {
-        const token = 'token';
+        const token =
+          'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM2MjM0NzYsImV4cCI6MTczMzcwOTg3Nn0.MtpsuNr5MVkw15Q1OE7vzuDs7Hu0xeq0oY3nZVmGpNM';
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
