@@ -5,4 +5,6 @@ export interface UserState {
     nickname: string;
     profileImage: string;
   } | null;
+  setUserId: (userId: string) => void;
+  clearUserId: () => void;
 }

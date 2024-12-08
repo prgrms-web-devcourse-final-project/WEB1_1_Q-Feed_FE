@@ -19,8 +19,6 @@ export interface GroupDetail {
   description: string;
   adminId: string;
   createdAt: string;
-  isMember: boolean;
-  isAdmin: boolean;
   members: {
     groupMemberId: number;
     userId: string;

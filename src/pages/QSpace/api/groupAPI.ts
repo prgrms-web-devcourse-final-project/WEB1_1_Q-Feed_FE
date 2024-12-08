@@ -7,6 +7,7 @@ import {
   GroupPost,
   UpdateGroupRequest,
 } from '@/pages/QSpace/types/group';
+import { ActionResponse } from '@/types/response';
 
 export const groupAPI = {
   // 카테고리별 그룹 목록 조회
@@ -26,7 +27,7 @@ export const groupAPI = {
   deleteGroup: (groupId: number) => apiClient.delete<void>(`/groups/${groupId}`),
 
   // 그룹 가입
-  joinGroup: (groupId: number) => apiClient.post(`/groups/${groupId}/join`),
+  joinGroup: (groupId: number) => apiClient.post<ActionResponse>(`/groups/${groupId}/join`),
 
   // 그룹 탈퇴
   leaveGroup: (groupId: number) => apiClient.delete(`/groups/${groupId}/leave`),
