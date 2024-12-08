@@ -5,12 +5,12 @@ importScripts('https://www.gstatic.com/firebasejs/9.21.0/firebase-messaging.js')
 
 // Firebase 초기화
 firebase.initializeApp({
-  apiKey: 'YOUR_API_KEY',
-  authDomain: 'YOUR_AUTH_DOMAIN',
-  projectId: 'YOUR_PROJECT_ID',
-  storageBucket: 'YOUR_STORAGE_BUCKET',
-  messagingSenderId: 'YOUR_MESSAGING_SENDER_ID',
-  appId: 'YOUR_APP_ID',
+  apiKey: 'AIzaSyCFC3QJKAZhz1R0k-h58wJA8_Rb_PbyiL4',
+  authDomain: 'q-feed.firebaseapp.com',
+  projectId: 'q-feed',
+  storageBucket: 'q-feed.firebasestorage.app',
+  messagingSenderId: '804246377517',
+  appId: '1:804246377517:web:71270af160949939da14a4',
 });
 
 // Messaging 초기화

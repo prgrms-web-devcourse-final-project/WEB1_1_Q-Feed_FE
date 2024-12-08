@@ -7,7 +7,7 @@ import { AUTH_KEYS } from '@/api/queryKeys';
 import { useUserStore } from '@/store/userStore';
 
 export const useLogin = () => {
-  const setUserId = useUserStore((state) => state.setUserId);
+  const { setUserId } = useUserStore();
 
   return useMutation<LoginResponse, Error, LoginRequest>({
     mutationKey: [AUTH_KEYS.ROOT, AUTH_KEYS.ACTIONS.LOGIN],
@@ -16,8 +16,6 @@ export const useLogin = () => {
       // 토큰 저장
       setCookie(ACCESS_TOKEN_KEY, data.accessToken);
       setCookie(REFRESH_TOKEN_KEY, data.refreshToken);
-
-      // userId 저장
       setUserId(data.userId);
     },
   });

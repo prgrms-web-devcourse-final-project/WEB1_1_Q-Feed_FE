@@ -61,6 +61,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
+      '/ws': {
+        target: 'wss://q-feed.n-e.kr/ws', // WebSocket 서버 URL
+        ws: true, // WebSocket 프록시 활성화
+        changeOrigin: true,
+      },
     },
   },
 });
