@@ -50,6 +50,9 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  define: {
+    global: 'window', // 여기에 global을 window로 정의
+  },
   server: {
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
@@ -60,6 +63,11 @@ export default defineConfig({
         target: 'http://43.203.125.140:8080',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
+      },
+      '/ws': {
+        target: 'ws://43.203.125.140:8080', // WebSocket 서버 URL
+        ws: true, // WebSocket 프록시 활성화
+        changeOrigin: true,
       },
     },
   },

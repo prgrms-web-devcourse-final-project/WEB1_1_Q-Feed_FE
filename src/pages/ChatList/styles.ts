@@ -33,7 +33,6 @@ export const userNameStyle = css`
   display: flex;
   justify-content: space-between;
   font-size: 14px;
-  font-weight: bold;
 `;
 
 export const timeStyle = css`

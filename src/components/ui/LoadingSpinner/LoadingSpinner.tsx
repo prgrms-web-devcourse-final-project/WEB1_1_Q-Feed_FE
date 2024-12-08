@@ -7,10 +7,7 @@ interface LoadingSpinnerProps {
   color?: string;
 }
 
-const LoadingSpinner = ({
-  size = 40,
-  color = theme.colors.primary,
-}: LoadingSpinnerProps) => {
+const LoadingSpinner = ({ size = 40, color = theme.colors.primary }: LoadingSpinnerProps) => {
   return (
     <SpinnerContainer>
       <ClockLoader size={size} color={color} />

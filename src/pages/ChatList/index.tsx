@@ -1,6 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { fetchChatList } from '@/pages/ChatList/api/fetchChatList';
+import { ChatData } from '@/pages/ChatList/type/chatListType';
 import ProfileImageCon from '../../components/ui/ProfileImageCon/ProfileImageCon';
 import InputBar from '../../components/ui/InputBar/InputBar';
 import Header from '@/components/common/Header';
@@ -14,34 +17,35 @@ import {
   unreadCountStyle,
   userNameStyle,
 } from '@/pages/ChatList/styles';
-interface ChatItemProps {
-  id: string; // 채팅방 ID
-  profileImg?: string; // 프로필 이미지 URL
-  userName: string; // 사용자 이름
-  lastMessage: string; // 마지막 메시지
-  time: string; // 메시지 시간
-  unreadCount?: number; // 읽지 않은 메시지 수
-}
 
 // 채팅 리스트 아이템 컴포넌트
-const ChatItem = ({ id, profileImg, userName, lastMessage, time, unreadCount }: ChatItemProps) => {
+const ChatItem = ({
+  chatRoomId,
+  otherUserProfile,
+  otherUserNickname,
+  lastMessageContent,
+  lastMessageCreatedAt,
+  unreadMessageCount,
+}: ChatData) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    navigate(`/chatroom/${id}`); // 클릭 시 채팅방으로 이동
+    navigate(`/chatroom/${chatRoomId}`); // 클릭 시 채팅방으로 이동
   };
 
   return (
     <div css={chatItemStyle} onClick={handleClick}>
-      <ProfileImageCon src={profileImg || ''} size={60} />
+      <ProfileImageCon src={otherUserProfile || ''} size={60} />
       <div css={chatContentStyle}>
         <div css={userNameStyle}>
-          <span>{userName}</span>
-          <span css={timeStyle}>{time}</span>
+          <span>{otherUserNickname}</span>
+          <span css={timeStyle}>{lastMessageCreatedAt}</span>
         </div>
         <div css={lastMessageStyle}>
-          <span>{lastMessage}</span>
-          {unreadCount && unreadCount > 0 && <span css={unreadCountStyle}>{unreadCount}</span>}
+          <span>{lastMessageContent}</span>
+          {unreadMessageCount && unreadMessageCount > 0 ? (
+            <span css={unreadCountStyle}>{unreadMessageCount}</span>
+          ) : null}
         </div>
       </div>
     </div>
@@ -51,39 +55,27 @@ const ChatItem = ({ id, profileImg, userName, lastMessage, time, unreadCount }: 
 // 채팅 리스트 메인 컴포넌트
 const ChatList = () => {
   const [searchTerm, setSearchTerm] = useState(''); // 검색어 상태
-  const [chatData] = useState([
-    {
-      id: '1',
-      profileImg: '',
-      userName: 'asdf',
-      lastMessage: '마지막 대화 내용 어쩌구저쩌구',
-      time: '13:18',
-      unreadCount: 3,
-    },
-    {
-      id: '2',
-      profileImg: '',
-      userName: '홍길동',
-      lastMessage: '여긴 새로운 메시지가 있어요!',
-      time: '14:25',
-      unreadCount: 10,
-    },
-    {
-      id: '3',
-      profileImg: '',
-      userName: '이순신',
-      lastMessage: '반갑습니다.',
-      time: '15:00',
-    },
-  ]);
+  const { data: chatData, isLoading } = useQuery({
+    queryKey: ['chatList'],
+    queryFn: fetchChatList,
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000,
+  });
 
   // 검색어를 기준으로 채팅 리스트 필터링
-  const filteredChatData = chatData.filter((chat) =>
-    chat.userName.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredChatData = Array.isArray(chatData)
+    ? chatData.filter((chat) =>
+        chat.otherUserNickname.toLowerCase().includes(searchTerm.toLowerCase())
+      )
+    : [];
+
   const handleSearchChange = (value: string) => {
     setSearchTerm(value); // 검색어 상태 업데이트
   };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div css={chatListContainerStyle}>
@@ -93,7 +85,7 @@ const ChatList = () => {
       {/* 채팅 리스트 */}
       <div css={chatListStyle}>
         {filteredChatData.map((chat) => (
-          <ChatItem key={chat.id} {...chat} />
+          <ChatItem key={chat.chatRoomId} {...chat} />
         ))}
       </div>
     </div>

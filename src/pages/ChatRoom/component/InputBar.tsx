@@ -21,13 +21,22 @@ const ChatInputBar: React.FC<InputBarProps> = ({
   onSend,
 }) => {
   const [value, setValue] = useState('');
+  const [isComposing, setIsComposing] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
+  const handleCompositionStart = () => {
+    setIsComposing(true); // IME 입력 시작
+  };
+
+  const handleCompositionEnd = (e: React.CompositionEvent<HTMLInputElement>) => {
+    setIsComposing(false); // IME 입력 종료
+    setValue(e.currentTarget.value); // 최종 입력 값 업데이트
+  };
 
   const handleSend = () => {
-    if (onSend && value.trim() !== '') {
+    if (!isComposing && onSend && value.trim() !== '') {
       const messageToSend = value.trim();
       setValue(''); // 입력 필드 초기화
       onSend(messageToSend); // 메시지 전송
@@ -35,7 +44,7 @@ const ChatInputBar: React.FC<InputBarProps> = ({
   };
 
   const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !isComposing) {
       e.preventDefault(); // 기본 동작 방지
       handleSend(); // 메시지 전송
     }
@@ -55,6 +64,8 @@ const ChatInputBar: React.FC<InputBarProps> = ({
           placeholder={placeholder}
           value={value}
           onChange={handleInputChange}
+          onCompositionStart={handleCompositionStart}
+          onCompositionEnd={handleCompositionEnd}
           onKeyDown={handleKeyPress} // 엔터키 이벤트 추가
         />
       </div>

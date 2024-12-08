@@ -1,8 +1,5 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { APIResponse } from '@/types/response';
-import { getCookie } from '@/utils/cookies';
-import { ACCESS_TOKEN_KEY } from '@/constants/token';
-
 export class APIClient {
   private client: AxiosInstance;
 
@@ -18,7 +15,8 @@ export class APIClient {
     // 요청 인터셉터
     this.client.interceptors.request.use(
       (config) => {
-        const token = getCookie(ACCESS_TOKEN_KEY);
+        const token =
+          'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM1OTI4MjQsImV4cCI6MTczMzY3OTIyNH0.RJwEddcsaKMFYsjiEgiCUAVzlEnCf1HBhfGtWzch74U';
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
