@@ -54,6 +54,8 @@ const QSpaceDetailPage = () => {
     [groupDetail?.members, userId]
   );
 
+  console.log(userId);
+
   const isAdmin = useMemo(() => groupDetail?.adminId === userId, [groupDetail?.adminId, userId]);
 
   const canJoinGroup = !isMember && !isAdmin;

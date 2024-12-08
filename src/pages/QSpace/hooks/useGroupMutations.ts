@@ -4,10 +4,16 @@ import { groupAPI } from '@/pages/QSpace/api/groupAPI';
 import { GROUP_KEYS } from '@/api/queryKeys';
 
 export const useJoinGroup = (groupId: number) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: async () => {
       const response = await groupAPI.joinGroup(groupId);
       return response;
+    },
+    onSuccess: () => {
+      // 그룹 데이터 갱신을 위해 쿼리 무효화
+      queryClient.invalidateQueries({ queryKey: [GROUP_KEYS.ROOT, groupId] });
     },
     onError: (error: Error) => {
       console.log(error);
