@@ -1,5 +1,6 @@
 import { useToast } from '@chakra-ui/react';
 import { NavigateFunction } from 'react-router';
+
 export interface Group {
   groupId: number;
   url: string;
@@ -10,16 +11,55 @@ export interface Group {
   membersCount: number;
 }
 
+export interface GroupDetail {
+  groupId: number;
+  categoryName: string;
+  url: string;
+  groupName: string;
+  description: string;
+  adminId: string;
+  createdAt: string;
+  isMember: boolean;
+  isAdmin: boolean;
+  members: {
+    groupMemberId: number;
+    userId: string;
+    userNickname: string;
+    userProfile: string;
+  }[];
+  posts: {
+    groupPostId: number;
+    nickname: string;
+    profile: string;
+    content: string;
+    createdAt: string;
+    likeCount: number;
+  }[];
+}
+
+export interface GroupMember {
+  groupMemberId: number;
+  userId: string;
+  userNickname: string;
+  userProfile: string;
+  description: string;
+}
+
+export interface GroupPost {
+  groupPostId: number;
+  nickname: string;
+  profile: string;
+  content: string;
+  createdAt: string;
+  likeCount: number;
+}
+
 export interface CreateGroupRequest {
   groupName: string;
   description: string;
   categoryId: number;
   url: string;
   isOpen: boolean;
-}
-
-export interface UploadResponse {
-  imageUrl: string;
 }
 
 export interface UpdateGroupRequest extends Partial<CreateGroupRequest> {

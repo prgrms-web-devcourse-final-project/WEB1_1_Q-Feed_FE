@@ -36,7 +36,7 @@ export const IDRecoveryPage = () => {
     <Container>
       <HeaderWithTitle title="아이디 찾기" />
       <ContentWrapper>
-        <EmailForm register={register} errors={errors} />
+        <EmailForm register={register} errors={errors} onVerify={handleOnClick} />
         <LoginButton text="아이디 확인하기" onClick={handleOnClick} />
       </ContentWrapper>
 

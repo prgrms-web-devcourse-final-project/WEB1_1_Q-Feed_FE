@@ -46,7 +46,7 @@ export const PasswordRecoveryPage = () => {
     <Container>
       <HeaderWithTitle title="비밀번호 찾기" />
       <ContentWrapper>
-        <EmailForm register={register} errors={errors} />
+        <EmailForm register={register} errors={errors} onVerify={handleVerify} />
         <ConfirmForm register={register} errors={errors} onVerify={handleVerify} />
         <LoginButton text="비밀번호 재설정 이메일 보내기" onClick={handleSendEmail} />
       </ContentWrapper>

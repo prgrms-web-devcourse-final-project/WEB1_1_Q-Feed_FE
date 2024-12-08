@@ -1,4 +1,4 @@
-import { groupAPI } from '@/pages/QSpace/api/fetchGroups';
+import { groupAPI } from '@/pages/QSpace/api/groupAPI';
 import { CreateGroupParams, CreateGroupRequest } from '@/pages/QSpace/types/group';
 import { showErrorToast, showSuccessToast, uploadImage } from '@/pages/QSpace/utils/uploadImage';
 

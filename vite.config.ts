@@ -57,7 +57,7 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'https://q-feed.n-e.kr/',
+        target: 'https://q-feed.n-e.kr',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
