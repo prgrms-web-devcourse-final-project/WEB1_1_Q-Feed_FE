@@ -57,7 +57,7 @@ export default defineConfig({
     },
     proxy: {
       '/api': {
-        target: 'http://43.203.125.140:8080',
+        target: 'https://q-feed.n-e.kr',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
