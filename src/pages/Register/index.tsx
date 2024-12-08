@@ -96,6 +96,10 @@ export const RegisterPage = () => {
         return;
       }
 
+      // [Question] 백엔드랑 합의된 로그인 / 회원가입 유효성 검사가 존재하나요?
+      // [Should] 존재한다면 zod등을 이용해서 유효성 검사 및 사용자에게 피드백(비밀번호가 형식에 안맞음 등,,)을 알려주는게 좋을거같습니다.
+      // 현재 비밀번호 유효성 검사에 실패하여 회원가입이 실패되는데, 유저 입장에서는 무었때문에 거절 당한지 알수가없습니다
+
       // 모든 조건이 충족되면 로컬스토리지에 저장
       localStorage.setItem('registerEmail', data.email);
       localStorage.setItem('registerPassword', data.password);
