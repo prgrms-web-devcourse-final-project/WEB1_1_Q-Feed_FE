@@ -12,15 +12,16 @@ import {
 import KakaoLoginButton from '@/pages/Login/components/KakaoLoginButton/KakaoLoginButton';
 import { useNavigation } from '@/hooks/useNavigation';
 import { useKakaoLogin } from '@/pages/Login/hooks/useKakaoLogin';
-import { useEffect } from 'react';
 import { useLogin } from '@/pages/Login/hooks/useLogin';
+import { useEffect } from 'react';
 import { LoginRequest } from '@/pages/Login/types/auth';
 
 export const Login = () => {
-  const { goToFindEmail, gotoSelectCategory, gotoPasswordRecoveryPage, gotoProfileRegister } =
+  const { goToFindEmail, gotoSelectCategory, gotoPasswordRecoveryPage, gotoRegisterPage } =
     useNavigation();
-  const { handleKakaoLogin } = useKakaoLogin();
   const { mutate: login, data, error } = useLogin();
+  const { handleKakaoLogin } = useKakaoLogin();
+
   const handleLogin = (LoginData: LoginRequest) => {
     login(LoginData);
   };
@@ -31,7 +32,7 @@ export const Login = () => {
     } else if (error) {
       alert('로그인 정보가 일치하지 않아요');
     }
-  }, [data]);
+  }, [data, error, gotoSelectCategory]);
 
   return (
     <Container>
@@ -48,7 +49,7 @@ export const Login = () => {
       <StyledHStack>
         <TextButton onClick={goToFindEmail}>이메일 찾기</TextButton>
         <TextButton onClick={gotoPasswordRecoveryPage}>비밀번호 찾기</TextButton>
-        <TextButton onClick={gotoProfileRegister}>회원가입</TextButton>
+        <TextButton onClick={gotoRegisterPage}>회원가입</TextButton>
       </StyledHStack>
     </Container>
   );

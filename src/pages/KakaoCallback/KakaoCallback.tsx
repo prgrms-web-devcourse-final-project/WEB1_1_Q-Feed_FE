@@ -2,7 +2,7 @@ import { APIURL } from '@/constants/api';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-interface KakaoUserInfo {
+export interface KakaoUserInfo {
   email?: string;
   nickname: string;
   profileImage?: string;

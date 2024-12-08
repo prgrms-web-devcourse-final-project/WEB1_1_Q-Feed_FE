@@ -79,6 +79,16 @@ export class APIClient {
     const response = await this.client.delete<APIResponse<T>>(url, config);
     return response.data;
   }
+
+  async postText<T>(url: string, text: string): Promise<APIResponse<T>> {
+    const response = await this.client.post<APIResponse<T>>(url, text, {
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+      transformRequest: [(data) => data], // 데이터 변환 방지
+    });
+    return response.data;
+  }
 }
 
 export const apiClient = new APIClient();

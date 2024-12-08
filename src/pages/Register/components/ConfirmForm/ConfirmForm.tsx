@@ -22,7 +22,7 @@ export const ConfirmForm = ({ register, errors, onVerify }: ConfirmFormProps) =>
           {...register('verificationCode', {
             required: '인증번호를 입력해주세요',
             pattern: {
-              value: /^[0-9]{6}$/,
+              value: /^[a-zA-Z0-9]*$/,
               message: '올바른 인증번호 형식이 아닙니다',
             },
           })}
