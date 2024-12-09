@@ -21,7 +21,7 @@ import {
   ButtonGroup,
   Container,
   Content,
-  QSpaceList,
+  // QSpaceList,
   QuestionList,
   Tab,
   TabContainer,
@@ -30,7 +30,6 @@ import {
 const MyPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'myQuestions' | 'qSpace'>('myQuestions');
-
   const { userId } = useUserStore();
 
   const { data: profile, isLoading: profileLoading, error: profileError } = useUserProfile(userId || '');

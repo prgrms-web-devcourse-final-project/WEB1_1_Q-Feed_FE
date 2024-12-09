@@ -2,10 +2,8 @@ import BackButton from '@/components/ui/BackButton/BackButton';
 import { QuestionCard } from '@/pages/Main/components/QuestionCard/QuestionCard';
 import { CommentItem } from '@/pages/AnswerDetail/components/CommentItem/CommentItem';
 import { MessageBox } from '@/pages/AnswerDetail/components/MessageBox/MessageBox';
-import { useState } from 'react';
 import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import {
   Body,
   CommentHeader,
@@ -18,21 +16,26 @@ import {
   TextCommentCount,
   Title,
 } from '@/pages/AnswerDetail/styles';
-import { dummyCommentList } from '@/mocks/dummyCommentList';
-
-const dummyComment = {
-  id: '2',
-  author: { name: '세계일주', profileImage: 'https://i.pravatar.cc/150?img=2' },
-  content: '크리스마스 마켓 좋죠! 뉘른베르크 크리스마스 마켓도 추천합니다~',
-  createdAt: '2024-11-28T09:30:00',
-  likes: 8,
-  isLiked: true,
-  replyCount: 27,
-};
+import { usePostDetail } from '@/pages/AnswerDetail/hooks/usePostDetail';
+import { useFetchQuestion } from '@/pages/AnswerDetail/hooks/useFetchQuestion';
+import { HobbyTag } from '@/constants/hobbytag';
+import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
+import { formatLastUpdated } from '@/utils/formatLastUpdated';
 
 export const PostDetailPage = () => {
-  const [comments, setComments] = useState(dummyCommentList);
-  const location = useLocation();
+  const { postId, categoryId } = useParams();
+  const parsedPostId = Number(postId);
+  const parsedCategoryId = Number(categoryId);
+  const { data: postDetail, isLoading, isError } = usePostDetail(parsedPostId);
+  const { data: todayQuestion } = useFetchQuestion(parsedCategoryId);
+
+  if (!postId || isNaN(parsedPostId)) {
+    return <div>유효하지 않은 게시물입니다</div>;
+  }
+
+  if (isLoading) <LoadingSpinner />;
+  if (isError) alert('Error');
+
   const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
     console.log(commentId, isLiked, count);
     //좋아요 처리
@@ -59,44 +62,51 @@ export const PostDetailPage = () => {
       replyCount: 0,
     };
 
-    setComments((prevComments) => [newComment, ...prevComments]);
-  };
+    console.log(newComment);
 
-  useEffect(() => {
-    setTimeout(() => {
-      document.documentElement.scrollTop = 0;
-      document.body.scrollTop = 0;
-    }, 0);
-  }, [location]);
+    // setComments((prevComments) => [newComment, ...prevComments]);
+  };
 
   return (
     <Container>
       <Header>
         <BackButton />
-        <Title>맛집</Title>
+        <Title>{HobbyTag[parsedCategoryId - 1]}</Title>
       </Header>
       <Body>
         <QuestionCard
-          date="2024.11.28"
-          question="오늘 당장 해외여행을 떠날수 있다면 어디로 갈건가요?"
+          date={formatLastUpdated(todayQuestion?.createdAt || '2024-12-12')}
+          question={todayQuestion?.content || '오늘의 질문은 무엇이야??'}
         />
         <PostWrapper>
-          <CommentItem
-            comment={dummyComment}
-            onLikeComment={handleLikeComment}
-            onReplyClick={handleReplyClick}
-          />
+          {postDetail && (
+            <CommentItem
+              commentId={postDetail.answerId}
+              profileImage={postDetail.profileImage}
+              nickName={postDetail.authorNickname}
+              content={postDetail.content}
+              createdAt={postDetail.createdAt}
+              likeCount={postDetail.likeCount}
+              isLike={postDetail.isLike}
+              replyCount={postDetail.commentCount}
+              comments={postDetail.comments}
+              onLikeComment={handleLikeComment}
+              onReplyClick={handleReplyClick}
+            />
+          )}
         </PostWrapper>
         <CommentHeader>
           <TextComment>댓글</TextComment>
-          <TextCommentCount>({comments.length})</TextCommentCount>
+          <TextCommentCount>({postDetail?.commentCount})</TextCommentCount>
         </CommentHeader>
         <CommentListWrapper>
-          <CommentItemList
-            comments={comments}
-            onLikeComment={handleLikeComment}
-            onReplyClick={handleReplyClick}
-          />
+          {postDetail?.comments && (
+            <CommentItemList
+              comments={postDetail?.comments}
+              onLikeComment={handleLikeComment}
+              onReplyClick={handleReplyClick}
+            />
+          )}
         </CommentListWrapper>
         <MessageBoxWrapper>
           <MessageBox onSendMessage={handleMessage} />
