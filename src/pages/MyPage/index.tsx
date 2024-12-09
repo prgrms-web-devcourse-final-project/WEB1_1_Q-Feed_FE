@@ -9,12 +9,12 @@ import MyProfile from '@/pages/MyPage/components/MyProfile/MyProfile';
 import QSpaceCard from '@/components/ui/QSpaceCard/QSpaceCard';
 import { useUserProfile, useUserInterests } from './hooks/useUserProfile';
 import { interestsMap } from '@/pages/MyPage/utils/interestsMap';
-import { useGroups } from '@/pages/QSpace/hooks/useGroupList';
 import { useInfiniteAnswers } from '@/pages/MyPage/hooks/useAnswers';
 import { categoryIdMap } from '@/utils/categoryIdMap';
 import { getQSpaceCard } from '@/utils/getQSpaceCard';
 import ErrorPage from '@/pages/Error';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
+import { useGroups } from '@/pages/QSpace/hooks/Query/useGroupList';
 import { useAnswerVisibility } from '@/pages/MyPage/api/useAnswerVisibility';
 import { useUserStore } from '@/store/userStore';
 import {
@@ -22,7 +22,6 @@ import {
   Container,
   Content,
   QSpaceList,
-  // QSpaceList,
   QuestionList,
   Tab,
   TabContainer,

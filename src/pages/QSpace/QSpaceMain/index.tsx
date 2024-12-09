@@ -11,7 +11,7 @@ import Header from '@/components/common/Header';
 import GroupStateCheckBox from '@/pages/QSpace/QSpaceMain/components/GroupStateCheckBox/GroupStateCheckBox';
 import FloatingButton from '@/pages/QSpace/QSpaceMain/components/FloatingButton/FloatingButton';
 
-import { useGroups } from '@/pages/QSpace/hooks/useGroupList';
+import { useGroups } from '@/pages/QSpace/hooks/Query/useGroupList';
 
 import {
   Body,
@@ -69,7 +69,9 @@ const QSpaceMainPage = () => {
           {isPending ? (
             <div>Loading...</div>
           ) : (
-            filteredGroups?.map((group) => <QSpaceCard {...getQSpaceCard(group)} />)
+            filteredGroups?.map((group) => (
+              <QSpaceCard key={group.groupId} {...getQSpaceCard(group)} />
+            ))
           )}
         </QSpaceList>
         <FloatingButton onClick={() => console.log('Create new space')} />

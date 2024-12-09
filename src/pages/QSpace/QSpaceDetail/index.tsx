@@ -1,19 +1,20 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useUserStore } from '@/store/userStore';
+import { useMemo } from 'react';
 
 import HobbyTags from '@/components/ui/HobbyTag/HobbyTags';
 import BackButton from '@/components/ui/BackButton/BackButton';
 import { CommentList } from '@/components/ui/CommentList/CommentList';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
+import { useUserStore } from '@/store/userStore';
 import ChatInputBar from '@/pages/ChatRoom/component/InputBar';
 
-import { useGroupDetail } from '@/pages/QSpace/hooks/useGroupDetail';
+import { useGroupDetail } from '@/pages/QSpace/hooks/Query/useGroupDetail';
 import {
   useCreatePost,
   useDeleteGroup,
   useJoinGroup,
   useLikePost,
-} from '@/pages/QSpace/hooks/useGroupMutations';
+} from '@/pages/QSpace/hooks/Mutation/useGroupMutations';
 
 import {
   Container,
@@ -34,35 +35,39 @@ import {
 import DetailsHeader from '@/pages/QSpace/QSpaceDetail/components/DetailsHeader/DetailsHeader';
 import KebabMenu from '@/pages/QSpace/QSpaceDetail/components/KebabMenu/KebabMenu';
 import MemberContainer from '@/pages/QSpace/QSpaceDetail/components/MemberContainer/MemberContainer';
+import { formatLastUpdated } from '@/utils/formatLastUpdated';
 
 const QSpaceDetailPage = () => {
   const navigate = useNavigate();
-  const { userId } = useUserStore();
   const location = useLocation();
 
   const groupId = location.state?.groupId;
   const { data: groupDetail, isPending } = useGroupDetail(groupId);
+  const { userId } = useUserStore();
 
-  const joinGroupMutation = useJoinGroup(groupId);
-  const createPostMutation = useCreatePost(groupId);
-  const likePostMutation = useLikePost(groupId);
-  const deleteGroupMutation = useDeleteGroup(groupId);
+  const joinGroup = useJoinGroup(groupId);
+  const createPost = useCreatePost(groupId);
+  const likePost = useLikePost(groupId);
+  const deleteGroup = useDeleteGroup(groupId);
+
+  const isMember = useMemo(
+    () => groupDetail?.members.some((member) => member.userId === userId),
+    [groupDetail?.members, userId]
+  );
+
+  console.log(userId);
+
+  const isAdmin = useMemo(() => groupDetail?.adminId === userId, [groupDetail?.adminId, userId]);
+
+  const canJoinGroup = !isMember && !isAdmin;
 
   const handleJoinGroup = () => {
-    if (!userId) {
-      navigate('/login');
-      return;
-    }
-    joinGroupMutation.mutate();
+    joinGroup.mutate();
   };
 
   const handleMemberListClick = () => {
     navigate(`/groups/${groupId}/members`);
   };
-
-  const isCurrentUserAdmin = groupDetail?.adminId === userId;
-  const isCurrentUserMember =
-    joinGroupMutation.isSuccess || groupDetail?.members.some((member) => member.userId === userId);
 
   if (isPending) {
     return <LoadingSpinner />;
@@ -96,18 +101,20 @@ const QSpaceDetailPage = () => {
                 ?.userProfile
             }
           />
-          {isCurrentUserAdmin && (
+          {isAdmin && (
             <KebabMenuWrapper>
               <KebabMenu
+                groupId={groupId}
+                isOpen={groupDetail.isOpen}
                 onEditClick={() => navigate(`/groups/${groupId}/edit`)}
-                onDeleteClick={() => deleteGroupMutation.mutate()}
+                onDeleteClick={() => deleteGroup.mutate()}
               />
             </KebabMenuWrapper>
           )}
         </HeaderWrapper>
 
         <ImageContainer>
-          <DiscussionImage src={groupDetail.url} alt="토론방 이미지" />
+          <DiscussionImage crossOrigin="anonymous" src={groupDetail.url} alt="토론방 이미지" />
         </ImageContainer>
 
         <ContentArea>
@@ -128,13 +135,13 @@ const QSpaceDetailPage = () => {
           onMemberListClick={handleMemberListClick}
         />
 
-        {!isCurrentUserMember && !isCurrentUserAdmin && (
+        {canJoinGroup ? (
           <JoinButtonContainer>
-            <JoinButton onClick={handleJoinGroup}>토론 참여하기</JoinButton>
+            <JoinButton onClick={handleJoinGroup} disabled={joinGroup.isPending}>
+              {joinGroup.isPending ? '참여 중...' : '토론 참여하기'}
+            </JoinButton>
           </JoinButtonContainer>
-        )}
-
-        {(isCurrentUserMember || isCurrentUserAdmin) && (
+        ) : (
           <>
             <CommentArea>
               <CommentList
@@ -143,17 +150,17 @@ const QSpaceDetailPage = () => {
                   content: post.content,
                   author: post.nickname,
                   profileImage: post.profile,
-                  createdAt: post.createdAt,
+                  createdAt: formatLastUpdated(post.createdAt),
                   likeCount: post.likeCount,
                 }))}
-                onLikeComment={(commentId) => likePostMutation.mutate(commentId)}
+                onLikeComment={(commentId) => likePost.mutate(commentId)}
               />
             </CommentArea>
 
             <ChatInputWrapper>
               <ChatInputBar
                 placeholder="메시지를 입력하세요"
-                onSend={(content) => createPostMutation.mutate(content)}
+                onSend={(content) => createPost.mutate(content)}
               />
             </ChatInputWrapper>
           </>

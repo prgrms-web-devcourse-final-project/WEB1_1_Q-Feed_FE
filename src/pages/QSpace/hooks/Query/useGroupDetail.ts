@@ -8,6 +8,8 @@ export const useGroupDetail = (groupId: number) => {
     queryKey: [GROUP_KEYS.ROOT, groupId],
     queryFn: async () => {
       const response = await groupAPI.getGroupDetail(groupId);
+      console.log(response.data?.adminId);
+
       if (!response.success || !response.data) {
         throw new Error(response.error?.message || '그룹 정보를 불러오는데 실패했습니다');
       }

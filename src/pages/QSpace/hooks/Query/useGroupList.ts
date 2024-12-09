@@ -6,5 +6,7 @@ export const useGroups = (categoryId: number) => {
     queryKey: ['groups', 'list', categoryId] as const,
     queryFn: () => fetchGroups(categoryId),
     enabled: categoryId !== undefined,
+    staleTime: 0,
+    refetchOnMount: 'always',
   });
 };

@@ -5,17 +5,17 @@ import { Avatar } from '@chakra-ui/react';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
+  border-bottom: 1px solid ${theme.colors.gray[200]};
 `;
 
 export const CommentItem = styled.div`
   display: flex;
   gap: 1rem;
-  border-bottom: 1px solid ${theme.colors.gray[300]};
   cursor: pointer;
   &:hover {
     background: ${theme.colors.sub};
   }
-  padding: 0.75rem 0;
+  padding: 1rem 1.5rem;
 `;
 
 export const StyledAvatar = styled(Avatar)`

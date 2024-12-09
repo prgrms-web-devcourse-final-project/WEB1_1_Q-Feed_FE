@@ -10,7 +10,6 @@ import {
   StyledAvatar,
 } from '@/components/ui/CommentList/CommentList.styles';
 import LikeButtonContainer from '@/components/ui/LikeButtonContainer/LikeButtonContainer';
-
 interface Comment {
   id: number; // groupPostId로 변경
   content: string;
@@ -26,22 +25,6 @@ interface CommentListProps {
 }
 
 export const CommentList = ({ comments, onLikeComment }: CommentListProps) => {
-  const formatTime = (dateString: string) => {
-    const now = new Date();
-    const commentDate = new Date(dateString);
-    const diffInHours = Math.floor((now.getTime() - commentDate.getTime()) / (1000 * 60 * 60));
-
-    if (diffInHours < 1) {
-      const diffInMinutes = Math.floor((now.getTime() - commentDate.getTime()) / (1000 * 60));
-      return `${diffInMinutes}분 전`;
-    }
-    if (diffInHours < 24) {
-      return `${diffInHours}시간 전`;
-    }
-    const diffInDays = Math.floor(diffInHours / 24);
-    return `${diffInDays}일 전`;
-  };
-
   return (
     <Container>
       {comments.map((comment) => (
@@ -50,7 +33,7 @@ export const CommentList = ({ comments, onLikeComment }: CommentListProps) => {
           <CommentContent>
             <AuthorInfo>
               <AuthorName>{comment.author}</AuthorName>
-              <CreatedAt>{formatTime(comment.createdAt)}</CreatedAt>
+              <CreatedAt>{comment.createdAt}</CreatedAt>
             </AuthorInfo>
             <Content>{comment.content}</Content>
             <ActionButtons>

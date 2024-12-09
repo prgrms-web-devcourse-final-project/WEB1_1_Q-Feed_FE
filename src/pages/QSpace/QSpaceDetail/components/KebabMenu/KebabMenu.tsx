@@ -1,21 +1,27 @@
 import { VscKebabVertical } from 'react-icons/vsc';
 import { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
+import { useUpdateGroupStatus } from '@/pages/QSpace/hooks/Mutation/useGroupMutations';
 import { Container, IconButton, MenuItem, MenuPopup } from './KebabMenu.styles';
 
 interface KebabMenuProps {
   onEditClick: () => void;
   onDeleteClick: () => void;
+  groupId: number;
+  isOpen?: boolean; // 모집 상태
 }
 
-const KebabMenu = ({ onEditClick, onDeleteClick }: KebabMenuProps) => {
-  const [isOpen, setIsOpen] = useState(false);
+const KebabMenu = ({ onEditClick, onDeleteClick, groupId, isOpen = true }: KebabMenuProps) => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const updateStatus = useUpdateGroupStatus(groupId);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
+        setIsMenuOpen(false);
       }
     };
 
@@ -26,17 +32,23 @@ const KebabMenu = ({ onEditClick, onDeleteClick }: KebabMenuProps) => {
   }, []);
 
   const handleToggle = () => {
-    setIsOpen(!isOpen);
+    setIsMenuOpen(!isMenuOpen);
   };
 
   const handleEdit = () => {
+    navigate(`/qspace/${groupId}/edit`);
     onEditClick();
-    setIsOpen(false);
+    setIsMenuOpen(false);
   };
 
   const handleDelete = () => {
     onDeleteClick();
-    setIsOpen(false);
+    setIsMenuOpen(false);
+  };
+
+  const handleStateChange = () => {
+    updateStatus.mutate();
+    setIsMenuOpen(false);
   };
 
   return (
@@ -45,9 +57,12 @@ const KebabMenu = ({ onEditClick, onDeleteClick }: KebabMenuProps) => {
         <VscKebabVertical size={24} />
       </IconButton>
 
-      {isOpen && (
+      {isMenuOpen && (
         <MenuPopup>
           <MenuItem onClick={handleEdit}>글 수정하기</MenuItem>
+          <MenuItem onClick={handleStateChange}>
+            {isOpen ? '모집 완료로 변경' : '모집중으로 변경'}
+          </MenuItem>
           <MenuItem onClick={handleDelete}>글 삭제하기</MenuItem>
         </MenuPopup>
       )}

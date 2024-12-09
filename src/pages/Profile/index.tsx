@@ -116,7 +116,7 @@ const ProfilePage = () => {
           </FollowInfo>
           <ButtonGroup>
             <Button
-              onClick={!isSelfProfile ? handleFollowClick : undefined} //
+              onClick={!isSelfProfile ? handleFollowClick : () => navigate('/login')} //
               backgroundColor={theme.colors.primary}
               textColor={theme.colors.white}
             >

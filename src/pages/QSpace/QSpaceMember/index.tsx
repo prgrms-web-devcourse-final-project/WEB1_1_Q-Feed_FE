@@ -4,10 +4,11 @@ import BackButton from '@/components/ui/BackButton/BackButton';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
 import { useUserStore } from '@/store/userStore';
 
-import { useMemberList } from '@/pages/QSpace/hooks/useMemberList';
+import { useMemberList } from '@/pages/QSpace/hooks/Query/useMemberList';
 import MemberList from '@/pages/QSpace/QSpaceMember/components/MemberList/MemberList';
 
 import { ContentContainer, Header, HeaderTitle, PageContainer } from './styles';
+import { useRemoveMember } from '@/pages/QSpace/hooks/Mutation/useRemoveMember';
 
 const QSpaceMemberPage = () => {
   const { groupId } = useParams();
@@ -15,10 +16,12 @@ const QSpaceMemberPage = () => {
   const groupIdNumber = Number(groupId);
 
   const { data: members, isPending } = useMemberList(groupIdNumber);
+  const removeMemberMutation = useRemoveMember(groupIdNumber);
 
-  const handleResign = (memberId: number) => {
-    // 탈퇴 로직 구현 예정
-    console.log('Member resigned:', memberId);
+  const handleResign = async (memberId: number) => {
+    if (window.confirm('정말로 이 멤버를 퇴장시키시겠습니까?')) {
+      await removeMemberMutation.mutateAsync(memberId);
+    }
   };
 
   if (isPending) {
@@ -37,6 +40,7 @@ const QSpaceMemberPage = () => {
           adminId={members?.[0]?.userId || ''}
           currentUserId={userId || ''}
           onResign={handleResign}
+          isLoading={removeMemberMutation.isPending}
         />
       </ContentContainer>
     </PageContainer>
