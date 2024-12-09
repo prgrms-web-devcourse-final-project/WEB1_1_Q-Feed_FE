@@ -4,13 +4,13 @@ export interface Author {
 }
 
 export interface Comment {
-  id: string;
+  commentId: string;
   author: Author;
   content: string;
   createdAt: string;
-  likes: number;
-  isLiked: boolean;
+  likeCount: number;
+  isLike: boolean;
   replyCount: number;
-  replies?: Comment[];
+  comments?: Comment[];
   parentId?: string;
 }

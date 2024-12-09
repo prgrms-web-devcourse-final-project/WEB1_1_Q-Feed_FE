@@ -1,6 +1,7 @@
 import ProfileImage from '@/components/ui/ProfileImageCon/ProfileImageCon';
 import Tags from '@/pages/MyPage/components/Tags/Tags';
 import { useNavigate } from 'react-router-dom';
+import userProfileImg from '@/assets/images/profile.svg'
 import {
   ProfileSection,
   ProfileImageWrapper,
@@ -19,13 +20,13 @@ import {
 interface MyProfileProps {
   profile: {
     name: string;
-    id: string;
+    email: string;
     followers: number;
     following: number;
     bio: string;
-    profileImage: string;
+    profileImage: string | null;
     tags: string[];
-  };
+  }
 }
 
 const MyProfile = ({ profile }: MyProfileProps) => {
@@ -34,7 +35,7 @@ const MyProfile = ({ profile }: MyProfileProps) => {
     <ProfileSection>
       <ProfileImageWrapper>
         <ProfileImage
-          src={profile.profileImage}
+          src={profile.profileImage || userProfileImg}
           size={100}
           alt={`${profile.name}의 프로필 이미지`}
         />
@@ -42,7 +43,7 @@ const MyProfile = ({ profile }: MyProfileProps) => {
       <ProfileInfo>
         <NameAndId>
           <Name>{profile.name}</Name>
-          <Id>{`(${profile.id})`}</Id>
+          <Id>{`(${profile.email})`}</Id>
         </NameAndId>
         <DetailsAndTags>
           <Details>

@@ -2,13 +2,15 @@ import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 import { Avatar } from '@chakra-ui/react';
 
-export const CommentWrapper = styled.div`
+export const CommentWrapper = styled.div<{ hideBorder?: boolean }>`
   width: 100%;
   cursor: pointer;
-  border-bottom: 0.0625rem solid ${theme.colors.gray[300]};
+  border-bottom: ${({ hideBorder }) =>
+    hideBorder ? 'none' : `0.0625rem solid ${theme.colors.gray[300]}`};
 `;
 
 export const Container = styled.div<{ depth: number; isCommentButtonExist: boolean }>`
+  width: 100%;
   display: flex;
   gap: 1rem;
   border-bottom: 1px solid ${theme.colors.gray[100]};

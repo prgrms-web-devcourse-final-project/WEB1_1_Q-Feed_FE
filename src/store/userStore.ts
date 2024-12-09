@@ -1,15 +1,8 @@
 import { create } from 'zustand';
-import { UserState } from '@/pages/QSpace/types/userState';
+import { User } from '@/types/user';
 
-interface UserStore extends UserState {
-  setUser: (user: Omit<UserState, 'isLoggedIn'>) => void;
-  logout: () => void;
-}
-
-export const useUserStore = create<UserStore>((set) => ({
+export const useUserStore = create<User>((set) => ({
   userId: null,
-  isLoggedIn: false,
-  profile: null,
-  setUser: (user) => set({ ...user, isLoggedIn: true }),
-  logout: () => set({ userId: null, isLoggedIn: false, profile: null }),
+  setUserId: (userId) => set({ userId }),
+  clearUserId: () => set({ userId: null }),
 }));
