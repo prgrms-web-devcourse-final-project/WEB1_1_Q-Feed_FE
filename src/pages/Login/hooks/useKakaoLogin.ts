@@ -1,23 +1,17 @@
 export const useKakaoLogin = () => {
-  const validateKakaoConfig = () => {
-    if (!import.meta.env.VITE_KAKAO_CLIENT_ID) {
-      throw new Error('카카오 클라이언트 ID가 설정되지 않았습니다.');
-    }
-    if (!import.meta.env.VITE_REDIRECT_URI) {
-      throw new Error('리다이렉트 URI가 설정되지 않았습니다.');
-    }
-  };
+  // KAKAO_AUTH_URL을 함수 내부로 이동
+  const kakaoLogin = () => {
+    const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${
+      import.meta.env.VITE_KAKAO_CLIENT_ID
+    }&redirect_uri=${import.meta.env.VITE_REDIRECT_URI}&response_type=code`;
 
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${import.meta.env.VITE_KAKAO_CLIENT_ID}&redirect_uri=${import.meta.env.VITE_REDIRECT_URI}&response_type=code`;
-
-  const handleKakaoLogin = () => {
-    try {
-      validateKakaoConfig();
-      window.location.href = KAKAO_AUTH_URL;
-    } catch (error) {
+    if (!import.meta.env.VITE_KAKAO_CLIENT_ID || !import.meta.env.VITE_REDIRECT_URI) {
       alert('카카오 로그인 설정에 문제가 있습니다.');
+      return;
     }
+
+    window.location.href = KAKAO_AUTH_URL;
   };
 
-  return { handleKakaoLogin };
+  return { handleKakaoLogin: kakaoLogin };
 };

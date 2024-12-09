@@ -15,6 +15,7 @@ import {
   TextContainer,
   Title,
 } from '@/components/ui/QSpaceCard/QSpaceCard.styles';
+import { ROUTES } from '@/constants/routes';
 
 interface QSpaceCardProps {
   imageUrl: string;
@@ -23,7 +24,7 @@ interface QSpaceCardProps {
   memberCount: number;
   isRecruiting: boolean;
   lastUpdated: string;
-  id?: string; // 카드의 고유 ID 추가 (선택적)
+  groupId: number;
 }
 
 const QSpaceCard = ({
@@ -33,13 +34,14 @@ const QSpaceCard = ({
   memberCount,
   isRecruiting,
   lastUpdated,
-  id,
+  groupId,
 }: QSpaceCardProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    // id가 있으면 해당 id를 포함한 경로로, 없으면 기본 경로로 이동
-    navigate(id ? `/qspace/details/${id}` : '/qspace/details');
+    navigate(ROUTES.QSPACE_DETAIL, {
+      state: { groupId },
+    });
   };
 
   return (

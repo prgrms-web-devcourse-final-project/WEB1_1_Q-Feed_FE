@@ -1,26 +1,15 @@
-import {
-  Container,
-  IconButton,
-  MenuItem,
-  MenuPopup,
-} from '@/pages/QSpace/QSpaceDetail/components/KebabMenu/KebabMenu.styles';
-import { useState, useRef, useEffect } from 'react';
 import { VscKebabVertical } from 'react-icons/vsc';
+import { useRef, useState, useEffect } from 'react';
+
+import { Container, IconButton, MenuItem, MenuPopup } from './KebabMenu.styles';
+
 interface KebabMenuProps {
-  onEditClick?: () => void;
-  onDeleteClick?: () => void;
-  onRecruitmentStatusChange?: (isRecruiting: boolean) => void;
-  initialRecruitmentStatus?: boolean;
+  onEditClick: () => void;
+  onDeleteClick: () => void;
 }
 
-const KebabMenu = ({
-  onEditClick,
-  onDeleteClick,
-  onRecruitmentStatusChange,
-  initialRecruitmentStatus = true, // true: 모집 중, false: 모집 완료
-}: KebabMenuProps) => {
+const KebabMenu = ({ onEditClick, onDeleteClick }: KebabMenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isRecruiting, setIsRecruiting] = useState(initialRecruitmentStatus);
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -40,10 +29,13 @@ const KebabMenu = ({
     setIsOpen(!isOpen);
   };
 
-  const handleRecruitmentStatusClick = () => {
-    const newStatus = !isRecruiting;
-    setIsRecruiting(newStatus);
-    onRecruitmentStatusChange?.(newStatus);
+  const handleEdit = () => {
+    onEditClick();
+    setIsOpen(false);
+  };
+
+  const handleDelete = () => {
+    onDeleteClick();
     setIsOpen(false);
   };
 
@@ -55,11 +47,8 @@ const KebabMenu = ({
 
       {isOpen && (
         <MenuPopup>
-          <MenuItem onClick={handleRecruitmentStatusClick}>
-            {isRecruiting ? '모집 완료로 변경' : '모집 중으로 변경'}
-          </MenuItem>
-          <MenuItem onClick={onEditClick}>글 수정하기</MenuItem>
-          <MenuItem onClick={onDeleteClick}>글 삭제하기</MenuItem>
+          <MenuItem onClick={handleEdit}>글 수정하기</MenuItem>
+          <MenuItem onClick={handleDelete}>글 삭제하기</MenuItem>
         </MenuPopup>
       )}
     </Container>

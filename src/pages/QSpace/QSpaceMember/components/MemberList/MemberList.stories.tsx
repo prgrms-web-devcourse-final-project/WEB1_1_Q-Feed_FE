@@ -1,60 +1,53 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import MemberList from './MemberList';
-import { ThemeProvider } from '@emotion/react';
-import theme from '@/styles/theme';
 
 const meta: Meta<typeof MemberList> = {
-  title: 'Components/QSpaceMember/MemberList',
+  title: 'Components/MemberList',
   component: MemberList,
   parameters: {
     layout: 'centered',
+    docs: {
+      description: {
+        component:
+          '그룹의 멤버 목록을 표시하는 컴포넌트입니다. 각 멤버의 프로필 이미지, 닉네임, 소개글을 보여줍니다.',
+      },
+    },
   },
-  decorators: [
-    (Story) => (
-      <ThemeProvider theme={theme}>
-        <div style={{ width: '600px', padding: '20px' }}>
-          <Story />
-        </div>
-      </ThemeProvider>
-    ),
-  ],
+  tags: ['autodocs'],
 };
 
 export default meta;
 type Story = StoryObj<typeof MemberList>;
 
-const sampleMembers = [
+const mockMembers = [
   {
-    id: '1',
-    name: '백종원',
-    role: '프로필 소개글',
-    profileImage: undefined,
+    groupMemberId: 1,
+    userId: 'user1',
+    userNickname: '김토론',
+    userProfile: '/api/placeholder/48/48',
+    description: '안녕하세요! 토론을 좋아하는 김토론입니다.',
   },
   {
-    id: '2',
-    name: '김철수',
-    role: '프로필 소개글',
-    profileImage: 'https://example.com/profile2.jpg',
+    groupMemberId: 2,
+    userId: 'user2',
+    userNickname: '박토의',
+    userProfile: '/api/placeholder/48/48',
+    description: '다양한 주제로 이야기 나누고 싶습니다.',
   },
   {
-    id: '3',
-    name: '이영희',
-    role: '프로필 소개글',
-    profileImage: undefined,
+    groupMemberId: 3,
+    userId: 'user3',
+    userNickname: '이의견',
+    userProfile: '/api/placeholder/48/48',
+    description: '',
   },
 ];
 
 export const Default: Story = {
   args: {
-    members: sampleMembers,
-    onResign: (memberId: string) => {
-      console.log(`Member ${memberId} resigned`);
+    members: mockMembers,
+    onResign: (memberId) => {
+      console.log(`Member resigned: ${memberId}`);
     },
-  },
-};
-
-export const EmptyList: Story = {
-  args: {
-    members: [],
   },
 };

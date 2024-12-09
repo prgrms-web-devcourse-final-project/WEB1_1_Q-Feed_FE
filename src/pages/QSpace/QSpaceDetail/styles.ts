@@ -1,4 +1,5 @@
 import theme from '@/styles/theme';
+import { Button } from '@chakra-ui/react';
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
@@ -69,4 +70,24 @@ export const ChatInputWrapper = styled.div`
   max-width: 430px;
   margin: 0 auto;
   z-index: 10;
+`;
+
+export const JoinButtonContainer = styled.div`
+  padding: 1rem;
+  position: relative;
+  background-color: none;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+`;
+
+export const JoinButton = styled(Button)`
+  width: 100%;
+  padding: 1.5rem 0.5rem;
+  background-color: ${theme.colors.primary};
+  color: ${theme.colors.white};
+  border-radius: 1rem;
+
+  &:hover {
+    background-color: ${theme.colors.sub};
+  }
 `;

@@ -11,7 +11,7 @@ import Header from '@/components/common/Header';
 import GroupStateCheckBox from '@/pages/QSpace/QSpaceMain/components/GroupStateCheckBox/GroupStateCheckBox';
 import FloatingButton from '@/pages/QSpace/QSpaceMain/components/FloatingButton/FloatingButton';
 
-import { useGroups } from '@/pages/QSpace/hooks/useGroups';
+import { useGroups } from '@/pages/QSpace/hooks/useGroupList';
 
 import {
   Body,
