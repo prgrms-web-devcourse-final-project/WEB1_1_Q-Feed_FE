@@ -19,6 +19,7 @@ export interface GroupDetail {
   description: string;
   adminId: string;
   createdAt: string;
+  isOpen: boolean;
   members: {
     groupMemberId: number;
     userId: string;

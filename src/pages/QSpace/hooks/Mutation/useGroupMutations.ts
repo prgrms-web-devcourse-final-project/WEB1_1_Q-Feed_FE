@@ -27,6 +27,10 @@ export const useCreatePost = (groupId: number) => {
 
   return useMutation({
     mutationFn: async (content: string) => {
+      if (!content || content.trim() === '') {
+        throw new Error('내용을 입력해주세요');
+      }
+
       const response = await groupAPI.createPost(groupId, content);
       if (!response.success) {
         throw new Error(response.error?.message || '게시글 작성에 실패했습니다');
@@ -62,14 +66,26 @@ export const useLikePost = (groupId: number) => {
 
 export const useUpdateGroupStatus = (groupId: number) => {
   const queryClient = useQueryClient();
+  const toast = useToast();
 
   return useMutation({
     mutationFn: () => groupAPI.updateGroupStatus(groupId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [GROUP_KEYS.ROOT, groupId] });
+      queryClient.invalidateQueries({ queryKey: [GROUP_KEYS.ROOT] });
+      toast({
+        title: '모집 상태가 변경되었습니다',
+        status: 'success',
+        duration: 3000,
+      });
     },
     onError: (error: Error) => {
-      console.log(error);
+      toast({
+        title: '모집 상태 변경 실패',
+        description: error instanceof Error ? error.message : '다시 시도해주세요',
+        status: 'error',
+        duration: 3000,
+      });
     },
   });
 };
