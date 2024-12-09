@@ -41,4 +41,8 @@ export const groupAPI = {
   // 게시글 작성
   createPost: (groupId: number, content: string) =>
     apiClient.post<GroupPost>(`/groups/${groupId}/posts`, { content }),
+
+  // 그룹 상태 변경
+  updateGroupStatus: (groupId: number) =>
+    apiClient.patch<ActionResponse>(`/groups/${groupId}/status`),
 } as const;

@@ -35,6 +35,7 @@ import {
 import DetailsHeader from '@/pages/QSpace/QSpaceDetail/components/DetailsHeader/DetailsHeader';
 import KebabMenu from '@/pages/QSpace/QSpaceDetail/components/KebabMenu/KebabMenu';
 import MemberContainer from '@/pages/QSpace/QSpaceDetail/components/MemberContainer/MemberContainer';
+import { formatLastUpdated } from '@/utils/formatLastUpdated';
 
 const QSpaceDetailPage = () => {
   const navigate = useNavigate();
@@ -103,6 +104,8 @@ const QSpaceDetailPage = () => {
           {isAdmin && (
             <KebabMenuWrapper>
               <KebabMenu
+                groupId={groupId}
+                isOpen={true}
                 onEditClick={() => navigate(`/groups/${groupId}/edit`)}
                 onDeleteClick={() => deleteGroup.mutate()}
               />
@@ -147,7 +150,7 @@ const QSpaceDetailPage = () => {
                   content: post.content,
                   author: post.nickname,
                   profileImage: post.profile,
-                  createdAt: post.createdAt,
+                  createdAt: formatLastUpdated(post.createdAt),
                   likeCount: post.likeCount,
                 }))}
                 onLikeComment={(commentId) => likePost.mutate(commentId)}
