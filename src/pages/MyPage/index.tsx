@@ -16,6 +16,7 @@ import { getQSpaceCard } from '@/utils/getQSpaceCard';
 import ErrorPage from '@/pages/Error';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
 import { useAnswerVisibility } from '@/pages/MyPage/api/useAnswerVisibility';
+import { useUserStore } from '@/store/userStore';
 import {
   ButtonGroup,
   Container,
@@ -30,11 +31,11 @@ const MyPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'myQuestions' | 'qSpace'>('myQuestions');
 
-  const userId = '18312fd3-a56f-4b91-80d2-dab72c584857';
+  const { userId } = useUserStore();
 
-  const { data: profile, isLoading: profileLoading, error: profileError } = useUserProfile(userId);
+  const { data: profile, isLoading: profileLoading, error: profileError } = useUserProfile(userId || '');
   const { data: interests, isLoading: interestsLoading, error: interestsError } =
-    useUserInterests(userId);
+    useUserInterests(userId || '');
   const { data: groups, isPending, error: groupError } = useGroups(categoryIdMap['전체']);
   const {
     data: answerData,
@@ -42,7 +43,7 @@ const MyPage = () => {
     hasNextPage,
     isLoading: answersLoading,
     error: answersError,
-  } = useInfiniteAnswers(userId, 10);
+  } = useInfiniteAnswers(userId || '', 10);
   const { mutate: toggleVisibility } = useAnswerVisibility();
 
   const handleLockToggle = (answerId: number, currentVisibility: boolean) => {
@@ -71,6 +72,10 @@ const MyPage = () => {
     profileImage: profile?.profileImageUrl || null,
     tags: interests?.map((interest) => interestsMap[interest]) || [],
   };
+
+  if (!userId) {
+    navigate('/login');
+  }
 
   return (
     <>
@@ -122,7 +127,7 @@ const MyPage = () => {
                   {isPending ? (
                     <LoadingSpinner />
                   ) : (
-                    groups?.map((group) => <QSpaceCard {...getQSpaceCard(group)} />)
+                    groups?.map((group, index) => <QSpaceCard key={index} {...getQSpaceCard(group)} />)
                   )}
                 </QSpaceList>
               )}
