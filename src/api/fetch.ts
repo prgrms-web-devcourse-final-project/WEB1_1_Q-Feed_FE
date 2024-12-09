@@ -83,6 +83,16 @@ export class APIClient {
     const response = await this.client.delete<APIResponse<T>>(url, config);
     return response.data;
   }
+
+  async postText<T>(url: string, text: string, config?: object): Promise<APIResponse<T>> {
+    const response = await this.client.post<APIResponse<T>>(url, text, {
+      ...config,
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+    });
+    return response.data;
+  }
 }
 
 export const apiClient = new APIClient();

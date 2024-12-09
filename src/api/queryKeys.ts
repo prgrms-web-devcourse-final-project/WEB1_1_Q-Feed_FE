@@ -57,3 +57,11 @@ export const POST_KEYS = {
     DETAIL: 'detail',
   },
 } as const;
+
+export const FEED_KEYS = {
+  ROOT: 'main',
+  ACTIONS: {
+    Answers: 'answer',
+    MyAnswer: 'myanswer',
+  },
+} as const;

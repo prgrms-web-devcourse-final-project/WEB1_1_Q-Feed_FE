@@ -21,7 +21,6 @@ import {
   NickNameWrapper,
 } from '@/pages/ProfileRegister/styles';
 import axios from 'axios';
-import { HobbyTag } from '@/constants/hobbytag';
 import { useNavigation } from '@/hooks/useNavigation';
 import { KakaoUserInfo } from '@/pages/KakaoCallback/KakaoCallback';
 import { authAPI } from '@/pages/ProfileRegister/api/fetchUser';
@@ -31,11 +30,12 @@ import { SignUpRequest } from '@/pages/ProfileRegister/type/userInfo';
 
 const ProfileRegisterPage: React.FC = () => {
   const { gotoSelectCategory } = useNavigation();
-  const availableTags = HobbyTag;
   const [profileImageSrc, setProfileImageSrc] = useState<string>(defaultProfile);
   const [name, setName] = useState<string>('');
   const [bio, setBio] = useState<string>('');
-  const [hobbyTags, setHobbyTags] = useState<string[]>([]);
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
+
+  // const [hobbyTags, setHobbyTags] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isValidNickname, setIsValidNickname] = useState<boolean>(true);
   const [nameError, setNameError] = useState<string>('');
@@ -94,8 +94,7 @@ const ProfileRegisterPage: React.FC = () => {
   };
 
   const handleTagSelectionChange = (selectedTags: string[]): void => {
-    const englishTags = selectedTags.map((tag) => CATEGORIES[tag as keyof typeof CATEGORIES]);
-    setHobbyTags(englishTags);
+    setSelectedTags(selectedTags);
   };
 
   const onClickSubmit = async (): Promise<void> => {
@@ -119,7 +118,7 @@ const ProfileRegisterPage: React.FC = () => {
       return;
     }
 
-    if (hobbyTags.length === 0) {
+    if (selectedTags.length === 0) {
       alert('하나 이상의 관심사 태그를 선택해주세요.');
       return;
     }
@@ -133,12 +132,16 @@ const ProfileRegisterPage: React.FC = () => {
         return;
       }
 
+      // 영문으로 입력해야 회원가입 가능
+      const englishTags = selectedTags.map((tag) => CATEGORIES[tag as keyof typeof CATEGORIES]);
+      setSelectedTags(englishTags);
+
       const signUpData: SignUpRequest = {
         email: registerEmail,
         password: registerPassword,
         nickname: name,
         description: bio,
-        interestCategoryNames: hobbyTags,
+        interestCategoryNames: englishTags,
         profileImageFile: fileInputRef.current?.files?.[0],
       };
 
@@ -281,8 +284,8 @@ const ProfileRegisterPage: React.FC = () => {
             <FormGroup>
               <Label>취미 태그</Label>
               <SelectableHobbyTags
-                tags={availableTags}
-                selectedTags={hobbyTags}
+                tags={['여행', '스포츠', '패션', '문화', '맛집', '기타']}
+                selectedTags={selectedTags}
                 onSelectionChange={handleTagSelectionChange}
               />
             </FormGroup>

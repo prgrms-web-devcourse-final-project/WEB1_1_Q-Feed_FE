@@ -19,30 +19,40 @@ import {
   ProfileSlideWrapper,
   Title,
 } from '@/pages/Main/styles';
+import { useFetchQuestion } from '@/pages/AnswerDetail/hooks/useFetchQuestion';
+import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
+// import { dummyComments } from '@/mocks/dummyComments';
+import { dummyPostComments } from '@/mocks/dummyPostCommentList';
+import { formatDate } from '@/pages/Main/formatDate';
 
 const Main = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState(categories[0]);
+  // const [answerCursor, setAnswerCursor] = useState<string | undefined>(undefined);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const categoryRef = useRef<HTMLDivElement>(null);
-
+  const { data: todayQuestion } = useFetchQuestion(1);
+  // const { data: answers } = useFetchAnswers({
+  //   categoryId: activeCategory,
+  //   size: 10,
+  //   answerCursor,
+  // // });
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
       setActiveCategory(category);
       console.log('Selected category:', category);
-      navigate(`/question/${category}`);
     }
   };
-  // const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
-  //   console.log(`Comment ${commentId} liked: ${isLiked}, count: ${count}`);
-  // };
+  const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
+    console.log(`Comment ${commentId} liked: ${isLiked}, count: ${count}`);
+  };
 
-  // const handleReplyClick = (commentId: string) => {
-  //   console.log(`Reply clicked for comment ${commentId}`);
-  //   navigate(`/post/${commentId}`);
-  // };
+  const handleReplyClick = (commentId: string) => {
+    console.log(`Reply clicked for comment ${commentId}`);
+    navigate(`/post/6/2`);
+  };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -96,10 +106,10 @@ const Main = () => {
 
       <Body>
         <QuestionCard
-          date="2024.11.28"
-          question="오늘 당장 해외여행을 떠날수 있다면 어디로 갈건가요!?"
+          date={formatDate(todayQuestion?.createdAt || '2024.11.28')}
+          question={todayQuestion?.content || '오늘의 질문은??'}
         />
-        <AnswerCard date="2024.11.28" answer="독일 크리스마스 마켓 구경하고싶어요🎄" />
+        <AnswerCard date="2024.12.09" answer=" 무조건 스마트폰" />
 
         <PostWrapper>
           <Title>지금 뜨는 인기 답변</Title>
@@ -113,11 +123,11 @@ const Main = () => {
         </ProfileSlideWrapper>
 
         <CommentListWrapper>
-          {/* <CommentItemList
-            comments={dummyComments}
+          <CommentItemList
+            comments={dummyPostComments}
             onLikeComment={handleLikeComment}
             onReplyClick={handleReplyClick}
-          /> */}
+          />
         </CommentListWrapper>
       </Body>
     </Container>

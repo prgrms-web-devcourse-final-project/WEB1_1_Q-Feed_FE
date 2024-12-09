@@ -35,7 +35,7 @@ export const RegisterPage = () => {
 
     checkEmail(emailValue, {
       onSuccess: (isAvailable) => {
-        if (isAvailable.data) {
+        if (isAvailable) {
           sendEmail(emailValue);
           setEmailExist(false);
           alert('인증 이메일이 전송되었습니다.');

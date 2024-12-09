@@ -8,6 +8,7 @@ export const useFetchQuestion = (categoryId: number) => {
     queryKey: [POST_KEYS.ACTIONS.Question, categoryId],
     queryFn: async () => {
       const response = await postAPI.getQuestion(categoryId);
+
       if (!response.success || !response.data) {
         throw new Error(response.error?.message || '질문을 불러오는데 실패했습니다');
       }
