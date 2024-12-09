@@ -11,6 +11,7 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
 import defaultProfileImg from '@/assets/images/profile.svg';
 import { tagMap } from '@/pages/ProfileEdit/utils/tagMap';
 import { interestsMap } from '@/pages/MyPage/utils/interestsMap';
+import { useUserStore } from '@/store/userStore';
 import {
   Container,
   ProfileSection,
@@ -29,10 +30,10 @@ import {
 
 const ProfileEditPage = () => {
   const navigate = useNavigate();
-  const userId = '18312fd3-a56f-4b91-80d2-dab72c584857';
+  const { userId } = useUserStore();
 
-  const { data: profileData, isLoading: profileLoading, error: profileError } = useUserProfile(userId);
-  const { data: interestsData, isLoading: interestsLoading, error: interestsError } = useUserInterests(userId);
+  const { data: profileData, isLoading: profileLoading, error: profileError } = useUserProfile(userId || '');
+  const { data: interestsData, isLoading: interestsLoading, error: interestsError } = useUserInterests(userId || '');
 
   const { mutate: updateUserProfile, isPending: isProfileUpdating } = useUpdateUserProfile();
   const { mutate: updateUserInterests, isPending: isInterestsUpdating } = useUpdateUserInterests();
@@ -120,6 +121,10 @@ const ProfileEditPage = () => {
       alert('업데이트 중 문제가 발생했습니다.');
     }
   };
+
+  if (!userId) {
+    navigate('/login');
+  }
 
   if (profileLoading || interestsLoading) {
     return <LoadingSpinner />;

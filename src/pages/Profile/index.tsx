@@ -18,6 +18,7 @@ import { formatDate } from '@/pages/MyPage/utils/date';
 import { useAnswersCount } from '@/pages/MyPage/hooks/useAnswersCount';
 import { useFollowStatus } from '@/pages/Profile/hooks/useFollowStatus';
 import { useFollowActions } from '@/pages/Profile/hooks/useFollowActions';
+import { useUserStore } from '@/store/userStore';
 import {
   AnswerCounter,
   AnswerSection,
@@ -41,10 +42,10 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const { id: followeeId } = useParams<{ id: string }>();
 
-  const followerId = '18312fd3-a56f-4b91-80d2-dab72c584857'; // 현재 로그인된 사용자 ID
+  const { userId: followerId } = useUserStore();// 현재 로그인된 사용자 ID
 
-  const { data: followStatus } = useFollowStatus(followerId, followeeId as string);
-  const { follow, unfollow } = useFollowActions(followerId, followeeId as string);
+  const { data: followStatus } = useFollowStatus(followerId || '', followeeId as string);
+  const { follow, unfollow } = useFollowActions(followerId || '', followeeId as string);
 
   const { data: profileData, isLoading: profileLoading, error: profileError } = useUserProfile(followeeId || '');
   const { data: interestsData, isLoading: interestsLoading, error: interestsError } = useUserInterests(followeeId || '');
@@ -89,6 +90,11 @@ const ProfilePage = () => {
   }
 
   const { nickname: name, email: id, followerCount: followers, followingCount: following, description: bio, profileImageUrl } = profileData || {};
+
+
+  if (!followerId) {
+    navigate('/login');
+  }
 
   return (
     <>
