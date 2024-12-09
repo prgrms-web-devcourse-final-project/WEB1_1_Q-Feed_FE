@@ -1,9 +1,7 @@
 import LikeButtonContainer from '@/components/ui/LikeButtonContainer/LikeButtonContainer';
-import { Comment } from '@/pages/Main/type/comment';
 import { useState } from 'react';
 import { SlideDown } from 'react-slidedown';
 import 'react-slidedown/lib/slidedown.css';
-import { formatTime } from '@/pages/AnswerDetail/util/timeFormat';
 import { SubCommentItem } from '@/pages/AnswerDetail/components/SubCommentItem/SubCommentItem';
 import {
   Container,
@@ -19,9 +17,19 @@ import {
   StyledAvatar,
 } from '@/pages/AnswerDetail/components/CommentItem/CommentItem.styles';
 import ReplyContainer from '@/components/ui/ReplyContainer/ReplyContainer';
+import { PostComments } from '@/pages/AnswerDetail/type/postType';
+import { formatLastUpdated } from '@/utils/formatLastUpdated';
 
 type CommentItemProps = {
-  comment: Comment;
+  commentId: number;
+  profileImage: string;
+  nickName: string;
+  content: string;
+  createdAt: string;
+  likeCount: number;
+  isLike: boolean;
+  replyCount: number;
+  comments: PostComments[];
   onLikeComment?: (commentId: string, isLiked: boolean, count: number) => void;
   onReplyClick?: (commentId: string) => void;
   onClick?: (commentId: string) => void;
@@ -30,7 +38,15 @@ type CommentItemProps = {
 };
 
 export const CommentItem = ({
-  comment,
+  commentId,
+  profileImage,
+  nickName,
+  content,
+  createdAt,
+  likeCount,
+  isLike,
+  replyCount,
+  comments,
   onLikeComment,
   onReplyClick,
   onClick,
@@ -40,33 +56,35 @@ export const CommentItem = ({
   const [showReplies, setShowReplies] = useState(false);
 
   return (
-    <CommentWrapper>
+    <CommentWrapper hideBorder={true}>
       <Container depth={depth} isCommentButtonExist={isCommentButtonExist}>
-        <StyledAvatar src={comment.author.profileImage} name={comment.author.name} size="sm" />
+        <StyledAvatar src={profileImage} name={nickName} size="sm" />
         <CommentContent>
           <AuthorInfo>
-            <AuthorName>{comment.author.name}</AuthorName>
-            <CreatedAt>{formatTime(comment.createdAt)}</CreatedAt>
+            <AuthorName>{nickName}</AuthorName>
+            <CreatedAt>{formatLastUpdated(createdAt)}</CreatedAt>
           </AuthorInfo>
           <Content
             onClick={() => {
-              onClick?.(comment.id);
+              onClick?.(commentId.toString());
               setShowReplies(!showReplies);
             }}
           >
-            {comment.content}
+            {content}
           </Content>
           <ActionButtons>
             <LikeButtonContainer
               size="small"
-              initialCount={comment.likes}
-              initialLiked={comment.isLiked}
-              onLikeChange={(isLiked, count) => onLikeComment?.(comment.id, isLiked, count)}
+              initialCount={likeCount}
+              initialLiked={isLike}
+              onLikeChange={(isLiked, count) =>
+                onLikeComment?.(commentId.toString(), isLiked, count)
+              }
             />
             <ReplyContainer
-              replyCount={comment.replyCount}
+              replyCount={replyCount}
               onReplyClick={() => {
-                onReplyClick?.(comment.id);
+                onReplyClick?.(commentId.toString());
                 setShowReplies(!showReplies);
               }}
             />
@@ -75,10 +93,10 @@ export const CommentItem = ({
         </CommentContent>
       </Container>
       <SlideDown>
-        {showReplies && comment.replies && (
+        {showReplies && comments && (
           <RepliesWrapper>
-            {comment.replies.map((reply) => (
-              <SubCommentItem comment={reply} key={reply.id} onLikeComment={onLikeComment} />
+            {comments.map((reply) => (
+              <SubCommentItem key={reply.commentId} comment={reply} onLikeComment={onLikeComment} />
             ))}
           </RepliesWrapper>
         )}

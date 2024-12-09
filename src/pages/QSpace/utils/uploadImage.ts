@@ -1,4 +1,4 @@
-import { uploadAPI } from '@/pages/QSpace/api/imageUpload';
+// import { uploadAPI } from '@/pages/QSpace/api/imageUpload';
 import { useToast } from '@chakra-ui/react';
 
 export const uploadImage = async (
@@ -6,11 +6,14 @@ export const uploadImage = async (
   toast: ReturnType<typeof useToast>
 ): Promise<string | null> => {
   try {
-    const { data: uploadResponse } = await uploadAPI.uploadImage(imageFile);
-    if (!uploadResponse?.imageUrl) {
-      throw new Error('이미지 업로드에 실패했습니다.');
-    }
-    return uploadResponse.imageUrl;
+    console.log('image', imageFile);
+
+    // const { data: uploadResponse } = await uploadAPI.uploadImage(imageFile);
+    // if (!uploadResponse?.imageUrl) {
+    //   throw new Error('이미지 업로드에 실패했습니다.');
+    // }
+    // return uploadResponse.imageUrl;
+    return null;
   } catch (error) {
     console.error('Failed to upload image:', error);
     toast({

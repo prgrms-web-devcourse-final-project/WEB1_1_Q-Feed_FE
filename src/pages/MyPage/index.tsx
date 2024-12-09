@@ -4,13 +4,14 @@ import Header from '@/pages/MyPage/components/Header/Header';
 import QuestionCard from '@/pages/MyPage/components/QuestionCard/QuestionCard';
 import Button from '@/pages/MyPage/components/Button/Button';
 import MyProfile from '@/pages/MyPage/components/MyProfile/MyProfile';
-import QSpaceCard from '@/components/ui/QSpaceCard/QSpaceCard';
-import { dummyProfile, dummyQuestions, dummyQSpaces } from '@/mocks/dunmyMyProfile';
+// import QSpaceCard from '@/components/ui/QSpaceCard/QSpaceCard';
+// import { dummyProfile, dummyQuestions, dummyQSpaces } from '@/mocks/dunmyMyProfile';
+import { dummyProfile, dummyQuestions } from '@/mocks/dunmyMyProfile';
 import {
   ButtonGroup,
   Container,
   Content,
-  QSpaceList,
+  // QSpaceList,
   QuestionList,
   Tab,
   TabContainer,
@@ -21,7 +22,7 @@ const MyPage = () => {
   const [activeTab, setActiveTab] = useState<'myQuestions' | 'qSpace'>('myQuestions');
   const [myQuestions, setMyQuestions] = useState(dummyQuestions);
   const profile = dummyProfile;
-  const qSpaceList = dummyQSpaces;
+  // const qSpaceList = dummyQSpaces;
 
   // 잠금 버튼 토글 핸들러
   const handleLockToggle = (id: number) => {
@@ -64,13 +65,13 @@ const MyPage = () => {
               ))}
             </QuestionList>
           )}
-          {activeTab === 'qSpace' && (
+          {/* {activeTab === 'qSpace' && (
             <QSpaceList>
               {qSpaceList.map((space, index) => (
                 <QSpaceCard key={index} {...space} />
               ))}
             </QSpaceList>
-          )}
+          )} */}
         </Content>
       </Container>
     </>

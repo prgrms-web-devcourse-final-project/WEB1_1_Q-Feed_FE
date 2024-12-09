@@ -15,7 +15,7 @@ export const ROUTES = {
   QUESTION: '/question/:category',
   SELECT: '/select',
   PROFILE: '/profile/:id',
-  POST_DETAIL: '/post/:id',
+  POST_DETAIL: '/post/:postId/:categoryId',
   PROFILE_EDIT: '/profile/edit',
   REGISTER: '/register',
   PASSWORD_RECOVERY: '/account-recovery/password',

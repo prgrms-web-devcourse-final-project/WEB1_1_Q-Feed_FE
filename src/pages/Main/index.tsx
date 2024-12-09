@@ -5,11 +5,9 @@ import Header from '@/components/common/Header';
 import { QuestionCard } from '@/pages/Main/components/QuestionCard/QuestionCard';
 import { PopularPostSlider } from '@/pages/Main/components/PopularPostSlider/PopularPostSlider';
 import { ProfileSlider } from '@/pages/Main/components/ProfileSlider/ProfileSlider';
-import { dummyComments } from '@/mocks/dummyComments';
 import { categories } from '@/pages/Main/type/category';
 import { dummyData } from '@/mocks/dummyPosts';
 import { userProfileData } from '@/mocks/dummyUserProfiles';
-import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
 import AnswerCard from '@/pages/Main/components/AnswerCard/AnswerCard';
 import {
   Body,
@@ -37,14 +35,14 @@ const Main = () => {
       navigate(`/question/${category}`);
     }
   };
-  const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
-    console.log(`Comment ${commentId} liked: ${isLiked}, count: ${count}`);
-  };
+  // const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
+  //   console.log(`Comment ${commentId} liked: ${isLiked}, count: ${count}`);
+  // };
 
-  const handleReplyClick = (commentId: string) => {
-    console.log(`Reply clicked for comment ${commentId}`);
-    navigate(`/post/${commentId}`);
-  };
+  // const handleReplyClick = (commentId: string) => {
+  //   console.log(`Reply clicked for comment ${commentId}`);
+  //   navigate(`/post/${commentId}`);
+  // };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -115,11 +113,11 @@ const Main = () => {
         </ProfileSlideWrapper>
 
         <CommentListWrapper>
-          <CommentItemList
+          {/* <CommentItemList
             comments={dummyComments}
             onLikeComment={handleLikeComment}
             onReplyClick={handleReplyClick}
-          />
+          /> */}
         </CommentListWrapper>
       </Body>
     </Container>
