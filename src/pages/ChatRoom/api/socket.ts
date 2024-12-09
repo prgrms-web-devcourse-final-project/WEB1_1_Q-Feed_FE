@@ -12,7 +12,7 @@ export const stompClient = new Client({
   },
   connectHeaders: {
     Authorization:
-      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM2MjM0NzYsImV4cCI6MTczMzcwOTg3Nn0.MtpsuNr5MVkw15Q1OE7vzuDs7Hu0xeq0oY3nZVmGpNM',
+      'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM3MTA4OTQsImV4cCI6MTczMzc5NzI5NH0.1ugqUNKraIrqI-3RtdbA2D-XNhZ5oCDNqO8fdt1ESV0',
   },
 });
 
