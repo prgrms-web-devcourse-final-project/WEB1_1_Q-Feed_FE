@@ -114,7 +114,7 @@ const QSpaceDetailPage = () => {
         </HeaderWrapper>
 
         <ImageContainer>
-          <DiscussionImage src={groupDetail.url} alt="토론방 이미지" />
+          <DiscussionImage crossOrigin="anonymous" src={groupDetail.url} alt="토론방 이미지" />
         </ImageContainer>
 
         <ContentArea>

@@ -37,6 +37,10 @@ export const groupAPI = {
   // 그룹 멤버리스트 조회
   getGroupMembers: (groupId: number) => apiClient.get<GroupMember[]>(`/groups/${groupId}/members`),
 
+  // 그룹 멤버 추방
+  removeMember: (groupId: number, memberId: number) =>
+    apiClient.delete(`/groups/${groupId}/members/${memberId}`),
+
   // 게시글 좋아요
   likePost: (postId: number) => apiClient.post(`/posts/${postId}/like`),
 

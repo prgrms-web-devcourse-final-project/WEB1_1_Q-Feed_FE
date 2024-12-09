@@ -9,7 +9,6 @@ import MyProfile from '@/pages/MyPage/components/MyProfile/MyProfile';
 import QSpaceCard from '@/components/ui/QSpaceCard/QSpaceCard';
 import { useUserProfile, useUserInterests } from './hooks/useUserProfile';
 import { interestsMap } from '@/pages/MyPage/utils/interestsMap';
-import { useGroups } from '@/pages/QSpace/hooks/useGroupList';
 import { useInfiniteAnswers } from '@/pages/MyPage/hooks/useAnswers';
 import { categoryIdMap } from '@/utils/categoryIdMap';
 import { getQSpaceCard } from '@/utils/getQSpaceCard';
@@ -26,15 +25,23 @@ import {
   Tab,
   TabContainer,
 } from '@/pages/MyPage/styles';
+import { useGroups } from '@/pages/QSpace/hooks/Query/useGroupList';
 
 const MyPage = () => {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'myQuestions' | 'qSpace'>('myQuestions');
   const { userId } = useUserStore();
 
-  const { data: profile, isLoading: profileLoading, error: profileError } = useUserProfile(userId || '');
-  const { data: interests, isLoading: interestsLoading, error: interestsError } =
-    useUserInterests(userId || '');
+  const {
+    data: profile,
+    isLoading: profileLoading,
+    error: profileError,
+  } = useUserProfile(userId || '');
+  const {
+    data: interests,
+    isLoading: interestsLoading,
+    error: interestsError,
+  } = useUserInterests(userId || '');
   const { data: groups, isPending, error: groupError } = useGroups(categoryIdMap['전체']);
   const {
     data: answerData,
@@ -90,7 +97,10 @@ const MyPage = () => {
               <Button onClick={handleCopyProfileLink}>프로필 공유</Button>
             </ButtonGroup>
             <TabContainer>
-              <Tab onClick={() => setActiveTab('myQuestions')} isActive={activeTab === 'myQuestions'}>
+              <Tab
+                onClick={() => setActiveTab('myQuestions')}
+                isActive={activeTab === 'myQuestions'}
+              >
                 나의 답변
               </Tab>
               <Tab onClick={() => setActiveTab('qSpace')} isActive={activeTab === 'qSpace'}>
@@ -114,11 +124,7 @@ const MyPage = () => {
                       />
                     ))
                   )}
-                  {hasNextPage && (
-                    <button onClick={() => fetchNextPage()}>
-                      더보기
-                    </button>
-                  )}
+                  {hasNextPage && <button onClick={() => fetchNextPage()}>더보기</button>}
                 </QuestionList>
               )}
               {activeTab === 'qSpace' && (
@@ -126,7 +132,9 @@ const MyPage = () => {
                   {isPending ? (
                     <LoadingSpinner />
                   ) : (
-                    groups?.map((group, index) => <QSpaceCard key={index} {...getQSpaceCard(group)} />)
+                    groups?.map((group, index) => (
+                      <QSpaceCard key={index} {...getQSpaceCard(group)} />
+                    ))
                   )}
                 </QSpaceList>
               )}
