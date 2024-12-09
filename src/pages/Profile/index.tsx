@@ -79,7 +79,11 @@ const ProfilePage = () => {
     }
   };
 
+  if (!followerId) {
+    navigate('/login');
+  }
   const isSelfProfile = followerId === followeeId; // 자기 자신인지 확인
+
 
   if (profileError || interestsError || answersError) {
     return <p>프로필 정보를 불러오는 중 문제가 발생했습니다.</p>;
@@ -92,9 +96,6 @@ const ProfilePage = () => {
   const { nickname: name, email: id, followerCount: followers, followingCount: following, description: bio, profileImageUrl } = profileData || {};
 
 
-  if (!followerId) {
-    navigate('/login');
-  }
 
   return (
     <>
