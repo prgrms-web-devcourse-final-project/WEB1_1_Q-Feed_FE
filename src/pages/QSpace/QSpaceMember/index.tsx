@@ -4,7 +4,7 @@ import BackButton from '@/components/ui/BackButton/BackButton';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
 import { useUserStore } from '@/store/userStore';
 
-import { useMemberList } from '@/pages/QSpace/hooks/useMemberList';
+import { useMemberList } from '@/pages/QSpace/hooks/Query/useMemberList';
 import MemberList from '@/pages/QSpace/QSpaceMember/components/MemberList/MemberList';
 
 import { ContentContainer, Header, HeaderTitle, PageContainer } from './styles';

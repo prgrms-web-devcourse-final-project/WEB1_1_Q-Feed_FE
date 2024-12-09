@@ -2,8 +2,8 @@ import { VscKebabVertical } from 'react-icons/vsc';
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useUpdateGroupStatus } from '@/pages/QSpace/hooks/Mutation/useGroupMutations';
 import { Container, IconButton, MenuItem, MenuPopup } from './KebabMenu.styles';
-import { useUpdateGroupStatus } from '@/pages/QSpace/hooks/useGroupMutations';
 
 interface KebabMenuProps {
   onEditClick: () => void;
@@ -36,7 +36,7 @@ const KebabMenu = ({ onEditClick, onDeleteClick, groupId, isOpen = true }: Kebab
   };
 
   const handleEdit = () => {
-    navigate(`/groups/${groupId}/edit`);
+    navigate(`/qspace/${groupId}/edit`);
     onEditClick();
     setIsMenuOpen(false);
   };

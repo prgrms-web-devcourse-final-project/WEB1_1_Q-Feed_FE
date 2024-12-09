@@ -7,6 +7,7 @@ export const ROUTES = {
   QSPACE: '/qspace',
   QSPACE_CATEGORY: '/qspace/category',
   QSPACE_GROUP: '/qspace/post',
+  QSPACE_EDIT: '/qspace/:groupId/edit',
   QSPACE_DETAIL: '/qspace/details',
   QSPACE_MEMBER: '/groups/:groupId/members',
   LOGIN: '/login',

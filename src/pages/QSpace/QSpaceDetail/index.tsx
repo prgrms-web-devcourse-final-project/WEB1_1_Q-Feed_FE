@@ -8,13 +8,13 @@ import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
 import { useUserStore } from '@/store/userStore';
 import ChatInputBar from '@/pages/ChatRoom/component/InputBar';
 
-import { useGroupDetail } from '@/pages/QSpace/hooks/useGroupDetail';
+import { useGroupDetail } from '@/pages/QSpace/hooks/Query/useGroupDetail';
 import {
   useCreatePost,
   useDeleteGroup,
   useJoinGroup,
   useLikePost,
-} from '@/pages/QSpace/hooks/useGroupMutations';
+} from '@/pages/QSpace/hooks/Mutation/useGroupMutations';
 
 import {
   Container,

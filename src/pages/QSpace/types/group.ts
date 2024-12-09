@@ -52,18 +52,6 @@ export interface GroupPost {
   likeCount: number;
 }
 
-export interface CreateGroupRequest {
-  groupName: string;
-  description: string;
-  categoryId: number;
-  url: string;
-  isOpen: boolean;
-}
-
-export interface UpdateGroupRequest extends Partial<CreateGroupRequest> {
-  groupId: number;
-}
-
 export interface GroupFormData {
   title: string;
   description: string;

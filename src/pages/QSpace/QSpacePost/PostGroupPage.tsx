@@ -4,6 +4,11 @@ import theme from '@/styles/theme';
 import BackButton from '@/components/ui/BackButton/BackButton';
 import { ImageUpload } from '@/components/ui/ImageUpload/ImageUpload';
 
+import { GroupDetail } from '@/pages/QSpace/types/group';
+import { useGroupForm } from '@/pages/QSpace/hooks/useGroupForm';
+import { usePostGroup } from '@/pages/QSpace/hooks/Mutation/usePostGroup';
+import { useUpdateGroup } from '@/pages/QSpace/hooks/Mutation/useUpdateGroup';
+
 import {
   CharCount,
   Container,
@@ -14,14 +19,18 @@ import {
   Label,
 } from './PostGroupPage.styles';
 
-import { useGroupForm } from '@/pages/QSpace/hooks/useGroupForm';
-import { usePostGroup } from '@/pages/QSpace/hooks/usePostGroup';
+interface PostGroupPageProps {
+  mode: 'create' | 'edit';
+  initialData?: GroupDetail;
+}
 
-const PostGroupPage = () => {
-  const { formData, formActions } = useGroupForm();
+const PostGroupPage = ({ mode = 'create', initialData }: PostGroupPageProps) => {
+  const { formData, formActions } = useGroupForm({ initialData });
+  const postGroupMutation = usePostGroup();
+  const updateGroupMutation = useUpdateGroup(initialData?.groupId || 0);
+
   const { title, description } = formData;
   const { setTitle, setDescription, setImageFile } = formActions;
-  const postGroupMutation = usePostGroup();
 
   const handlePostGroup = () => {
     const form = new FormData();
@@ -34,9 +43,12 @@ const PostGroupPage = () => {
       form.append('file', formData.imageFile);
     }
 
-    postGroupMutation.mutate(form);
+    if (mode === 'edit' && updateGroupMutation) {
+      updateGroupMutation.mutate(form);
+    } else {
+      postGroupMutation.mutate(form);
+    }
   };
-
   return (
     <Container>
       <Header>
@@ -88,13 +100,13 @@ const PostGroupPage = () => {
           height="3.5rem"
           onClick={handlePostGroup}
           isPending={postGroupMutation.isPending}
-          isDisabled={!title || !description || postGroupMutation.isPending}
+          isDisabled={!formData.title || !formData.description || postGroupMutation.isPending}
           _disabled={{
             bg: theme.colors.gray[300],
             cursor: 'not-allowed',
           }}
         >
-          {postGroupMutation.isPending ? '생성 중...' : '방 만들기'}
+          {mode === 'edit' ? '수정하기' : '방 만들기'}
         </CreateButton>
       </Content>
     </Container>

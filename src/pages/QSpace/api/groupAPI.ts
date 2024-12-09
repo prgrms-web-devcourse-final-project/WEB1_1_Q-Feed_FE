@@ -1,11 +1,5 @@
 import { apiClient } from '@/api/fetch';
-import {
-  Group,
-  GroupDetail,
-  GroupMember,
-  GroupPost,
-  UpdateGroupRequest,
-} from '@/pages/QSpace/types/group';
+import { Group, GroupDetail, GroupMember, GroupPost } from '@/pages/QSpace/types/group';
 import { ActionResponse } from '@/types/response';
 
 export const groupAPI = {
@@ -23,15 +17,19 @@ export const groupAPI = {
       },
     }),
 
-  // 그룹 정보 수정
-  updateGroup: ({ groupId, ...data }: UpdateGroupRequest) =>
-    apiClient.patch<Group>(`/groups/${groupId}`, data),
-
   // 그룹 삭제
   deleteGroup: (groupId: number) => apiClient.delete<void>(`/groups/${groupId}`),
 
   // 그룹 가입
   joinGroup: (groupId: number) => apiClient.post<ActionResponse>(`/groups/${groupId}/join`),
+
+  // 그룹 수정
+  updateGroup: (groupId: number, formData: FormData) =>
+    apiClient.patch<ActionResponse<Group>>(`/groups/${groupId}`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }),
 
   // 그룹 탈퇴
   leaveGroup: (groupId: number) => apiClient.delete(`/groups/${groupId}/leave`),
