@@ -2,6 +2,7 @@ import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { APIResponse } from '@/types/response';
 import { getCookie } from '@/utils/cookies';
 import { ACCESS_TOKEN_KEY } from '@/constants/token';
+
 export class APIClient {
   private client: AxiosInstance;
 
@@ -21,6 +22,11 @@ export class APIClient {
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
+
+        if (config.data instanceof FormData) {
+          config.headers['Content-Type'] = 'multipart/form-data';
+        }
+
         return config;
       },
       (error) => {
@@ -76,16 +82,6 @@ export class APIClient {
 
   async delete<T>(url: string, config?: object): Promise<APIResponse<T>> {
     const response = await this.client.delete<APIResponse<T>>(url, config);
-    return response.data;
-  }
-
-  async postText<T>(url: string, text: string): Promise<APIResponse<T>> {
-    const response = await this.client.post<APIResponse<T>>(url, text, {
-      headers: {
-        'Content-Type': 'text/plain',
-      },
-      transformRequest: [(data) => data], // 데이터 변환 방지
-    });
     return response.data;
   }
 }
