@@ -1,7 +1,7 @@
 export interface CreateAnswerRequest {
   questionId: number;
   content: string;
-  image?: string;
+  image?: File | null;
   visibility: boolean;
 }
 
