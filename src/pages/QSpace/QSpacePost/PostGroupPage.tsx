@@ -14,17 +14,27 @@ import {
   Label,
 } from './PostGroupPage.styles';
 
-import { createGroup } from '@/pages/QSpace/utils/createGroup';
-import { useGroupForm } from '@/pages/QSpace/hooks/usePostGroupForm';
+import { useGroupForm } from '@/pages/QSpace/hooks/useGroupForm';
+import { usePostGroup } from '@/pages/QSpace/hooks/usePostGroup';
 
 const PostGroupPage = () => {
-  const { formData, formActions, formState, toast, navigate } = useGroupForm();
+  const { formData, formActions } = useGroupForm();
   const { title, description } = formData;
   const { setTitle, setDescription, setImageFile } = formActions;
-  const { isPending, setIsPending } = formState;
+  const postGroupMutation = usePostGroup();
 
-  const handleCreateGroup = () => {
-    createGroup({ formData, setIsPending, toast, navigate });
+  const handlePostGroup = () => {
+    const form = new FormData();
+    form.append('groupName', title);
+    form.append('description', description);
+    form.append('categoryId', formData.categoryId.toString());
+    form.append('isOpen', 'true');
+
+    if (formData.imageFile) {
+      form.append('file', formData.imageFile);
+    }
+
+    postGroupMutation.mutate(form);
   };
 
   return (
@@ -76,15 +86,15 @@ const PostGroupPage = () => {
           color="white"
           width="100%"
           height="3.5rem"
-          onClick={handleCreateGroup}
-          isPending={isPending}
-          isDisabled={!title || !description || isPending}
+          onClick={handlePostGroup}
+          isPending={postGroupMutation.isPending}
+          isDisabled={!title || !description || postGroupMutation.isPending}
           _disabled={{
             bg: theme.colors.gray[300],
             cursor: 'not-allowed',
           }}
         >
-          {isPending ? '생성 중...' : '방 만들기'}
+          {postGroupMutation.isPending ? '생성 중...' : '방 만들기'}
         </CreateButton>
       </Content>
     </Container>

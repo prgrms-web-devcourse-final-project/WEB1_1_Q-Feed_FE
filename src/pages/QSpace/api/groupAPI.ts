@@ -1,6 +1,5 @@
 import { apiClient } from '@/api/fetch';
 import {
-  CreateGroupRequest,
   Group,
   GroupDetail,
   GroupMember,
@@ -17,7 +16,12 @@ export const groupAPI = {
   getGroupDetail: (groupId: number) => apiClient.get<GroupDetail>(`/groups/${groupId}/detail`),
 
   // 새로운 그룹 생성
-  createGroup: (data: CreateGroupRequest) => apiClient.post<Group>('/groups/create', data),
+  createGroup: (formData: FormData) =>
+    apiClient.post<ActionResponse<Group>>('/groups/create', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    }),
 
   // 그룹 정보 수정
   updateGroup: ({ groupId, ...data }: UpdateGroupRequest) =>
