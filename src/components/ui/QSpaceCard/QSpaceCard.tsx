@@ -48,7 +48,7 @@ const QSpaceCard = ({
     <Container onClick={handleClick}>
       <Content>
         <ImageContainer>
-          <Image src={imageUrl} alt={title} />
+          <Image crossOrigin="anonymous" src={imageUrl} alt={title} />
         </ImageContainer>
         <TextContainer>
           <RecruitingStatus isRecruiting={isRecruiting}>

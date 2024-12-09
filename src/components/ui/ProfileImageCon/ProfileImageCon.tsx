@@ -22,7 +22,7 @@ const ProfileImage = ({
 }: ProfileImageProps) => {
   return (
     <div css={containerStyle(size, bgColor)}>
-      {src ? <img css={imageStyle(size)} src={src} alt={alt} /> : <IoPerson css={iconStyle()} />}
+      {src ? <img crossOrigin="anonymous" css={imageStyle(size)} src={src} alt={alt} /> : <IoPerson css={iconStyle()} />}
     </div>
   );
 };

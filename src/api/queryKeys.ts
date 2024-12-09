@@ -49,3 +49,11 @@ export const AUTH_KEYS = {
     REFRESH: 'refresh',
   },
 } as const;
+
+export const POST_KEYS = {
+  ROOT: 'post',
+  ACTIONS: {
+    Question: 'question',
+    DETAIL: 'detail',
+  },
+} as const;
