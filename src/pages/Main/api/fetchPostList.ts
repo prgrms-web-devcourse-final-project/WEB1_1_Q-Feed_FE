@@ -14,4 +14,13 @@ export const feedAPI = {
 
   getMyAnswer: (questionId: number) =>
     apiClient.get<AnswerData>(`/feed/answers/users/question/${questionId}`),
+
+  getFeedAnswers: (params: { answerCursor?: string; size?: number; category?: string }) =>
+    apiClient.get<PostDetail[]>('/feed/answers', {
+      params: {
+        answerCursor: params.answerCursor || '',
+        size: params.size || 10,
+        category: params.category || '여행',
+      },
+    }),
 } as const;

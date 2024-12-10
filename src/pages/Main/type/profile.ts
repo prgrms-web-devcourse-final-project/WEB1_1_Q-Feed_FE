@@ -9,3 +9,14 @@ export interface Profile {
 export interface ProfileSliderProps {
   initialProfiles?: Profile[];
 }
+
+export interface RecommendProfile {
+  userId: string;
+  nickname: string;
+  profileImage: string;
+  followerCount: number;
+}
+
+export interface RecommendProfileSliderProps {
+  initialProfiles?: RecommendProfile[];
+}

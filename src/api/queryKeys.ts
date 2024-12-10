@@ -63,5 +63,6 @@ export const FEED_KEYS = {
   ACTIONS: {
     Answers: 'answer',
     MyAnswer: 'myanswer',
+    FeedAnswers: 'feeds',
   },
 } as const;
