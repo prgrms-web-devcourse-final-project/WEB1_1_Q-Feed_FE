@@ -1,8 +1,12 @@
 import {
+  StyledFormControl,
+  StyledFormErrorMessage,
+  StyledInput,
+} from '@/pages/Login/components/LoginForm/LoginForm.styles';
+import {
   VerificationButton,
   VerificationWrapper,
 } from '@/pages/Register/components/ConfirmForm/ConfirmForm.styles';
-import { StyledFormControl, StyledFormErrorMessage, StyledInput } from '@/pages/Register/styles';
 import { FormValues } from '@/pages/Register/type/formType';
 import theme from '@/styles/theme';
 import { FormLabel } from '@chakra-ui/react';
