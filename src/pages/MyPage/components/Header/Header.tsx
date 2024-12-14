@@ -7,7 +7,7 @@ import {
   Title,
   RightSection,
   IconButton,
-} from '@/pages/MyPage/components/Header/Header.styles'
+} from '@/pages/MyPage/components/Header/Header.styles';
 
 interface HeaderProps {
   profileImage?: string;
@@ -19,7 +19,7 @@ const Header = ({ className, title }: HeaderProps) => {
   const navigate = useNavigate();
 
   const onLogoClick = () => {
-    navigate('/');
+    navigate('/main');
   };
 
   const handleNotificationClick = () => {

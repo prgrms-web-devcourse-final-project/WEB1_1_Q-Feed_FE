@@ -26,8 +26,11 @@ const QuestionPage = () => {
   const [isPrivate, setIsPrivate] = useState(true);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
 
-  const { data: question, isLoading: loadingQuestion, error: questionError } =
-    useQuestions(categoryIdMap[category as string]);
+  const {
+    data: question,
+    isLoading: loadingQuestion,
+    error: questionError,
+  } = useQuestions(categoryIdMap[category as string]);
   const { mutate: createAnswer, error: isCreateAnswerError } = useCreateAnswer();
 
   const handleImageUpload = (file: File | null) => {
@@ -36,7 +39,8 @@ const QuestionPage = () => {
 
   const handleSubmit = () => {
     console.log(
-      `답변: ${answer}\n공개 여부: ${isPrivate ? '비공개' : '공개'}\n이미지: ${uploadedImage ? uploadedImage.name : '없음'
+      `답변: ${answer}\n공개 여부: ${isPrivate ? '비공개' : '공개'}\n이미지: ${
+        uploadedImage ? uploadedImage.name : '없음'
       }`
     );
 
@@ -50,7 +54,7 @@ const QuestionPage = () => {
     createAnswer(createAnswerRequest, {
       onSuccess: (data: CreateAnswerResponse) => {
         console.log('Answer created:', data.message);
-        navigate('/');
+        navigate('/main');
       },
       onError: (err) => {
         console.error('Error creating answer:', err);
@@ -100,9 +104,7 @@ const QuestionPage = () => {
 const PageLayout = ({ children }: { children: React.ReactNode }) => (
   <>
     <Header />
-    <Container>
-      {children}
-    </Container>
+    <Container>{children}</Container>
   </>
 );
 

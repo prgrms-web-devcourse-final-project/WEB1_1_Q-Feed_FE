@@ -8,7 +8,7 @@ const ErrorPage = () => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
-    navigate('/');
+    navigate('/main');
   };
 
   return (

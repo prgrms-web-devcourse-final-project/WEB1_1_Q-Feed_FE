@@ -1,6 +1,6 @@
 export const ROUTES = {
   ROOT: '/',
-  MAIN: '',
+  MAIN: '/main',
   CHAT: '/chat',
   MYPAGE: '/mypage',
   LANDING: '/landing',

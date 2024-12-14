@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         element: <MyPage />,
       },
       {
-        path: ROUTES.LANDING, //랜딩페이지
+        path: ROUTES.ROOT, //랜딩페이지
         element: <LandingPage />,
       },
       {
