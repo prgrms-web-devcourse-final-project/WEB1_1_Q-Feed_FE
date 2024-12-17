@@ -14,6 +14,7 @@ export interface Group {
 export interface GroupDetail {
   groupId: number;
   categoryName: string;
+  categoryId: number;
   url: string;
   groupName: string;
   description: string;

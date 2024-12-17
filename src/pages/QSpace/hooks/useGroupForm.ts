@@ -3,11 +3,17 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useToast } from '@chakra-ui/react';
 import { GroupFormData, GroupDetail } from '../types/group';
 
-export const useGroupForm = ({ initialData }: { initialData?: GroupDetail } = {}) => {
+export const useGroupForm = (
+  { initialData, mode }: { initialData?: GroupDetail; mode: 'create' | 'edit' } = { mode: 'create' }
+) => {
   const location = useLocation();
   const navigate = useNavigate();
   const toast = useToast();
-  const { categoryId } = location.state as { categoryId: number };
+
+  const categoryId =
+    mode === 'edit'
+      ? initialData?.categoryId
+      : (location.state as { categoryId: number })?.categoryId;
 
   const [title, setTitle] = useState(initialData?.groupName || '');
   const [description, setDescription] = useState(initialData?.description || '');
@@ -18,7 +24,7 @@ export const useGroupForm = ({ initialData }: { initialData?: GroupDetail } = {}
     title,
     description,
     imageFile,
-    categoryId,
+    categoryId: categoryId as number,
   };
 
   const formActions = {
