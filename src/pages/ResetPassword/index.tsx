@@ -7,6 +7,7 @@ import { Container, ContentWrapper } from '@/pages/ResetPassword/styles';
 import { StyledHStack, TextButton } from '@/pages/Login/styles';
 import { useNavigation } from '@/hooks/useNavigation';
 import { FormContainer } from '@/pages/Register/styles';
+import { useResetPassword } from '@/pages/ResetPassword/hooks/useResetPassword';
 
 export const ResetPasswordPage = () => {
   const { gotoPasswordRecoveryPage, gotoLogin, gotoRegisterPage } = useNavigation();
@@ -16,6 +17,8 @@ export const ResetPasswordPage = () => {
     formState: { errors },
     watch,
   } = useForm<FormValues>();
+  const resetPassword = useResetPassword();
+  const recoveryEmail = localStorage.getItem('recoveryEmail') || '';
 
   const handleFindID = () => {
     gotoPasswordRecoveryPage();
@@ -28,7 +31,27 @@ export const ResetPasswordPage = () => {
   };
 
   const onSubmit = async (data: FormValues) => {
-    console.log('test', data); //비밀번호 설정 부분
+    try {
+      // 비밀번호와 확인 비밀번호 일치 확인
+      if (data.password !== data.passwordConfirm) {
+        alert('비밀번호가 일치하지 않습니다.');
+        return;
+      }
+
+      // 비밀번호 재설정 뮤테이션 실행
+      const result = await resetPassword.mutateAsync({
+        password: data.password,
+        email: recoveryEmail,
+      });
+
+      // 성공 시 로그인 페이지로 이동
+      alert(result.message);
+      gotoLogin();
+    } catch (error) {
+      // 에러 처리
+      console.log(error);
+      alert('비밀번호 재설정 중 오류가 발생했습니다.');
+    }
   };
 
   return (

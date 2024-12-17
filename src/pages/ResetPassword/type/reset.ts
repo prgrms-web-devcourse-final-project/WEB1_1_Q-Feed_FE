@@ -1,5 +1,8 @@
 export interface ResetRequest {
   email: string;
-  code: string;
-  newPassword: string;
+  password: string;
+}
+
+export interface ResetResponse {
+  message: string;
 }
