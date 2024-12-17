@@ -16,7 +16,3 @@ export interface RecommendProfile {
   profileImage: string;
   followerCount: number;
 }
-
-export interface RecommendProfileSliderProps {
-  initialProfiles?: RecommendProfile[];
-}

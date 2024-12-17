@@ -13,3 +13,8 @@ export const formatDate = (isoDateString: string): string => {
     return isoDateString; // 변환 실패 시 원본 문자열 반환
   }
 };
+
+export const getTodayDate = (): string => {
+  const today = new Date();
+  return `${today.getFullYear()} / ${today.getMonth() + 1} /${today.getDate()}`;
+};

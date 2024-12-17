@@ -4,7 +4,7 @@ import { Swiper } from 'swiper/react';
 
 export const StyledSwiper = styled(Swiper)`
   width: 100%;
-  padding: 20px 0;
+  padding: 20px 0 30px 0;
   .swiper-wrapper {
     display: flex;
     flex-direction: row;
@@ -13,6 +13,7 @@ export const StyledSwiper = styled(Swiper)`
   .swiper-slide {
     flex: 0 0 auto;
     width: auto !important;
+    margin-bottom: 10px;
   }
 
   .swiper-button-next,
