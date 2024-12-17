@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import {
-  iconButtonStyle,
-  iconStyle,
+  /* iconButtonStyle, */
+  /* iconStyle, */
   inputContainerStyle,
   inputStyle,
   inputWrap,
@@ -9,7 +9,7 @@ import {
   sendIconStyle,
 } from '@/pages/ChatRoom/component/InputBar.styles';
 import { useState } from 'react';
-import { MdOutlineAddAPhoto } from 'react-icons/md';
+/* import { MdOutlineAddAPhoto } from 'react-icons/md'; */
 
 interface InputBarProps {
   placeholder?: string;
@@ -54,9 +54,9 @@ const ChatInputBar: React.FC<InputBarProps> = ({
     <div css={inputWrap}>
       <div css={inputContainerStyle}>
         {/* 카메라 아이콘 */}
-        <button css={iconButtonStyle}>
-          <MdOutlineAddAPhoto css={iconStyle} />
-        </button>
+        {/* <button css={iconButtonStyle}> */}
+        {/* <MdOutlineAddAPhoto css={iconStyle} /> */}
+        {/* </button> */}
         {/* 텍스트 입력 */}
         <input
           type="text"

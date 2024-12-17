@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { IoChevronBack } from 'react-icons/io5';
 import { HiOutlineBell, HiOutlineBellSlash } from 'react-icons/hi2';
@@ -21,171 +21,131 @@ import {
 const ChatRoom = () => {
   const { id: chatRoomId } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const [isNotificationEnabled, setIsNotificationEnabled] = useState(true);
-  const [messages, setMessages] = useState<MessageType[]>([]); // 메시지 상태 관리
-  const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
   const refetchChatList = location.state?.refetchChatList;
-  const myId = '83974189-a749-4a24-bd5a-8ca2577fac73'; // 본인 ID
 
+  const [isNotificationEnabled, setIsNotificationEnabled] = useState(true);
+  const [messages, setMessages] = useState<MessageType[]>([]);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+  const myId = '83974189-a749-4a24-bd5a-8ca2577fac73';
+  const messagesContainerRef = useRef<HTMLDivElement | null>(null); // 메시지 컨테이너 참조 추가
+
+  // 뒤로가기 시 채팅 리스트 새로고침
   const handleBack = () => {
-    // 뒤로가기 버튼 클릭 시 리스트 리페치
-    if (refetchChatList) {
-      refetchChatList(); // 채팅 리스트 데이터 새로고침
-    }
-    navigate(-1); // 이전 페이지로 이동
+    if (refetchChatList) refetchChatList();
+    navigate(-1);
   };
 
-  const toggleNotification = () => {
-    setIsNotificationEnabled((prevState) => !prevState);
-  };
-  useEffect(() => {
+  // 읽음 처리
+  const handleMarkAsRead = useCallback(async () => {
     if (!chatRoomId) return;
-
-    // 초기 메시지 로드
-    const fetchInitialMessages = async () => {
-      try {
-        const response = await fetch(`/api/chats/${chatRoomId}/messages`, {
-          headers: {
-            Authorization: 'Bearer YOUR_TOKEN',
-          },
-        });
-
-        if (response.ok) {
-          const data: MessageType[] = await response.json();
-          setMessages(data);
-        } else {
-          console.error('초기 메시지 로드 실패');
-        }
-      } catch (error) {
-        console.error('초기 메시지 로드 중 오류:', error);
-      }
-    };
-
-    // 읽음처리 API 호출
-    const handleMarkAsRead = async () => {
-      try {
-        await markAsRead(chatRoomId);
-        console.log('읽음 처리 완료');
-      } catch (error) {
-        console.error('읽음 처리 중 오류:', error);
-      }
-    };
-
-    fetchInitialMessages();
-    handleMarkAsRead(); // 읽음처리 호출
+    try {
+      await markAsRead(chatRoomId);
+      console.log('읽음 처리 완료');
+    } catch (error) {
+      console.error('읽음 처리 중 오류:', error);
+    }
   }, [chatRoomId]);
-
-  useEffect(() => {
-    if (messagesEndRef.current) {
-      messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }, [messages]);
-
-  useEffect(() => {
-    if (!chatRoomId) return;
-
-    // 초기 메시지 로드
-    const fetchInitialMessages = async () => {
-      try {
-        const response = await fetch(`/api/chats/${chatRoomId}/messages`, {
-          headers: {
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzM3MTA4OTQsImV4cCI6MTczMzc5NzI5NH0.1ugqUNKraIrqI-3RtdbA2D-XNhZ5oCDNqO8fdt1ESV0',
-          },
-        });
-
-        if (response.ok) {
-          const data: MessageType[] = await response.json();
-          console.log('서버 응답 데이터:', data);
-
-          // 서버에서 받은 데이터를 시간순으로 정렬 (최신 메시지가 아래로)
-          const sortedData = data.sort(
-            (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-          );
-
-          setMessages(sortedData);
-          console.log('초기 메시지 로드:', sortedData);
-        } else {
-          console.error('초기 메시지 로드 실패:', response.status, await response.text());
-        }
-      } catch (error) {
-        console.error('초기 메시지 로드 중 오류:', error);
-      }
-    };
-
-    fetchInitialMessages();
-
-    // STOMP 연결 설정
-    connectStomp();
-
-    stompClient.onConnect = () => {
-      console.log(`STOMP 연결 성공 (ChatRoom ID: ${chatRoomId})`);
-
-      const subscription = stompClient.subscribe(`/sub/chat/${chatRoomId}`, (message) => {
-        console.log('Received: ' + message.body);
-
-        try {
-          const receivedMessage: MessageType = JSON.parse(message.body);
-
-          // 본인이 보낸 메시지인지 확인하여 isMine 설정
-          const updatedMessage: MessageType = {
-            ...receivedMessage,
-            isMine: receivedMessage.senderId === myId,
-          };
-
-          console.log('파싱된 메시지:', updatedMessage);
-
-          // 메시지를 추가하고 정렬 (최신 메시지가 아래로)
-          setMessages((prevMessages) => {
-            const updatedMessages = [...prevMessages, updatedMessage];
-            return updatedMessages.sort(
-              (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-            );
-          });
-        } catch (error) {
-          console.error('메시지 파싱 오류:', error);
-        }
+  // 메시지 불러오기 함수
+  const fetchInitialMessages = useCallback(async () => {
+    try {
+      const response = await fetch(`/api/chats/${chatRoomId}/messages`, {
+        headers: {
+          Authorization:
+            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzQ0MzcxNTgsImV4cCI6MTczNDUyMzU1OH0.CKKlqRKa-FgCfYGZG_LvExGn8cSn5V_Ws5Nu3q-ncUw',
+        },
       });
 
-      return () => {
-        console.log('STOMP 구독 해제');
-        subscription.unsubscribe();
-      };
-    };
+      if (response.ok) {
+        const data: MessageType[] = await response.json();
+        const sortedData = [...data].sort(
+          (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        );
+        setMessages(sortedData);
 
-    stompClient.onStompError = (error) => {
-      console.error('STOMP 연결 에러:', error);
-    };
-
-    return () => {
-      disconnectStomp();
-    };
+        // 스크롤을 가장 아래로 이동
+        setTimeout(() => {
+          if (messagesContainerRef.current) {
+            messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+          }
+        }, 0);
+      } else {
+        console.error('초기 메시지 로드 실패:', response.status, await response.text());
+      }
+    } catch (error) {
+      console.error('초기 메시지 로드 중 오류:', error);
+    }
   }, [chatRoomId]);
 
+  // 메시지 전송 함수
   const handleSendMessage = (message: string) => {
     if (!chatRoomId) return;
 
     const payload = {
       roomId: Number(chatRoomId),
-      senderId: myId, // 본인 ID
-      message, // 메시지 내용
+      senderId: myId,
+      message,
     };
 
     stompClient.publish({
       destination: `/pub/chat/message`,
       body: JSON.stringify(payload),
     });
-
     console.log('메시지 전송:', payload);
   };
+
+  useEffect(() => {
+    if (!chatRoomId) return;
+
+    fetchInitialMessages(); // 초기 메시지 로드
+    handleMarkAsRead(); // 읽음 처리
+
+    // STOMP 설정
+    connectStomp();
+    stompClient.onConnect = () => {
+      console.log(`STOMP 연결 성공 (ChatRoom ID: ${chatRoomId})`);
+
+      const subscription = stompClient.subscribe(`/sub/chat/${chatRoomId}`, (message) => {
+        try {
+          const receivedMessage: MessageType = JSON.parse(message.body);
+
+          setMessages((prevMessages) => {
+            const updatedMessages = [
+              ...prevMessages,
+              { ...receivedMessage, isMine: receivedMessage.senderId === myId },
+            ];
+            return updatedMessages.sort(
+              (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            );
+          });
+
+          setTimeout(() => {
+            messagesEndRef.current?.scrollIntoView({ behavior: 'instant' });
+          }, 0);
+        } catch (error) {
+          console.error('메시지 파싱 오류:', error);
+        }
+      });
+
+      return () => subscription.unsubscribe();
+    };
+
+    return () => disconnectStomp();
+  }, [chatRoomId, fetchInitialMessages, handleMarkAsRead]);
+
+  useEffect(() => {
+    // 메시지가 업데이트될 때 스크롤 즉시 맨 아래로 이동
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop = messagesContainerRef.current.scrollHeight;
+    }
+  }, [messages]);
 
   return (
     <div css={chatRoomContainer}>
       <div css={headerStyle}>
         <IoChevronBack css={backIconStyle} onClick={handleBack} />
-        <span css={headerTitle}>채팅방 ID: {chatRoomId}</span>
-        <button css={iconButtonStyle} onClick={toggleNotification}>
+        <span css={headerTitle}>채팅방</span>
+        <button css={iconButtonStyle} onClick={() => setIsNotificationEnabled((prev) => !prev)}>
           {isNotificationEnabled ? (
             <HiOutlineBell css={iconStyle} />
           ) : (
@@ -193,14 +153,23 @@ const ChatRoom = () => {
           )}
         </button>
       </div>
-
-      <MessageList messages={messages} />
+      <div
+        ref={messagesContainerRef}
+        css={{
+          flex: 1, // 남은 공간을 모두 차지
+          /* display: 'flex',
+          flexDirection: 'column', */
+          overflowY: 'auto', // 스크롤 가능
+          backgroundColor: '#f9f4f0', // 배경색 추가 (기존 theme.colors.background 사용 가능)
+        }}
+      >
+        <MessageList messages={messages} />
+      </div>
 
       <div css={inputBarStyle}>
         <ChatInputBar placeholder="메시지를 입력하세요." onSend={handleSendMessage} />
       </div>
 
-      {/* 스크롤 이동을 위한 참조 */}
       <div ref={messagesEndRef} />
     </div>
   );
