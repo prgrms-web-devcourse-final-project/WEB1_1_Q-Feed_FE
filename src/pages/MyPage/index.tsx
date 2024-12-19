@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { copyToClipboard } from '@/pages/MyPage/utils/clipboard';
 import { formatDate } from '@/pages/MyPage/utils/date';
@@ -9,12 +9,12 @@ import MyProfile from '@/pages/MyPage/components/MyProfile/MyProfile';
 import QSpaceCard from '@/components/ui/QSpaceCard/QSpaceCard';
 import { useUserProfile, useUserInterests } from './hooks/useUserProfile';
 import { interestsMap } from '@/pages/MyPage/utils/interestsMap';
+import { useGroups } from '@/pages/ProfileRegister/hooks/useCreateUser';
 import { useInfiniteAnswers } from '@/pages/MyPage/hooks/useAnswers';
 import { categoryIdMap } from '@/utils/categoryIdMap';
 import { getQSpaceCard } from '@/utils/getQSpaceCard';
 import ErrorPage from '@/pages/Error';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
-import { useGroups } from '@/pages/QSpace/hooks/Query/useGroupList';
 import { useAnswerVisibility } from '@/pages/MyPage/api/useAnswerVisibility';
 import { useUserStore } from '@/store/userStore';
 import {
@@ -25,6 +25,7 @@ import {
   QuestionList,
   Tab,
   TabContainer,
+  MoreText,
 } from '@/pages/MyPage/styles';
 
 const MyPage = () => {
@@ -32,24 +33,20 @@ const MyPage = () => {
   const [activeTab, setActiveTab] = useState<'myQuestions' | 'qSpace'>('myQuestions');
   const { userId } = useUserStore();
 
-  const {
-    data: profile,
-    isLoading: profileLoading,
-    error: profileError,
-  } = useUserProfile(userId || '');
-  const {
-    data: interests,
-    isLoading: interestsLoading,
-    error: interestsError,
-  } = useUserInterests(userId || '');
-  const { data: groups, isPending, error: groupError } = useGroups(categoryIdMap['전체']);
+  const { data: profile, isLoading: profileLoading, error: profileError, refetch: refetchProfile } =
+    useUserProfile(userId || '');
+  const { data: interests, isLoading: interestsLoading, error: interestsError, refetch: refetchInterests } =
+    useUserInterests(userId || '');
+  const { data: groups, isPending, error: groupError, refetch: refetchGroups } =
+    useGroups(categoryIdMap['전체']);
   const {
     data: answerData,
     fetchNextPage,
     hasNextPage,
     isLoading: answersLoading,
     error: answersError,
-  } = useInfiniteAnswers(userId || '', 10);
+    refetch: refetchAnswers,
+  } = useInfiniteAnswers(userId || '', 5);
   const { mutate: toggleVisibility } = useAnswerVisibility();
 
   const handleLockToggle = (answerId: number, currentVisibility: boolean) => {
@@ -61,13 +58,21 @@ const MyPage = () => {
     copyToClipboard(profileLink);
   };
 
-  if (profileError || interestsError || groupError || answersError) {
-    return (
-      <Container>
-        <ErrorPage />
-      </Container>
-    );
-  }
+
+  useEffect(() => {
+    if (!userId) {
+      navigate('/login');
+    }
+  }, [userId, navigate]);
+
+  useEffect(() => {
+    if (userId) {
+      refetchProfile();
+      refetchInterests();
+      refetchGroups();
+      refetchAnswers();
+    }
+  }, [refetchAnswers, refetchGroups, refetchInterests, refetchProfile, userId]);
 
   const myProfileData = {
     name: profile?.nickname || '',
@@ -79,8 +84,12 @@ const MyPage = () => {
     tags: interests?.map((interest) => interestsMap[interest]) || [],
   };
 
-  if (!userId) {
-    navigate('/login');
+  if (profileError || interestsError || groupError || answersError) {
+    return (
+      <Container>
+        <ErrorPage />
+      </Container>
+    );
   }
 
   return (
@@ -97,10 +106,7 @@ const MyPage = () => {
               <Button onClick={handleCopyProfileLink}>프로필 공유</Button>
             </ButtonGroup>
             <TabContainer>
-              <Tab
-                onClick={() => setActiveTab('myQuestions')}
-                isActive={activeTab === 'myQuestions'}
-              >
+              <Tab onClick={() => setActiveTab('myQuestions')} isActive={activeTab === 'myQuestions'}>
                 나의 답변
               </Tab>
               <Tab onClick={() => setActiveTab('qSpace')} isActive={activeTab === 'qSpace'}>
@@ -124,7 +130,11 @@ const MyPage = () => {
                       />
                     ))
                   )}
-                  {hasNextPage && <button onClick={() => fetchNextPage()}>더보기</button>}
+                  {hasNextPage && (
+                    <button onClick={() => fetchNextPage()}>
+                      <MoreText>더보기</MoreText>
+                    </button>
+                  )}
                 </QuestionList>
               )}
               {activeTab === 'qSpace' && (
@@ -132,9 +142,7 @@ const MyPage = () => {
                   {isPending ? (
                     <LoadingSpinner />
                   ) : (
-                    groups?.map((group, index) => (
-                      <QSpaceCard key={index} {...getQSpaceCard(group)} />
-                    ))
+                    groups?.map((group, index) => <QSpaceCard key={index} {...getQSpaceCard(group)} />)
                   )}
                 </QSpaceList>
               )}
