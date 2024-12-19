@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ImageUpload } from '@/components/ui/ImageUpload/ImageUpload';
 import { categoryIdMap } from '@/utils/categoryIdMap';
@@ -8,7 +8,7 @@ import Header from '@/components/common/Header';
 import Answer from '@/pages/Question/components/Answer/Answer';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
 import ErrorPage from '@/pages/Error';
-import { CreateAnswerRequest, CreateAnswerResponse } from '@/pages/Question/types/answer';
+import { CreateAnswerRequest } from '@/pages/Question/types/answer';
 import {
   Container,
   ImageUploadContainer,
@@ -31,6 +31,7 @@ const QuestionPage = () => {
     isLoading: loadingQuestion,
     error: questionError,
   } = useQuestions(categoryIdMap[category as string]);
+
   const { mutate: createAnswer, error: isCreateAnswerError } = useCreateAnswer();
 
   const handleImageUpload = (file: File | null) => {
@@ -38,12 +39,6 @@ const QuestionPage = () => {
   };
 
   const handleSubmit = () => {
-    console.log(
-      `답변: ${answer}\n공개 여부: ${isPrivate ? '비공개' : '공개'}\n이미지: ${
-        uploadedImage ? uploadedImage.name : '없음'
-      }`
-    );
-
     const createAnswerRequest: CreateAnswerRequest = {
       questionId: categoryIdMap[category as string],
       content: answer,
@@ -52,51 +47,40 @@ const QuestionPage = () => {
     };
 
     createAnswer(createAnswerRequest, {
-      onSuccess: (data: CreateAnswerResponse) => {
-        console.log('Answer created:', data.message);
+      onSuccess: () => {
         navigate('/main');
       },
-      onError: (err) => {
-        console.error('Error creating answer:', err);
+      onError: (error) => {
+        console.error('Error creating answer:', error);
       },
     });
   };
 
   if (loadingQuestion) {
-    return (
-      <PageLayout>
-        <LoadingSpinner />
-      </PageLayout>
-    );
+    return <PageLayout><LoadingSpinner /></PageLayout>;
   }
 
   if (questionError || isCreateAnswerError) {
-    return (
-      <PageLayout>
-        <ErrorPage />
-      </PageLayout>
-    );
+    return <PageLayout><ErrorPage /></PageLayout>;
   }
 
   return (
     <PageLayout>
-      <Container>
-        <TitleContainer>
-          <Title>오늘의 질문</Title>
-          <Date>D+32</Date>
-        </TitleContainer>
-        <Question>{question?.content}</Question>
-        <ImageUploadContainer>
-          <ImageUpload onImageUpload={handleImageUpload} />
-        </ImageUploadContainer>
-        <Answer
-          answer={answer}
-          setAnswer={setAnswer}
-          isPrivate={isPrivate}
-          onLockToggle={() => setIsPrivate((prev) => !prev)}
-        />
-        <SubmitButton onClick={handleSubmit}>등록하기</SubmitButton>
-      </Container>
+      <TitleContainer>
+        <Title>오늘의 질문</Title>
+        <Date>D+32</Date>
+      </TitleContainer>
+      <Question>{question?.content}</Question>
+      <ImageUploadContainer>
+        <ImageUpload onImageUpload={handleImageUpload} />
+      </ImageUploadContainer>
+      <Answer
+        answer={answer}
+        setAnswer={setAnswer}
+        isPrivate={isPrivate}
+        onLockToggle={() => setIsPrivate((prev) => !prev)}
+      />
+      <SubmitButton onClick={handleSubmit}>등록하기</SubmitButton>
     </PageLayout>
   );
 };
