@@ -8,9 +8,12 @@ export const useFollowActions = (followerId: string, followeeId: string) => {
   const follow = useMutation({
     mutationFn: () => followUser(followerId, followeeId),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['followStatus', followerId, followeeId],
-      });
+      queryClient.setQueryData(['followStatus', followerId, followeeId], true);
+      queryClient.invalidateQueries({ queryKey: ['followStatus', followerId, followeeId] });
+      queryClient.invalidateQueries({ queryKey: ['userProfile', followeeId] });
+    },
+    onError: (error) => {
+      console.error('Error:', error);
     },
   });
 
@@ -18,9 +21,12 @@ export const useFollowActions = (followerId: string, followeeId: string) => {
   const unfollow = useMutation({
     mutationFn: () => unfollowUser(followerId, followeeId),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ['followStatus', followerId, followeeId],
-      });
+      queryClient.setQueryData(['followStatus', followerId, followeeId], false);
+      queryClient.invalidateQueries({ queryKey: ['followStatus', followerId, followeeId] });
+      queryClient.invalidateQueries({ queryKey: ['userProfile', followeeId] });
+    },
+    onError: (error) => {
+      console.error('Error:', error);
     },
   });
 
