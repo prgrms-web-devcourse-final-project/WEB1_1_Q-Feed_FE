@@ -23,12 +23,15 @@ const ChatRoom = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const refetchChatList = location.state?.refetchChatList;
-
+  const otherUserNickname = location.state?.otherUserNickname || "채팅방"; // 기본값 설정
   const [isNotificationEnabled, setIsNotificationEnabled] = useState(true);
   const [messages, setMessages] = useState<MessageType[]>([]);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const myId = '83974189-a749-4a24-bd5a-8ca2577fac73';
   const messagesContainerRef = useRef<HTMLDivElement | null>(null); // 메시지 컨테이너 참조 추가
+
+  console.log('Location State:', location.state); // 전체 state 확인
+  console.log('Other User Nickname:', otherUserNickname); // 닉네임 확인
 
   // 뒤로가기 시 채팅 리스트 새로고침
   const handleBack = () => {
@@ -52,7 +55,7 @@ const ChatRoom = () => {
       const response = await fetch(`/api/chats/${chatRoomId}/messages`, {
         headers: {
           Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI4Mzk3NDE4OS1hNzQ5LTRhMjQtYmQ1YS04Y2EyNTc3ZmFjNzMiLCJpYXQiOjE3MzQ0MzcxNTgsImV4cCI6MTczNDUyMzU1OH0.CKKlqRKa-FgCfYGZG_LvExGn8cSn5V_Ws5Nu3q-ncUw',
+            'Bearer token',
         },
       });
 
@@ -144,7 +147,7 @@ const ChatRoom = () => {
     <div css={chatRoomContainer}>
       <div css={headerStyle}>
         <IoChevronBack css={backIconStyle} onClick={handleBack} />
-        <span css={headerTitle}>채팅방</span>
+        <span css={headerTitle}>{otherUserNickname}</span>
         <button css={iconButtonStyle} onClick={() => setIsNotificationEnabled((prev) => !prev)}>
           {isNotificationEnabled ? (
             <HiOutlineBell css={iconStyle} />
@@ -157,8 +160,6 @@ const ChatRoom = () => {
         ref={messagesContainerRef}
         css={{
           flex: 1, // 남은 공간을 모두 차지
-          /* display: 'flex',
-          flexDirection: 'column', */
           overflowY: 'auto', // 스크롤 가능
           backgroundColor: '#f9f4f0', // 배경색 추가 (기존 theme.colors.background 사용 가능)
         }}

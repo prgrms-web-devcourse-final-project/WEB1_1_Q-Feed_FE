@@ -84,9 +84,12 @@ const ChatList = () => {
   const navigate = useNavigate();
 
   // 채팅방 클릭 핸들러
-  const handleChatRoomClick = (chatRoomId: string) => {
+  const handleChatRoomClick = (chatRoomId: string, otherUserNickname: string) => {
+    console.log('ChatRoomId:', chatRoomId); // 확인
+    console.log('OtherUserNickname:', otherUserNickname); // 확인
+
     navigate(`/chatroom/${chatRoomId}`, {
-      state: { refetchChatList: refetch }, // 채팅방에서 뒤로가기 시 리스트 새로고침을 위해 refetch 전달
+      state: { otherUserNickname, refetchChatList: refetch }, // 닉네임 전달
     });
   };
 
@@ -118,9 +121,10 @@ const ChatList = () => {
         {filteredChatData.map((chat) => (
           <div
             key={chat.chatRoomId}
-            onClick={() => handleChatRoomClick(chat.chatRoomId)} // 채팅방 클릭 이벤트 추가
+            onClick={() => handleChatRoomClick(chat.chatRoomId, chat.otherUserNickname)} // 채팅방 클릭 이벤트 추가
           >
-            <ChatItem {...chat} />
+            <ChatItem {...chat}
+             />
           </div>
         ))}
       </div>
