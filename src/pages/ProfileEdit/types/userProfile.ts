@@ -7,3 +7,12 @@ export interface UpdateUserProfileRequest {
 export interface UpdateUserProfileResponse {
   message: string; // 서버 응답 메시지
 }
+
+export interface ApiErrorResponse {
+  error: {
+    message: string;
+    details?: string;
+  };
+  status: number;
+  success: boolean;
+}
