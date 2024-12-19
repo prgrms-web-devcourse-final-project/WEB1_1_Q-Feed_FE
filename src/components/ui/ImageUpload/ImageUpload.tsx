@@ -1,3 +1,4 @@
+// ImageUpload.tsx
 import { useState } from 'react';
 import { LuImagePlus, LuImageOff } from 'react-icons/lu';
 import theme from '@/styles/theme';
@@ -9,32 +10,34 @@ import {
   PreviewImage,
   RemoveOverlay,
   UploadBox,
-} from '@/components/ui/ImageUpload/ImageUpload.styles';
+} from './ImageUpload.styles';
 
 interface ImageUploadProps {
   onImageUpload?: (file: File | null) => void;
-  accept?: string;
   maxSize?: number;
 }
 
+const ALLOWED_TYPES = ['image/jpeg', 'image/png']; // 허용 MIME 타입
+const ERROR_MESSAGES = {
+  INVALID_TYPE: 'jpg 또는 png 파일만 업로드할 수 있습니다.',
+  SIZE_EXCEEDED: '파일 크기가 너무 큽니다.',
+};
+
 export const ImageUpload = ({
   onImageUpload,
-  accept = 'image/*',
-  maxSize = 5 * 1024 * 1024,
+  maxSize = 5 * 1024 * 1024, // 기본 파일 크기 제한: 5MB
 }: ImageUploadProps) => {
   const [preview, setPreview] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const validImageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-
   const processFile = (file: File) => {
-    if (!validImageTypes.includes(file.type)) {
-      setError('이미지 파일(JPEG, PNG, GIF, WEBP)만 허용됩니다.');
+    if (!ALLOWED_TYPES.includes(file.type)) {
+      setError(ERROR_MESSAGES.INVALID_TYPE);
       return;
     }
 
     if (file.size > maxSize) {
-      setError(`파일 크기는 ${Math.floor(maxSize / (1024 * 1024))}MB 이하여야 합니다.`);
+      setError(ERROR_MESSAGES.SIZE_EXCEEDED);
       return;
     }
 
@@ -78,7 +81,7 @@ export const ImageUpload = ({
         onClick={handleBoxClick}
         hasPreview={!!preview}
       >
-        <input type="file" accept={accept} onChange={handleFileChange} />
+        <input type="file" accept=".jpg,.jpeg,.png" onChange={handleFileChange} />
         {preview ? (
           <PreviewContainer>
             <PreviewImage src={preview} alt="Uploaded Preview" />

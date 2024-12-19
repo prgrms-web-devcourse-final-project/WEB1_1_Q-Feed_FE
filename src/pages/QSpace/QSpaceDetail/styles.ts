@@ -56,9 +56,8 @@ export const TagWrapper = styled.div`
   margin-top: 0.5rem;
 `;
 export const CommentArea = styled.div`
-  padding: 0.5rem;
+  height: 100vh;
   background-color: ${theme.colors.white80};
-  padding-bottom: calc(5rem + 12px);
 `;
 export const ChatInputWrapper = styled.div`
   position: fixed;

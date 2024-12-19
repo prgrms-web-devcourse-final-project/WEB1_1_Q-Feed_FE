@@ -21,25 +21,24 @@ import {
   NickNameWrapper,
 } from '@/pages/ProfileRegister/styles';
 import axios from 'axios';
-import { HobbyTag } from '@/constants/hobbytag';
 import { useNavigation } from '@/hooks/useNavigation';
 import { KakaoUserInfo } from '@/pages/KakaoCallback/KakaoCallback';
 import { authAPI } from '@/pages/ProfileRegister/api/fetchUser';
 import { CATEGORIES } from '@/constants/categories';
 import { HeaderWithTitle } from '@/components/ui/HeaderWithTitle/HeaderWithTitle';
 import { SignUpRequest } from '@/pages/ProfileRegister/type/userInfo';
+import { NICKNAME_REGEX } from '@/utils/registerRegex';
 
 const ProfileRegisterPage: React.FC = () => {
   const { gotoSelectCategory } = useNavigation();
-  const availableTags = HobbyTag;
   const [profileImageSrc, setProfileImageSrc] = useState<string>(defaultProfile);
   const [name, setName] = useState<string>('');
   const [bio, setBio] = useState<string>('');
-  const [hobbyTags, setHobbyTags] = useState<string[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isValidNickname, setIsValidNickname] = useState<boolean>(true);
-  const [nameError, setNameError] = useState<string>('');
+  const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
+  // const [hobbyTags, setHobbyTags] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [nameError, setNameError] = useState<string>('');
   const [debouncedName, setDebouncedName] = useState<string>('');
 
   useEffect(() => {
@@ -58,13 +57,17 @@ const ProfileRegisterPage: React.FC = () => {
 
   const checkNickname = async (nickname: string) => {
     try {
-      const response = await authAPI.checkNickname(nickname);
-      const isAvailable = response.data === true;
-      setIsValidNickname(isAvailable);
-      setNameError(isValidNickname ? '' : '사용 불가능한 닉네임입니다.');
+      if (!NICKNAME_REGEX.test(nickname)) {
+        setNameError('닉네임은 한글, 영문, 숫자, 하이픈(-), 언더스코어(_)만 사용 가능합니다.');
+      } else {
+        const response = await authAPI.checkNickname(nickname);
+        console.log(response.data);
+
+        const isAvailable = response.data === true;
+        setNameError(isAvailable ? '' : '이미 사용중인 닉네임입니다.');
+      }
     } catch (error) {
       console.error('닉네임 검증 실패:', error);
-      setIsValidNickname(false);
       setNameError('닉네임 검증에 실패했습니다.');
     }
   };
@@ -73,9 +76,13 @@ const ProfileRegisterPage: React.FC = () => {
     const newName = e.target.value;
     setName(newName);
 
-    if (newName.length <= 2 || newName.length >= 10) {
+    if (!NICKNAME_REGEX.test(newName)) {
+      setNameError('닉네임은 한글, 영문, 숫자, 하이픈(-), 언더스코어(_)만 사용 가능합니다.');
+      return;
+    }
+
+    if (newName.length < 2 || newName.length > 10) {
       setNameError('닉네임은 2자 이상 10자 이하로 입력해주세요.');
-      setIsValidNickname(false);
       return;
     }
   };
@@ -94,8 +101,7 @@ const ProfileRegisterPage: React.FC = () => {
   };
 
   const handleTagSelectionChange = (selectedTags: string[]): void => {
-    const englishTags = selectedTags.map((tag) => CATEGORIES[tag as keyof typeof CATEGORIES]);
-    setHobbyTags(englishTags);
+    setSelectedTags(selectedTags);
   };
 
   const onClickSubmit = async (): Promise<void> => {
@@ -119,7 +125,7 @@ const ProfileRegisterPage: React.FC = () => {
       return;
     }
 
-    if (hobbyTags.length === 0) {
+    if (selectedTags.length === 0) {
       alert('하나 이상의 관심사 태그를 선택해주세요.');
       return;
     }
@@ -133,12 +139,16 @@ const ProfileRegisterPage: React.FC = () => {
         return;
       }
 
+      // 영문으로 입력해야 회원가입 가능
+      const englishTags = selectedTags.map((tag) => CATEGORIES[tag as keyof typeof CATEGORIES]);
+      setSelectedTags(englishTags);
+
       const signUpData: SignUpRequest = {
         email: registerEmail,
         password: registerPassword,
         nickname: name,
         description: bio,
-        interestCategoryNames: hobbyTags,
+        interestCategoryNames: englishTags,
         profileImageFile: fileInputRef.current?.files?.[0],
       };
 
@@ -158,16 +168,32 @@ const ProfileRegisterPage: React.FC = () => {
 
   const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const file = event.target.files?.[0];
-    if (file && file.type.startsWith('image/')) {
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        const result = e.target?.result as string;
-        setProfileImageSrc(result);
-      };
-      reader.readAsDataURL(file);
-    } else {
-      alert('이미지 파일만 업로드 가능합니다.');
+    const allowedFormats = ['image/jpeg', 'image/png', 'image/gif'];
+    const maxFileSize = 5 * 1024 * 1024; // 5MB
+
+    if (!file) {
+      alert('파일을 선택해주세요.');
+      return;
     }
+
+    if (!allowedFormats.includes(file.type)) {
+      alert('지원되는 이미지 형식은 JPEG, PNG, GIF만 가능합니다.');
+      return;
+    }
+
+    console.log('파일사이즈:', file.size, ',', maxFileSize);
+
+    if (file.size > maxFileSize) {
+      alert('이미지 파일은 5MB 이하만 업로드 가능합니다.');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e: ProgressEvent<FileReader>) => {
+      const result = e.target?.result as string;
+      setProfileImageSrc(result);
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleEditButtonClick = (): void => {
@@ -281,8 +307,8 @@ const ProfileRegisterPage: React.FC = () => {
             <FormGroup>
               <Label>취미 태그</Label>
               <SelectableHobbyTags
-                tags={availableTags}
-                selectedTags={hobbyTags}
+                tags={['여행', '스포츠', '패션', '문화', '맛집', '기타']}
+                selectedTags={selectedTags}
                 onSelectionChange={handleTagSelectionChange}
               />
             </FormGroup>

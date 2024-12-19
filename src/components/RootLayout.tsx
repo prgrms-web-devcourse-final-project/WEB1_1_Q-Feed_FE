@@ -3,10 +3,13 @@ import { Outlet, useLocation } from 'react-router-dom';
 
 const RootLayout = () => {
   const location = useLocation();
-  const isFooterHidden = location.pathname.startsWith('/chatroom');
+  const isFooterHidden =
+    location.pathname === '/login' ||
+    location.pathname === '/' ||
+    location.pathname.startsWith('/chatroom');
   return (
     <div>
-      <main className='container'>
+      <main className="container">
         <Outlet />
       </main>
       {!isFooterHidden && <Footer />}

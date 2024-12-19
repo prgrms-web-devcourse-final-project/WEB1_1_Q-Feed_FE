@@ -40,13 +40,16 @@ export const Body = styled.div`
 
 export const PostWrapper = styled.div`
   margin-top: 2.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-bottom: 0.0625rem solid ${theme.colors.gray[300]};
 `;
 
 export const CommentHeader = styled.div`
   display: flex;
   width: 100%;
   padding: 0.9375rem 1.5625rem;
-  border-bottom: 0.0625rem solid ${theme.colors.gray[300]};
+  border-bottom: 1px solid ${theme.colors.gray[300]};
   background-color: ${theme.colors.white80};
 `;
 

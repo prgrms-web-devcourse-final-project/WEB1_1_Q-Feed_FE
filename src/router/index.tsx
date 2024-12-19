@@ -48,7 +48,7 @@ const router = createBrowserRouter([
         element: <MyPage />,
       },
       {
-        path: ROUTES.LANDING, //랜딩페이지
+        path: ROUTES.ROOT, //랜딩페이지
         element: <LandingPage />,
       },
       {
@@ -65,7 +65,11 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTES.QSPACE_GROUP,
-        element: <PostGroupPage />,
+        element: <PostGroupPage mode="create" />,
+      },
+      {
+        path: ROUTES.QSPACE_EDIT,
+        element: <PostGroupPage mode="edit" />,
       },
       {
         path: ROUTES.QSPACE_DETAIL,

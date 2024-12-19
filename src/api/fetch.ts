@@ -1,5 +1,7 @@
 import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { APIResponse } from '@/types/response';
+import { getCookie } from '@/utils/cookies';
+import { ACCESS_TOKEN_KEY } from '@/constants/token';
 export class APIClient {
   private client: AxiosInstance;
 
@@ -15,11 +17,15 @@ export class APIClient {
     // 요청 인터셉터
     this.client.interceptors.request.use(
       (config) => {
-        const token =
-          'token';
+        const token = getCookie(ACCESS_TOKEN_KEY);
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
         }
+
+        if (config.data instanceof FormData) {
+          config.headers['Content-Type'] = 'multipart/form-data';
+        }
+
         return config;
       },
       (error) => {
@@ -78,12 +84,12 @@ export class APIClient {
     return response.data;
   }
 
-  async postText<T>(url: string, text: string): Promise<APIResponse<T>> {
+  async postText<T>(url: string, text: string, config?: object): Promise<APIResponse<T>> {
     const response = await this.client.post<APIResponse<T>>(url, text, {
+      ...config,
       headers: {
         'Content-Type': 'text/plain',
       },
-      transformRequest: [(data) => data], // 데이터 변환 방지
     });
     return response.data;
   }

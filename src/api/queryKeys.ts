@@ -47,5 +47,22 @@ export const AUTH_KEYS = {
     LOGOUT: 'logout',
     REGISTER: 'register',
     REFRESH: 'refresh',
+    RESETPASSWORD: 'resetpassword',
+  },
+} as const;
+
+export const POST_KEYS = {
+  ROOT: 'post',
+  ACTIONS: {
+    Question: 'question',
+    DETAIL: 'detail',
+  },
+} as const;
+
+export const FEED_KEYS = {
+  ROOT: 'main',
+  ACTIONS: {
+    Answers: 'answer',
+    MyAnswer: 'myanswer',
   },
 } as const;

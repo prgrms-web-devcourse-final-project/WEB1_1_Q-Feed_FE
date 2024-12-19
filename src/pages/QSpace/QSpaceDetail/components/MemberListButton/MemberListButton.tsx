@@ -8,7 +8,7 @@ interface MemberListButtonProps {
 const MemberListButton = ({ onClick, className }: MemberListButtonProps) => {
   return (
     <Button onClick={onClick} className={className}>
-      멤버 관리
+      멤버 목록
     </Button>
   );
 };

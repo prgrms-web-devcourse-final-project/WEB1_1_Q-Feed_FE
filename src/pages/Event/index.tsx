@@ -28,12 +28,12 @@ const EventPage = () => {
     console.log(
       `답변: ${answer}\n공개 여부: ${isPrivate ? '비공개' : '공개'}\n이미지: ${uploadedImage ? uploadedImage.name : '없음'}`
     );
-    navigate('/');
+    navigate('/main');
   };
 
   return (
     <>
-      <Header title='이벤트' />
+      <Header title="이벤트" />
       <Container>
         <Title>Special Question</Title>
         <Question>다가오는 크리스마스, 주연님의 크리스마스 계획은?</Question>

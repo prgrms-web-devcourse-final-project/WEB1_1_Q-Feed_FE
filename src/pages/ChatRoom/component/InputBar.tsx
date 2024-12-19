@@ -6,10 +6,11 @@ import {
   inputStyle,
   inputWrap,
   sendButtonStyle,
-  sendIconStyle,
 } from '@/pages/ChatRoom/component/InputBar.styles';
 import { useState } from 'react';
+
 /* import { MdOutlineAddAPhoto } from 'react-icons/md'; */
+import { SendButton } from '@/components/ui/SendButton/SendButton';
 
 interface InputBarProps {
   placeholder?: string;
@@ -71,7 +72,7 @@ const ChatInputBar: React.FC<InputBarProps> = ({
       </div>
       {/* 보내기 버튼 */}
       <button css={sendButtonStyle} onClick={handleSend}>
-        <img src="/src/assets/SendButton.svg" alt="Send" css={sendIconStyle} />
+        <SendButton />
       </button>
     </div>
   );

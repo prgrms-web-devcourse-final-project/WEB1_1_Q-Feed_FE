@@ -19,8 +19,7 @@ export interface GroupDetail {
   description: string;
   adminId: string;
   createdAt: string;
-  isMember: boolean;
-  isAdmin: boolean;
+  isOpen: boolean;
   members: {
     groupMemberId: number;
     userId: string;
@@ -52,18 +51,6 @@ export interface GroupPost {
   content: string;
   createdAt: string;
   likeCount: number;
-}
-
-export interface CreateGroupRequest {
-  groupName: string;
-  description: string;
-  categoryId: number;
-  url: string;
-  isOpen: boolean;
-}
-
-export interface UpdateGroupRequest extends Partial<CreateGroupRequest> {
-  groupId: number;
 }
 
 export interface GroupFormData {

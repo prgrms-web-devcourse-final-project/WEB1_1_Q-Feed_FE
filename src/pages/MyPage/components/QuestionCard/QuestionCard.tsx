@@ -5,7 +5,7 @@ import {
   Date,
   LockButton,
   Content,
-} from '@/pages/MyPage/components/QuestionCard/QuestionCard.styles'
+} from "@/pages/MyPage/components/QuestionCard/QuestionCard.styles";
 
 interface QuestionCardProps {
   date: string; // 질문 날짜
@@ -30,15 +30,17 @@ const QuestionCard = ({
     <Container onClick={handleCardClick}>
       <Header>
         <Date>{date}</Date>
-        <LockButton
-          onClick={(e) => {
-            e.stopPropagation();
-            onLockToggle?.();
-          }}
-          isPrivate={isPrivate}
-        >
-          {isPrivate ? <IoLockClosed size="1rem" /> : <IoLockOpen size="1rem" />}
-        </LockButton>
+        {onLockToggle && ( // onLockToggle이 전달된 경우에만 LockButton 렌더링
+          <LockButton
+            onClick={(e) => {
+              e.stopPropagation();
+              onLockToggle?.();
+            }}
+            isPrivate={isPrivate}
+          >
+            {isPrivate ? <IoLockClosed size="1rem" /> : <IoLockOpen size="1rem" />}
+          </LockButton>
+        )}
       </Header>
       <Content>{content}</Content>
     </Container>

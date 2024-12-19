@@ -9,9 +9,10 @@ interface MemberListProps {
   adminId: string;
   currentUserId: string;
   onResign?: (memberId: number) => void;
+  isLoading?: boolean;
 }
 
-const MemberList = ({ members, adminId, currentUserId, onResign }: MemberListProps) => {
+const MemberList = ({ members, adminId, currentUserId, onResign, isLoading }: MemberListProps) => {
   const handleResign = (memberId: number) => {
     if (onResign) {
       onResign(memberId);
@@ -35,7 +36,7 @@ const MemberList = ({ members, adminId, currentUserId, onResign }: MemberListPro
             <Role>{member.description || '프로필 소개글이 없습니다'}</Role>
           </InfoContainer>
           {isAdmin && member.userId !== currentUserId && (
-            <ReSignButton onClick={() => handleResign(member.groupMemberId)} />
+            <ReSignButton onClick={() => handleResign(member.groupMemberId)} disabled={isLoading} />
           )}
         </MemberItem>
       ))}
