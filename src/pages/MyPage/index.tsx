@@ -109,7 +109,7 @@ const MyPage = () => {
                 나의 답변
               </Tab>
               <Tab onClick={() => setActiveTab('qSpace')} isActive={activeTab === 'qSpace'}>
-                참여중인 소통방
+                나의 큐스페이스
               </Tab>
             </TabContainer>
             <Content>
