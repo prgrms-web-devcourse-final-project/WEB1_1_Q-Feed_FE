@@ -41,7 +41,11 @@ export const messageListStyle = css`
   overflow-y: auto;
   background-color: ${theme.colors.background};
 `;
-
+/* export const messageContainerStyle = css`
+  flex: 1;
+  overflow-y: 'auto';
+  background-color: ${theme.colors .background};
+`; */
 export const otherMessageStyle = css`
   display: flex;
   align-items: flex-start;
