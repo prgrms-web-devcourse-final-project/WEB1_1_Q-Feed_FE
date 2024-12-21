@@ -30,7 +30,7 @@ import { useUserStore } from '@/store/userStore';
 
 const Main = () => {
   // const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
+  const [activeCategory, setActiveCategory] = useState(categories[1]);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
@@ -87,6 +87,8 @@ const Main = () => {
     console.log(e);
   };
 
+  const date = new Date();
+  const formattedDate: string = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
   return (
     <Container>
       <Header />
@@ -115,7 +117,7 @@ const Main = () => {
           question={todayQuestion?.content || '오늘의 질문은??'}
         />
         <AnswerCard
-          date={formatDate(myAnswer?.createdAt || '2024.12.09')}
+          date={formatDate(myAnswer?.createdAt || formattedDate)}
           answer={myAnswer?.answerContent || ''}
         />
 
