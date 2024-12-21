@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ImageUpload } from '@/components/ui/ImageUpload/ImageUpload';
 import { categoryIdMap } from '@/utils/categoryIdMap';
 import { useQuestions } from '@/pages/Question/hooks/useQuestion';
 import { useCreateAnswer } from '@/pages/Question/hooks/useAnswer';
+import { useUserAnswer } from '@/pages/Question/hooks/useAnswer';
 import Header from '@/components/common/Header';
 import Answer from '@/pages/Question/components/Answer/Answer';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
 import ErrorPage from '@/pages/Error';
-import { CreateAnswerRequest, CreateAnswerResponse } from '@/pages/Question/types/answer';
+import { CreateAnswerRequest } from '@/pages/Question/types/answer';
 import {
   Container,
   ImageUploadContainer,
@@ -31,6 +32,20 @@ const QuestionPage = () => {
     isLoading: loadingQuestion,
     error: questionError,
   } = useQuestions(categoryIdMap[category as string]);
+
+  const questionId = question?.questionId;
+
+  // 사용자가 질문에 답변했는지 확인
+  const { data: userAnswer, isLoading: loadingAnswer } = useUserAnswer(
+    questionId ? String(questionId) : ''
+  );
+
+  useEffect(() => {
+    if (userAnswer) {
+      navigate('/main');
+    }
+  }, [userAnswer, navigate]);
+
   const { mutate: createAnswer, error: isCreateAnswerError } = useCreateAnswer();
 
   const handleImageUpload = (file: File | null) => {
@@ -38,65 +53,48 @@ const QuestionPage = () => {
   };
 
   const handleSubmit = () => {
-    console.log(
-      `답변: ${answer}\n공개 여부: ${isPrivate ? '비공개' : '공개'}\n이미지: ${
-        uploadedImage ? uploadedImage.name : '없음'
-      }`
-    );
-
     const createAnswerRequest: CreateAnswerRequest = {
-      questionId: categoryIdMap[category as string],
+      questionId: questionId as number,
       content: answer,
       visibility: isPrivate,
       image: uploadedImage,
     };
 
     createAnswer(createAnswerRequest, {
-      onSuccess: (data: CreateAnswerResponse) => {
-        console.log('Answer created:', data.message);
+      onSuccess: () => {
         navigate('/main');
       },
-      onError: (err) => {
-        console.error('Error creating answer:', err);
+      onError: (error) => {
+        console.error('Error creating answer:', error);
       },
     });
   };
 
-  if (loadingQuestion) {
-    return (
-      <PageLayout>
-        <LoadingSpinner />
-      </PageLayout>
-    );
+  if (loadingQuestion || loadingAnswer) {
+    return <PageLayout><LoadingSpinner /></PageLayout>;
   }
 
   if (questionError || isCreateAnswerError) {
-    return (
-      <PageLayout>
-        <ErrorPage />
-      </PageLayout>
-    );
+    return <PageLayout><ErrorPage /></PageLayout>;
   }
 
   return (
     <PageLayout>
-      <Container>
-        <TitleContainer>
-          <Title>오늘의 질문</Title>
-          <Date>D+32</Date>
-        </TitleContainer>
-        <Question>{question?.content}</Question>
-        <ImageUploadContainer>
-          <ImageUpload onImageUpload={handleImageUpload} />
-        </ImageUploadContainer>
-        <Answer
-          answer={answer}
-          setAnswer={setAnswer}
-          isPrivate={isPrivate}
-          onLockToggle={() => setIsPrivate((prev) => !prev)}
-        />
-        <SubmitButton onClick={handleSubmit}>등록하기</SubmitButton>
-      </Container>
+      <TitleContainer>
+        <Title>오늘의 질문</Title>
+        <Date>D+32</Date>
+      </TitleContainer>
+      <Question>{question?.content}</Question>
+      <ImageUploadContainer>
+        <ImageUpload onImageUpload={handleImageUpload} />
+      </ImageUploadContainer>
+      <Answer
+        answer={answer}
+        setAnswer={setAnswer}
+        isPrivate={isPrivate}
+        onLockToggle={() => setIsPrivate((prev) => !prev)}
+      />
+      <SubmitButton onClick={handleSubmit}>등록하기</SubmitButton>
     </PageLayout>
   );
 };

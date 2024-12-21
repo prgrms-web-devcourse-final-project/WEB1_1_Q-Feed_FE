@@ -17,3 +17,16 @@ export const fetchMessages = async (chatRoomId: string): Promise<MessageType[]> 
     return [];
   }
 };
+
+export const markAsRead = async (chatRoomId: string): Promise<void> => {
+  try {
+    const response = await apiClient.put(`/chats/${chatRoomId}/markasread`);
+    if (response.status === 200) {
+      console.log('읽음 처리 완료');
+    } else {
+      console.error('읽음 처리 실패', response);
+    }
+  } catch (error) {
+    console.error('읽음 처리 중 오류 발생:', error);
+  }
+};

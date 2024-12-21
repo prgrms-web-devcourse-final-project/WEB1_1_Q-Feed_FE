@@ -105,3 +105,9 @@ export const AnswerCounter = styled.span`
   text-align: left;
   margin-left: 0.3rem;
 `;
+
+export const MoreText = styled.span`
+   font-family: ${theme.typography.fontFamily.korean};
+   color: ${theme.colors.primary};
+   font-weight: bold;
+`;

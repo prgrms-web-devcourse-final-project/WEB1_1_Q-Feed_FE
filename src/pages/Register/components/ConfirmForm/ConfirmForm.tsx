@@ -2,10 +2,14 @@ import {
   VerificationButton,
   VerificationWrapper,
 } from '@/pages/Register/components/ConfirmForm/ConfirmForm.styles';
-import { StyledFormControl, StyledFormErrorMessage, StyledInput } from '@/pages/Register/styles';
 import { FormLabel } from '@chakra-ui/react';
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 import { FormValues } from '@/pages/Register/type/formType';
+import {
+  StyledFormControl,
+  StyledFormErrorMessage,
+  StyledInput,
+} from '@/pages/Login/components/LoginForm/LoginForm.styles';
 
 type ConfirmFormProps = {
   register: UseFormRegister<FormValues>;

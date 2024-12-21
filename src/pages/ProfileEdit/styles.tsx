@@ -4,7 +4,8 @@ import theme from '@/styles/theme';
 export const Container = styled.div`
   padding: 1.5rem 1rem;
   background-color: ${theme.colors.background};
-  min-height: calc(100vh - 8rem);
+  min-height: calc(100vh - 3.75rem);
+  padding-bottom: 5.25rem;
 `;
 
 export const ProfileSection = styled.div`

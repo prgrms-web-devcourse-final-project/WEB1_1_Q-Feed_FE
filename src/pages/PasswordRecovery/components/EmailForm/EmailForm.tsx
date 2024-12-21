@@ -3,10 +3,7 @@ import {
   StyledFormErrorMessage,
   StyledInput,
 } from '@/pages/Login/components/LoginForm/LoginForm.styles';
-import {
-  VerificationButton,
-  VerificationWrapper,
-} from '@/pages/Register/components/ConfirmForm/ConfirmForm.styles';
+import { VerificationWrapper } from '@/pages/Register/components/ConfirmForm/ConfirmForm.styles';
 import { FormValues } from '@/pages/Register/type/formType';
 import theme from '@/styles/theme';
 import { FormLabel } from '@chakra-ui/react';
@@ -15,10 +12,9 @@ import { UseFormRegister, FieldErrors } from 'react-hook-form';
 type EmailFormProps = {
   register: UseFormRegister<FormValues>;
   errors: FieldErrors<FormValues>;
-  onVerify: () => void;
 };
 
-export const EmailForm = ({ register, errors, onVerify }: EmailFormProps) => {
+export const EmailForm = ({ register, errors }: EmailFormProps) => {
   return (
     <StyledFormControl isInvalid={!!errors.email}>
       <FormLabel>이메일</FormLabel>
@@ -38,9 +34,6 @@ export const EmailForm = ({ register, errors, onVerify }: EmailFormProps) => {
           })}
           type="email"
         />
-        <VerificationButton type="button" onClick={onVerify}>
-          전송하기
-        </VerificationButton>
       </VerificationWrapper>
       <StyledFormErrorMessage>{errors.email?.message}</StyledFormErrorMessage>
     </StyledFormControl>

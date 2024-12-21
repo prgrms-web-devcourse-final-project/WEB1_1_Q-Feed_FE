@@ -11,5 +11,6 @@ export const UserAPI = {
   verifyEmailCode: (email: string, code: string) =>
     apiClient.post('/auth/email/verify/check', { email, code }),
 
+  // 이메일 중복 확인
   checkEmailExist: (email: string) => apiClient.postText('/auth/email/check', email),
 };
