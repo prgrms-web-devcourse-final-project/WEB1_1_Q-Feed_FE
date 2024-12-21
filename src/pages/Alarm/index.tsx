@@ -1,5 +1,5 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoChevronBack } from 'react-icons/io5';
 import ProfileImage from '@/components/ui/ProfileImageCon/ProfileImageCon';
@@ -19,62 +19,58 @@ import {
   timeStyle,
   unreadCountStyle,
 } from '@/pages/Alarm/styles';
-interface NotificationItem {
-  id: number;
-  type: string;
-  message: string;
-  time: string;
-}
+import { NotificationItem } from '@/pages/Alarm/type/alarmType';
+import {
+  fetchNotifications,
+  markNotificationAsRead,
+  markAllNotificationsAsRead,
+} from '@/pages/Alarm/api/fetchAlarm';
 
 const NotificationPage = () => {
   const navigate = useNavigate();
-  const notifications: NotificationItem[] = [
-    {
-      id: 1,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '방금',
-    },
-    {
-      id: 2,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '1시간 전',
-    },
-    {
-      id: 3,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '1시간 전',
-    },
-    {
-      id: 4,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '방금',
-    },
-    {
-      id: 5,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '1시간 전',
-    },
-    {
-      id: 6,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '1시간 전',
-    },
-  ];
 
+  // 알림 데이터 상태
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [readItems, setReadItems] = useState<number[]>([]); // 읽음 처리된 알림 ID 저장
 
-  const handleItemClick = (id: number) => {
-    setReadItems((prev) => (prev.includes(id) ? prev : [...prev, id]));
+  // 알림 데이터 불러오기
+  useEffect(() => {
+    const loadNotifications = async () => {
+      try {
+        const data = await fetchNotifications();
+        setNotifications(data);
+        const readIds = data.filter((notification) => notification.isRead).map((n) => n.id);
+        setReadItems(readIds); // 이미 읽음 처리된 알림 ID를 상태에 저장
+      } catch (error) {
+        console.error('알림 데이터를 불러오는 중 오류가 발생했습니다:', error);
+      }
+    };
+
+    loadNotifications();
+  }, []);
+
+  // 알림 클릭 시 읽음 처리 및 URL로 이동
+  const handleItemClick = async (notification: NotificationItem) => {
+    if (!readItems.includes(notification.id)) {
+      // 읽음 처리 API 호출
+      await markNotificationAsRead(notification.id);
+      setReadItems((prev) => [...prev, notification.id]);
+    }
+
+    // URL로 이동
+    if (notification.url) {
+      navigate(notification.url);
+    }
   };
 
-  const markAllAsRead = () => {
-    setReadItems(notifications.map((notification) => notification.id));
+  // 모든 알림 읽음 처리
+  const markAllAsRead = async () => {
+    try {
+      await markAllNotificationsAsRead(); // API 호출
+      setReadItems(notifications.map((notification) => notification.id)); // 모든 알림을 읽음 처리 상태로 변경
+    } catch (error) {
+      console.error('모든 알림 읽음 처리 중 오류가 발생했습니다:', error);
+    }
   };
 
   return (
@@ -87,7 +83,9 @@ const NotificationPage = () => {
 
       {/* Unread count */}
       <div css={readWrap}>
-        <div css={unreadCountStyle}>안읽은 알림 {notifications.length - readItems.length}개</div>
+        <div css={unreadCountStyle}>
+          안읽은 알림 {notifications.length - readItems.length}개
+        </div>
         <span css={markAllAsReadStyle} onClick={markAllAsRead}>
           모두 읽음 표시
         </span>
@@ -102,7 +100,7 @@ const NotificationPage = () => {
               listCon,
               readItems.includes(notification.id) && listConRead, // 읽음 처리된 항목 스타일
             ]}
-            onClick={() => handleItemClick(notification.id)}
+            onClick={() => handleItemClick(notification)}
           >
             <ProfileImage src="" size={40} />
             <div css={notificationContentStyle}>
