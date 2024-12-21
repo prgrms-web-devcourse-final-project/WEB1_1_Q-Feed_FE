@@ -1,6 +1,5 @@
 import { EmailForm } from '@/pages/Register/components/EmailForm/EmailForm';
 import { PasswordForm } from '@/pages/Register/components/PasswordForm/PasswordForm';
-import { Container, FormContainer, Text, TextButton, TextWrapper } from '@/pages/Register/styles';
 import { useForm } from 'react-hook-form';
 import { FormValues } from '@/pages/Register/type/formType';
 import LoginButton from '@/pages/Login/components/LoginButton/LoginButton';
@@ -11,6 +10,8 @@ import { useSendEmail } from '@/pages/Register/hooks/useSendEmail';
 import { useVerifyEmailCode } from '@/pages/Register/hooks/useVerifyEmailCode';
 import { useState } from 'react';
 import { useCheckEmailExist } from '@/pages/Register/hooks/useCheckEmailExist';
+import { Container, FormContainer, Text, TextButton, TextWrapper } from '@/pages/Register/styles';
+import { EMAIL_REGEX } from '@/utils/registerRegex';
 
 export const RegisterPage = () => {
   const { gotoLogin, gotoProfileRegister } = useNavigation();
@@ -33,16 +34,25 @@ export const RegisterPage = () => {
     const emailValue = getValues('email');
     setEmail(emailValue);
 
+    if (emailValue == '') {
+      alert('이메일을 입력하세요');
+      return;
+    }
+
+    if (!EMAIL_REGEX.test(emailValue)) {
+      alert('올바른 이메일 형식이 아닙니다.');
+      return;
+    }
+
     checkEmail(emailValue, {
       onSuccess: (isAvailable) => {
         if (isAvailable) {
           sendEmail(emailValue);
-          setEmailExist(false);
           alert('인증 이메일이 전송되었습니다.');
+          setEmailExist(false);
         } else {
-          setEmailExist(true);
-
           alert(`이미 가입된 이메일입니다.`);
+          return;
         }
       },
       onError: (error) => {

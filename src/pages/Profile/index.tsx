@@ -36,6 +36,7 @@ import {
   ProfileSection,
   Title,
   TitleSection,
+  MoreText,
 } from '@/pages/Profile/styles';
 
 const ProfilePage = () => {
@@ -55,7 +56,7 @@ const ProfilePage = () => {
     hasNextPage,
     isLoading: answersLoading,
     error: answersError,
-  } = useInfiniteAnswers(followeeId || '', 10);
+  } = useInfiniteAnswers(followeeId || '', 5);
 
   const { data: answerCount } = useAnswersCount(followeeId || '');
   const [tags, setTags] = useState<string[]>([]);
@@ -72,18 +73,18 @@ const ProfilePage = () => {
   };
 
   const handleFollowClick = () => {
-    if (followStatus?.isFollowing) {
+    if (!followerId) {
+      navigate('/login');
+    }
+
+    if (followStatus) {
       unfollow.mutate();
     } else {
       follow.mutate();
     }
   };
 
-  if (!followerId) {
-    navigate('/login');
-  }
   const isSelfProfile = followerId === followeeId; // 자기 자신인지 확인
-
 
   if (profileError || interestsError || answersError) {
     return <p>프로필 정보를 불러오는 중 문제가 발생했습니다.</p>;
@@ -94,8 +95,6 @@ const ProfilePage = () => {
   }
 
   const { nickname: name, email: id, followerCount: followers, followingCount: following, description: bio, profileImageUrl } = profileData || {};
-
-
 
   return (
     <>
@@ -116,13 +115,13 @@ const ProfilePage = () => {
           </FollowInfo>
           <ButtonGroup>
             <Button
-              onClick={!isSelfProfile ? handleFollowClick : () => navigate('/login')} //
+              onClick={!isSelfProfile ? handleFollowClick : undefined} //
               backgroundColor={theme.colors.primary}
               textColor={theme.colors.white}
             >
               {isSelfProfile
                 ? 'Me'
-                : followStatus?.isFollowing
+                : followStatus
                   ? 'Unfollow'
                   : 'Follow'}
             </Button>
@@ -166,7 +165,7 @@ const ProfilePage = () => {
               ))
             )}
             {hasNextPage && (
-              <button onClick={() => fetchNextPage()}>더보기</button>
+              <button onClick={() => fetchNextPage()}><MoreText>더보기</MoreText></button>
             )}
           </QuestionList>
         </AnswerSection>

@@ -15,7 +15,7 @@ export const fetchUserAnswers = async (
       size,
     }
   );
-  console.log('나의 답변 리스트 요청', response)
+
   if (!response.data) {
     throw new Error('No data received from API');
   }

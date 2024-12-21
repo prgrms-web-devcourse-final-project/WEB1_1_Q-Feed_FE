@@ -1,5 +1,5 @@
 import { apiClient } from '@/api/fetch';
-import { CreateAnswerRequest, CreateAnswerResponse } from '../types/answer';
+import { CreateAnswerRequest, CreateAnswerResponse, AnswerResponse } from '../types/answer';
 
 export const createAnswer = async (
   data: CreateAnswerRequest
@@ -19,4 +19,29 @@ export const createAnswer = async (
   }
 
   return response.data;
+};
+
+export const getUserAnswerByQuestion = async (
+  questionId: string
+): Promise<AnswerResponse | null> => {
+  try {
+    const response = await apiClient.get<AnswerResponse>(
+      `/feed/answers/users/question/${questionId}`
+    );
+
+    console.log(response);
+
+    if (response.status === 204) {
+      return null;
+    }
+
+    if (!response.data) {
+      throw new Error('No data received from API');
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching user answer:', error);
+    throw new Error('Failed to fetch user answer');
+  }
 };

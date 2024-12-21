@@ -8,6 +8,7 @@ import { useUserProfile, useUserInterests } from '@/pages/MyPage/hooks/useUserPr
 import { useUpdateUserProfile } from './hooks/useUpdateUserProfile';
 import { useUpdateUserInterests } from './hooks/useUpdateUserInterests';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
+import ErrorPage from '@/pages/Error';
 import defaultProfileImg from '@/assets/images/profile.svg';
 import { tagMap } from '@/pages/ProfileEdit/utils/tagMap';
 import { interestsMap } from '@/pages/MyPage/utils/interestsMap';
@@ -41,26 +42,24 @@ const ProfileEditPage = () => {
   const [name, setName] = useState('');
   const [bio, setBio] = useState('');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [profileImage, setProfileImage] = useState<string>(defaultProfileImg); // 기본 이미지를 초기값으로 설정
+  const [profileImage, setProfileImage] = useState<string>(defaultProfileImg);
   const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
+  const [updateError, setUpdateError] = useState<string | null>(null); // 추가된 상태
 
-  // 초기값 설정
+  const ALLOWED_TYPES = ['image/jpeg', 'image/png'];
+  const ERROR_MESSAGES = {
+    INVALID_TYPE: 'jpg 또는 png 파일만 업로드할 수 있습니다.',
+  };
+
   useEffect(() => {
     if (profileData) {
-      setName(profileData.nickname || ''); // 닉네임 설정
-      setBio(profileData.description || ''); // 소개 설정
-
-      console.log(profileData.profileImageUrl)
-      // 프로필 이미지가 없으면 기본 이미지 설정
-      if (profileData.profileImageUrl) {
-        setProfileImage(profileData.profileImageUrl); // 서버에서 받은 이미지 설정
-      } else {
-        setProfileImage(defaultProfileImg); // 기본 이미지 설정
-      }
+      setName(profileData.nickname || '');
+      setBio(profileData.description || '');
+      setProfileImage(profileData.profileImageUrl || defaultProfileImg);
     }
 
     if (interestsData) {
-      setSelectedTags(interestsData.map(interest => interestsMap[interest])); // 관심사 태그 설정
+      setSelectedTags(interestsData.map((interest) => interestsMap[interest]));
     }
   }, [profileData, interestsData]);
 
@@ -69,10 +68,17 @@ const ProfileEditPage = () => {
   };
 
   const handleImageChange = (file: File | null) => {
-    setProfileImageFile(file);
-
     if (file) {
-      setProfileImage(URL.createObjectURL(file)); // 미리보기 이미지 URL 생성
+      if (!ALLOWED_TYPES.includes(file.type)) {
+        alert(ERROR_MESSAGES.INVALID_TYPE);
+        return;
+      }
+
+      setProfileImageFile(file);
+      setProfileImage(URL.createObjectURL(file));
+    } else {
+      setProfileImageFile(null);
+      setProfileImage(defaultProfileImg);
     }
   };
 
@@ -86,53 +92,84 @@ const ProfileEditPage = () => {
     try {
       const mappedTags = selectedTags.map((tag) => tagMap[tag]);
 
-      // 태그 업데이트 요청
-      await updateUserInterests(mappedTags, {
-        onSuccess: () => {
-          console.log('관심사 태그 업데이트 성공');
-        },
-        onError: (error) => {
-          console.error('관심사 태그 업데이트 중 오류 발생:', error);
-          throw new Error('관심사 태그 업데이트 중 문제가 발생했습니다.');
-        },
+      // 프로필 업데이트를 Promise로 래핑
+      const updateProfilePromise = new Promise<void>((resolve, reject) => {
+        updateUserProfile(
+          { nickname: name, description: bio, profileImageFile },
+          {
+            onSuccess: () => {
+              console.log('프로필 업데이트 성공');
+              resolve();
+            },
+            onError: (error) => {
+              console.error('프로필 업데이트 중 오류 발생:', error);
+
+              if (error.message === '400') {
+                alert('이미 사용 중인 닉네임입니다.');
+                reject(new Error('400'));
+                return;
+              }
+
+              reject(new Error('프로필 업데이트 중 문제가 발생했습니다.'));
+            },
+          }
+        );
       });
 
-      // 프로필 업데이트 요청
-      await updateUserProfile(
-        {
-          nickname: name,
-          description: bio,
-          profileImageFile,
-        },
-        {
-          onSuccess: (data) => {
-            console.log('프로필 업데이트 성공:', data.message);
-            navigate('/mypage');
+      // 프로필 업데이트 완료 후 관심사 태그 업데이트 실행
+      await updateProfilePromise;
+
+      // 관심사 태그 업데이트를 Promise로 래핑
+      const updateTagsPromise = new Promise<void>((resolve, reject) => {
+        updateUserInterests(mappedTags, {
+          onSuccess: () => {
+            console.log('관심사 태그 업데이트 성공');
+            resolve();
           },
           onError: (error) => {
-            alert(error);
-            console.error('프로필 업데이트 중 오류 발생:', error);
-            throw new Error('프로필 업데이트 중 문제가 발생했습니다.');
+            console.error('관심사 태그 업데이트 중 오류 발생:', error);
+            reject(new Error('관심사 태그 업데이트 중 문제가 발생했습니다.'));
           },
-        }
-      );
+        });
+      });
+
+      await updateTagsPromise;
+
+      // 모든 작업이 성공적으로 완료된 경우
+      navigate('/mypage');
     } catch (error) {
-      console.error(error);
-      alert('업데이트 중 문제가 발생했습니다.');
+      if (error instanceof Error) {
+        if (error.message === '400') {
+          console.log('닉네임 중복으로 인해 요청이 중단되었습니다.');
+          return; // 닉네임 중복의 경우 추가 작업 없이 중단
+        }
+
+        console.error('catch에서 오류 처리:', error.message);
+        setUpdateError(error.message);
+      } else {
+        console.error('알 수 없는 오류 발생:', error);
+        setUpdateError('업데이트 중 문제가 발생했습니다.');
+      }
     }
   };
 
+
   if (!userId) {
     navigate('/login');
+  }
+
+  if (profileError || interestsError || updateError) {
+    return (
+      <Container>
+        <ErrorPage />
+      </Container>
+    );
   }
 
   if (profileLoading || interestsLoading) {
     return <LoadingSpinner />;
   }
 
-  if (profileError || interestsError) {
-    return <p>프로필 정보를 불러오는 중 문제가 발생했습니다.</p>;
-  }
 
   return (
     <>
@@ -141,7 +178,7 @@ const ProfileEditPage = () => {
         <ProfileSection>
           <ProfileImageWrapper>
             <ProfileImage
-              src={profileImage} // 프로필 이미지 URL 또는 기본 이미지
+              src={profileImage}
               size={120}
               alt="프로필 이미지"
             />
@@ -151,7 +188,7 @@ const ProfileEditPage = () => {
             <input
               id="profileImageInput"
               type="file"
-              accept="image/*"
+              accept=".jpg,.jpeg,.png"
               style={{ display: 'none' }}
               onChange={(e) => handleImageChange(e.target.files?.[0] || null)}
             />

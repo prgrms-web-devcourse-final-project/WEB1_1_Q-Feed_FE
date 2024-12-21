@@ -47,6 +47,7 @@ export const AUTH_KEYS = {
     LOGOUT: 'logout',
     REGISTER: 'register',
     REFRESH: 'refresh',
+    RESETPASSWORD: 'resetpassword',
   },
 } as const;
 
