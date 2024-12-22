@@ -12,7 +12,7 @@ interface KebabMenuProps {
   isOpen?: boolean; // 모집 상태
 }
 
-const KebabMenu = ({ onEditClick, onDeleteClick, groupId, isOpen = true }: KebabMenuProps) => {
+const KebabMenu = ({ onEditClick, onDeleteClick, groupId }: KebabMenuProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
@@ -60,9 +60,7 @@ const KebabMenu = ({ onEditClick, onDeleteClick, groupId, isOpen = true }: Kebab
       {isMenuOpen && (
         <MenuPopup>
           <MenuItem onClick={handleEdit}>글 수정하기</MenuItem>
-          <MenuItem onClick={handleStateChange}>
-            {isOpen ? '모집 완료로 변경' : '모집중으로 변경'}
-          </MenuItem>
+          <MenuItem onClick={handleStateChange}>모집상태 변경</MenuItem>
           <MenuItem onClick={handleDelete}>글 삭제하기</MenuItem>
         </MenuPopup>
       )}

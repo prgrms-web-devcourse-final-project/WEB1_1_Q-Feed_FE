@@ -18,7 +18,7 @@ export const useUpdateGroup = (groupId: number) => {
       return response.data;
     },
     onSuccess: () => {
-      // 그룹 상세 데이터 갱신
+      queryClient.invalidateQueries({ queryKey: [GROUP_KEYS.ROOT] });
       queryClient.invalidateQueries({ queryKey: [GROUP_KEYS.ROOT, groupId] });
 
       toast({
@@ -28,7 +28,7 @@ export const useUpdateGroup = (groupId: number) => {
       });
 
       // 상세 페이지로 이동
-      navigate(`/groups/${groupId}/detail`);
+      navigate(`/qspace`);
     },
     onError: (error) => {
       toast({
