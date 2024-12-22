@@ -24,7 +24,9 @@ export const useNavigation = () => {
   };
   const gotoSelectCategory = () => navigate(ROUTES.SELECT);
   const gotoProfilePage = () => navigate(ROUTES.PROFILE);
-  const gotoDetailPage = () => navigate(ROUTES.POST_DETAIL);
+  const gotoDetailPage = (answerId: string) => {
+    navigate(ROUTES.POST_DETAIL.replace(':postId', answerId));
+  };
   const gotoProfileEditPage = () => navigate(ROUTES.PROFILE_EDIT);
   const gotoProfileRegister = () => navigate(ROUTES.PROFILE_REGISTER);
   const gotoPasswordRecoveryPage = () => navigate(ROUTES.PASSWORD_RECOVERY);
