@@ -1,3 +1,4 @@
+import { Category } from '@/constants/categories';
 import { ROUTES } from '@/constants/routes';
 import { useNavigate } from 'react-router-dom';
 
@@ -17,7 +18,10 @@ export const useNavigation = () => {
   const gotoLogin = () => navigate(ROUTES.LOGIN);
   const gotoAlarm = () => navigate(ROUTES.ALARM);
   const gotoChatRoom = () => navigate(ROUTES.CHATROOM);
-  const gotoQuestionPage = () => navigate(ROUTES.QUESTION);
+  const gotoQuestionPage = (category?: string) => {
+    const targetCategory = category || Category.TRAVEL;
+    navigate(ROUTES.QUESTION.replace(':category', targetCategory));
+  };
   const gotoSelectCategory = () => navigate(ROUTES.SELECT);
   const gotoProfilePage = () => navigate(ROUTES.PROFILE);
   const gotoDetailPage = () => navigate(ROUTES.POST_DETAIL);

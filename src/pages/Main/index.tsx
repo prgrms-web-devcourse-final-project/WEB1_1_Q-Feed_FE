@@ -14,50 +14,42 @@ import {
   Title,
 } from '@/pages/Main/styles';
 import { useFetchQuestion } from '@/pages/AnswerDetail/hooks/useFetchQuestion';
-// import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
-import { formatDate, getTodayDate } from '@/pages/Main/util/formatDate';
+import { getTodayDate } from '@/pages/Main/util/formatDate';
 import { useFetchMyAnswer } from '@/pages/Main/hooks/useGetMyAnswer';
-// import InfiniteScroll from 'react-infinite-scroll-component';
-// import { useNavigate } from 'react-router';
 import { useRef, useState } from 'react';
-import { categories } from '@/constants/categories';
+import { categories, Category, CATEGORY_QUESTION_MAP } from '@/constants/categories';
 import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
-// import { useFetchFeedAnswers } from '@/pages/Main/hooks/useFetchFeed';
-// import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
-// import { dummyCommentList } from '@/mocks/dummyComments';
 import { useGetRecommendation } from '@/pages/Main/hooks/useGetRecommendation';
 import { useUserStore } from '@/store/userStore';
+import { useNavigation } from '@/hooks/useNavigation';
 
 const Main = () => {
-  // const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState(categories[1]);
+  const { gotoQuestionPage } = useNavigation();
+  const [activeCategory, setActiveCategory] = useState(Category.TRAVEL);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
   const categoryRef = useRef<HTMLDivElement>(null);
-  const { data: todayQuestion } = useFetchQuestion(1);
-  const { data: myAnswer } = useFetchMyAnswer(todayQuestion?.questionId || 0);
-  // const { data: commentList } = useFetchFeedAnswers({
-  //   category: 1,
-  //   size: 40, // 댓글 수에 맞게 조정
-  // });
+  const { data: todayQuestion } = useFetchQuestion(CATEGORY_QUESTION_MAP[activeCategory] || 1);
+  const { data: myAnswer } = useFetchMyAnswer(todayQuestion?.questionId || 1);
   const { userId: followerId } = useUserStore();
   const { data: recommendList, isLoading } = useGetRecommendation(followerId || '');
 
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
-      setActiveCategory(category);
-      console.log('Selected category:', category);
+      const validCategory = Object.values(Category).find((validCat) => validCat === category);
+
+      if (validCategory) {
+        setActiveCategory(validCategory);
+      }
+
+      console.log('test:', validCategory, myAnswer?.answerContent);
+
+      if (myAnswer?.answerContent == undefined) {
+        gotoQuestionPage(validCategory);
+      }
     }
   };
-  // const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
-  //   console.log(`Comment ${commentId} liked: ${isLiked}, count: ${count}`);
-  // };
-
-  // const handleReplyClick = (commentId: string) => {
-  //   console.log(`Reply clicked for comment ${commentId}`);
-  //   navigate(`/post/${commentId}/${activeCategory}}`);
-  // };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
@@ -87,8 +79,6 @@ const Main = () => {
     console.log(e);
   };
 
-  const date = new Date();
-  const formattedDate: string = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
   return (
     <Container>
       <Header />
@@ -114,12 +104,9 @@ const Main = () => {
       <Body>
         <QuestionCard
           date={getTodayDate()}
-          question={todayQuestion?.content || '오늘의 질문은??'}
+          question={todayQuestion?.content || `${activeCategory}질문 - 로딩 오류`}
         />
-        <AnswerCard
-          date={formatDate(myAnswer?.createdAt || formattedDate)}
-          answer={myAnswer?.answerContent || ''}
-        />
+        <AnswerCard answer={myAnswer?.answerContent || `${activeCategory}에 대한 나의 답변`} />
 
         <PostWrapper>
           <Title>지금 뜨는 인기 답변</Title>
@@ -143,22 +130,6 @@ const Main = () => {
             )}
           <Title>최근 등록된 답변</Title>
         </ProfileSlideWrapper>
-
-        {/* <CommentListWrapper>
-          <CommentItemList
-            comments={dummyCommentList}
-            onLikeComment={handleLikeComment}
-            onReplyClick={handleReplyClick}
-          />
-        </CommentListWrapper> */}
-
-        {/* <CommentListWrapper>
-          <CommentItemList
-            comments={commentList?.pages.flatMap((page) => page.answers) || []}
-            onLikeComment={handleLikeComment}
-            onReplyClick={handleReplyClick}
-          />
-        </CommentListWrapper> */}
       </Body>
     </Container>
   );
