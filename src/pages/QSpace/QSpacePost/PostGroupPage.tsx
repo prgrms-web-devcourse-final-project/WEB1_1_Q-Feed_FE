@@ -25,7 +25,7 @@ interface PostGroupPageProps {
 }
 
 const PostGroupPage = ({ mode = 'create', initialData }: PostGroupPageProps) => {
-  const { formData, formActions } = useGroupForm({ initialData });
+  const { formData, formActions } = useGroupForm();
   const postGroupMutation = usePostGroup();
   const updateGroupMutation = useUpdateGroup(initialData?.groupId || 0);
 
@@ -43,18 +43,15 @@ const PostGroupPage = ({ mode = 'create', initialData }: PostGroupPageProps) => 
 
     if (formData.imageFile) {
       form.append('file', formData.imageFile);
-      console.log(
-        'Form after file append:',
-        Array.from(form.entries()).map(([key, value]) => [key, value])
-      );
     }
 
-    if (mode === 'edit' && updateGroupMutation) {
+    if (mode === 'edit' && initialData?.groupId) {
       updateGroupMutation.mutate(form);
     } else {
       postGroupMutation.mutate(form);
     }
   };
+
   return (
     <Container>
       <Header>
@@ -105,8 +102,12 @@ const PostGroupPage = ({ mode = 'create', initialData }: PostGroupPageProps) => 
           width="100%"
           height="3.5rem"
           onClick={handlePostGroup}
-          isPending={postGroupMutation.isPending}
-          isDisabled={!formData.title || !formData.description || postGroupMutation.isPending}
+          isPending={mode === 'edit' ? updateGroupMutation.isPending : postGroupMutation.isPending}
+          isDisabled={
+            !formData.title ||
+            !formData.description ||
+            (mode === 'edit' ? updateGroupMutation.isPending : postGroupMutation.isPending)
+          }
           _disabled={{
             bg: theme.colors.gray[300],
             cursor: 'not-allowed',

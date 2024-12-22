@@ -9,3 +9,9 @@ export interface CreateAnswerResponse {
   answerId: number;
   message: string;
 }
+
+export interface AnswerResponse {
+  answerId: number;
+  answerContent: string;
+  createdAt: string;
+}

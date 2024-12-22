@@ -9,9 +9,8 @@ import MyProfile from '@/pages/MyPage/components/MyProfile/MyProfile';
 import QSpaceCard from '@/components/ui/QSpaceCard/QSpaceCard';
 import { useUserProfile, useUserInterests } from './hooks/useUserProfile';
 import { interestsMap } from '@/pages/MyPage/utils/interestsMap';
-import { useGroups } from '@/pages/ProfileRegister/hooks/useCreateUser';
+import { useUserGroups } from '@/pages/MyPage/hooks/useUserGroups';
 import { useInfiniteAnswers } from '@/pages/MyPage/hooks/useAnswers';
-import { categoryIdMap } from '@/utils/categoryIdMap';
 import { getQSpaceCard } from '@/utils/getQSpaceCard';
 import ErrorPage from '@/pages/Error';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
@@ -37,8 +36,8 @@ const MyPage = () => {
     useUserProfile(userId || '');
   const { data: interests, isLoading: interestsLoading, error: interestsError, refetch: refetchInterests } =
     useUserInterests(userId || '');
-  const { data: groups, isPending, error: groupError, refetch: refetchGroups } =
-    useGroups(categoryIdMap['전체']);
+  const { data: groups, isLoading: groupsLoading, error: groupsError, refetch: refetchGroups } =
+    useUserGroups();
   const {
     data: answerData,
     fetchNextPage,
@@ -84,7 +83,7 @@ const MyPage = () => {
     tags: interests?.map((interest) => interestsMap[interest]) || [],
   };
 
-  if (profileError || interestsError || groupError || answersError) {
+  if (profileError || interestsError || groupsError || answersError) {
     return (
       <Container>
         <ErrorPage />
@@ -110,7 +109,7 @@ const MyPage = () => {
                 나의 답변
               </Tab>
               <Tab onClick={() => setActiveTab('qSpace')} isActive={activeTab === 'qSpace'}>
-                참여중인 소통방
+                나의 큐스페이스
               </Tab>
             </TabContainer>
             <Content>
@@ -126,7 +125,7 @@ const MyPage = () => {
                         content={answer.answerContent}
                         isPrivate={!answer.visibility}
                         onLockToggle={() => handleLockToggle(answer.answerId, answer.visibility)}
-                        onClick={() => alert(`답변 상세 페이지 이동 id(${answer.answerId})`)}
+                        onClick={() => alert(`답변 상세 페이지 이동 - answer-id : [${answer.answerId}]`)}
                       />
                     ))
                   )}
@@ -139,7 +138,7 @@ const MyPage = () => {
               )}
               {activeTab === 'qSpace' && (
                 <QSpaceList>
-                  {isPending ? (
+                  {groupsLoading ? (
                     <LoadingSpinner />
                   ) : (
                     groups?.map((group, index) => <QSpaceCard key={index} {...getQSpaceCard(group)} />)
