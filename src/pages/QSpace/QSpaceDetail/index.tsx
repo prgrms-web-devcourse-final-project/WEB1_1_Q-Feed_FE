@@ -106,7 +106,7 @@ const QSpaceDetailPage = () => {
               <KebabMenu
                 groupId={groupId}
                 isOpen={groupDetail.isOpen}
-                onEditClick={() => navigate(`/groups/${groupId}/edit`)}
+                onEditClick={() => navigate(`/groups/${groupId}/edit`, { state: { groupId } })}
                 onDeleteClick={() => deleteGroup.mutate()}
               />
             </KebabMenuWrapper>
