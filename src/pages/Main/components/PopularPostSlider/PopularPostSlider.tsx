@@ -9,12 +9,19 @@ import {
   Container,
   StyledSwiper,
 } from '@/pages/Main/components/PopularPostSlider/PopularPostSlider.styles';
+import { useNavigation } from '@/hooks/useNavigation';
 
 interface PopularPostSliderProps {
   popularPosts: PopularPost[];
 }
 
 export const PopularPostSlider = ({ popularPosts }: PopularPostSliderProps) => {
+  const { gotoDetailPage } = useNavigation();
+
+  const handlePostClick = (answerId: number) => {
+    gotoDetailPage(answerId);
+  };
+
   return (
     <Container>
       <StyledSwiper
@@ -32,7 +39,7 @@ export const PopularPostSlider = ({ popularPosts }: PopularPostSliderProps) => {
       >
         {popularPosts.map((item, index) => (
           <SwiperSlide key={index}>
-            <PopularPostCard post={item.post} />
+            <PopularPostCard post={item.content} onClick={() => handlePostClick(item.answerId)} />
           </SwiperSlide>
         ))}
       </StyledSwiper>

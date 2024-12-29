@@ -2,7 +2,6 @@ import Header from '@/components/common/Header';
 import { QuestionCard } from '@/pages/Main/components/QuestionCard/QuestionCard';
 import { PopularPostSlider } from '@/pages/Main/components/PopularPostSlider/PopularPostSlider';
 import { ProfileSlider } from '@/pages/Main/components/ProfileSlider/ProfileSlider';
-import { dummyData } from '@/mocks/dummyPosts';
 import AnswerCard from '@/pages/Main/components/AnswerCard/AnswerCard';
 import {
   Body,
@@ -23,6 +22,8 @@ import { useGetRecommendation } from '@/pages/Main/hooks/useGetRecommendation';
 import { useUserStore } from '@/store/userStore';
 import { useNavigation } from '@/hooks/useNavigation';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
+import { useGetTrendingPosts } from '@/pages/Main/hooks/useGetTrendPosts';
+import { PopularPost } from '@/pages/Main/type/popularPosts';
 
 const Main = () => {
   const { gotoQuestionPage } = useNavigation();
@@ -39,7 +40,27 @@ const Main = () => {
   );
   const { userId: followerId } = useUserStore();
   const { data: recommendList, isLoading } = useGetRecommendation(followerId || '');
+  const { data: trendList } = useGetTrendingPosts(CATEGORY_QUESTION_MAP[activeCategory] || 1);
 
+  interface TrendingAnswersResponse {
+    trendingAnswers: PopularPost[];
+  }
+
+  function isTrendingAnswersResponse(data: unknown): data is TrendingAnswersResponse {
+    if (typeof data !== 'object' || data === null) return false;
+
+    const trendingAnswers = (data as Record<string, unknown>)['trendingAnswers'];
+
+    return (
+      trendingAnswers !== undefined &&
+      Array.isArray(trendingAnswers) &&
+      trendingAnswers.length > 0 &&
+      trendingAnswers.every(
+        (item) =>
+          typeof item === 'object' && item !== null && 'answerId' in item && 'content' in item
+      )
+    );
+  }
   useEffect(() => {
     if (isAnswerLoading) {
       setIsLoading(true);
@@ -49,6 +70,10 @@ const Main = () => {
       gotoQuestionPage(activeCategory);
     }
   }, [todayQuestion, myAnswer, activeCategory, gotoQuestionPage, isAnswerLoading]);
+
+  useEffect(() => {
+    console.log('test:', trendList);
+  }, [trendList]);
 
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
@@ -125,10 +150,12 @@ const Main = () => {
         />
         <AnswerCard answer={myAnswer?.answerContent || `${activeCategory}에 대한 나의 답변`} />
 
-        <PostWrapper>
-          <Title>지금 뜨는 인기 답변</Title>
-          <PopularPostSlider popularPosts={dummyData} />
-        </PostWrapper>
+        {isTrendingAnswersResponse(trendList) && (
+          <PostWrapper>
+            <Title>지금 뜨는 인기 답변</Title>
+            <PopularPostSlider popularPosts={trendList.trendingAnswers} />
+          </PostWrapper>
+        )}
 
         <ProfileSlideWrapper>
           {!isLoading &&
