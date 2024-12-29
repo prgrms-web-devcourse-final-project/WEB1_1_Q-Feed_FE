@@ -22,6 +22,7 @@ import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
 import { useGetRecommendation } from '@/pages/Main/hooks/useGetRecommendation';
 import { useUserStore } from '@/store/userStore';
 import { useNavigation } from '@/hooks/useNavigation';
+import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
 
 const Main = () => {
   const { gotoQuestionPage } = useNavigation();
@@ -29,17 +30,25 @@ const Main = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [isQLoading, setIsLoading] = useState(false);
+
   const categoryRef = useRef<HTMLDivElement>(null);
   const { data: todayQuestion } = useFetchQuestion(CATEGORY_QUESTION_MAP[activeCategory] || 1);
-  const { data: myAnswer } = useFetchMyAnswer(todayQuestion?.questionId || 1);
+  const { data: myAnswer, isLoading: isAnswerLoading } = useFetchMyAnswer(
+    todayQuestion?.questionId || 1
+  );
   const { userId: followerId } = useUserStore();
   const { data: recommendList, isLoading } = useGetRecommendation(followerId || '');
 
   useEffect(() => {
+    if (isAnswerLoading) {
+      setIsLoading(true);
+      return () => setIsLoading(false);
+    }
     if (myAnswer?.answerContent === undefined) {
       gotoQuestionPage(activeCategory);
     }
-  }, [todayQuestion, myAnswer, activeCategory, gotoQuestionPage]);
+  }, [todayQuestion, myAnswer, activeCategory, gotoQuestionPage, isAnswerLoading]);
 
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
@@ -77,6 +86,15 @@ const Main = () => {
     setIsDragging(false);
     console.log(e);
   };
+
+  if (isQLoading) {
+    return (
+      <Container>
+        <Header />
+        <LoadingSpinner />
+      </Container>
+    );
+  }
 
   return (
     <Container>
