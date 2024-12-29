@@ -16,7 +16,7 @@ import {
 import { useFetchQuestion } from '@/pages/AnswerDetail/hooks/useFetchQuestion';
 import { getTodayDate } from '@/pages/Main/util/formatDate';
 import { useFetchMyAnswer } from '@/pages/Main/hooks/useGetMyAnswer';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { categories, Category, CATEGORY_QUESTION_MAP } from '@/constants/categories';
 import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
 import { useGetRecommendation } from '@/pages/Main/hooks/useGetRecommendation';
@@ -35,18 +35,17 @@ const Main = () => {
   const { userId: followerId } = useUserStore();
   const { data: recommendList, isLoading } = useGetRecommendation(followerId || '');
 
+  useEffect(() => {
+    if (myAnswer?.answerContent === undefined) {
+      gotoQuestionPage(activeCategory);
+    }
+  }, [todayQuestion, myAnswer, activeCategory, gotoQuestionPage]);
+
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
       const validCategory = Object.values(Category).find((validCat) => validCat === category);
-
       if (validCategory) {
         setActiveCategory(validCategory);
-      }
-
-      console.log('test:', validCategory, myAnswer?.answerContent);
-
-      if (myAnswer?.answerContent == undefined) {
-        gotoQuestionPage(validCategory);
       }
     }
   };
