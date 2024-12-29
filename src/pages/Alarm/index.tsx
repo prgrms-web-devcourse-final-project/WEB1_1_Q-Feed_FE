@@ -1,94 +1,72 @@
 /** @jsxImportSource @emotion/react */
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { IoChevronBack } from 'react-icons/io5';
-import ProfileImage from '@/components/ui/ProfileImageCon/ProfileImageCon';
+import NotificationItemComponent from '@/pages/Alarm/AlarmItem';
 import {
-  backIconStyle,
   containerStyle,
   headerStyle,
   headerTitleStyle,
-  listCon,
-  listConRead,
-  listStyle,
-  markAllAsReadStyle,
-  notificationContentStyle,
-  notificationMessageStyle,
-  notificationTypeStyle,
   readWrap,
-  timeStyle,
   unreadCountStyle,
+  markAllAsReadStyle,
+  listStyle,
 } from '@/pages/Alarm/styles';
-interface NotificationItem {
-  id: number;
-  type: string;
-  message: string;
-  time: string;
-}
+import { NotificationItem } from '@/pages/Alarm/type/alarmType';
+import { fetchNotifications, markAllNotificationsAsRead } from '@/pages/Alarm/api/fetchAlarm';
 
 const NotificationPage = () => {
   const navigate = useNavigate();
-  const notifications: NotificationItem[] = [
-    {
-      id: 1,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '방금',
-    },
-    {
-      id: 2,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '1시간 전',
-    },
-    {
-      id: 3,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '1시간 전',
-    },
-    {
-      id: 4,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '방금',
-    },
-    {
-      id: 5,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '1시간 전',
-    },
-    {
-      id: 6,
-      type: '알림 유형(큐스페이스, 이벤트 등)',
-      message: "큐피드님이 나의 글에 '댓글'을 남겼습니다.",
-      time: '1시간 전',
-    },
-  ];
 
+  // 알림 데이터 상태
+  const [notifications, setNotifications] = useState<NotificationItem[]>([]);
   const [readItems, setReadItems] = useState<number[]>([]); // 읽음 처리된 알림 ID 저장
 
-  const handleItemClick = (id: number) => {
-    setReadItems((prev) => (prev.includes(id) ? prev : [...prev, id]));
+  // 알림 데이터 불러오기
+  useEffect(() => {
+    const loadNotifications = async () => {
+      try {
+        const data = await fetchNotifications();
+        setNotifications(data);
+        const readIds = data
+          .filter((notification) => notification.isRead)
+          .map((n) => n.notificationId);
+        setReadItems(readIds); // 이미 읽음 처리된 알림 ID를 상태에 저장
+      } catch (error) {
+        console.error('알림 데이터를 불러오는 중 오류가 발생했습니다:', error);
+      }
+    };
+
+    loadNotifications();
+  }, []);
+
+  // 특정 알림 읽음 처리
+  const handleItemRead = (id: number) => {
+    setReadItems((prev) => [...prev, id]);
   };
 
-  const markAllAsRead = () => {
-    setReadItems(notifications.map((notification) => notification.id));
+  // 모든 알림 읽음 처리
+  const handleMarkAllAsRead = async () => {
+    try {
+      await markAllNotificationsAsRead(); // API 호출
+      setReadItems(notifications.map((notification) => notification.notificationId)); // 모든 알림을 읽음 처리 상태로 변경
+    } catch (error) {
+      console.error('모든 알림 읽음 처리 중 오류가 발생했습니다:', error);
+    }
   };
 
   return (
     <div css={containerStyle}>
       {/* Header */}
       <div css={headerStyle}>
-        <IoChevronBack css={backIconStyle} onClick={() => navigate(-1)} />
+        <IoChevronBack onClick={() => navigate(-1)} />
         <span css={headerTitleStyle}>알림</span>
       </div>
 
       {/* Unread count */}
       <div css={readWrap}>
         <div css={unreadCountStyle}>안읽은 알림 {notifications.length - readItems.length}개</div>
-        <span css={markAllAsReadStyle} onClick={markAllAsRead}>
+        <span css={markAllAsReadStyle} onClick={handleMarkAllAsRead}>
           모두 읽음 표시
         </span>
       </div>
@@ -96,21 +74,12 @@ const NotificationPage = () => {
       {/* Notification List */}
       <div css={listStyle}>
         {notifications.map((notification) => (
-          <div
-            key={notification.id}
-            css={[
-              listCon,
-              readItems.includes(notification.id) && listConRead, // 읽음 처리된 항목 스타일
-            ]}
-            onClick={() => handleItemClick(notification.id)}
-          >
-            <ProfileImage src="" size={40} />
-            <div css={notificationContentStyle}>
-              <span css={notificationTypeStyle}>{notification.type}</span>
-              <p css={notificationMessageStyle}>{notification.message}</p>
-            </div>
-            <span css={timeStyle}>{notification.time}</span>
-          </div>
+          <NotificationItemComponent
+            key={notification.notificationId}
+            notification={notification}
+            isRead={readItems.includes(notification.notificationId)}
+            onRead={handleItemRead}
+          />
         ))}
       </div>
     </div>

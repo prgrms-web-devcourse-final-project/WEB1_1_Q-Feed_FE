@@ -2,12 +2,12 @@ import { initializeApp } from 'firebase/app';
 import { getMessaging, onMessage, getToken } from 'firebase/messaging';
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: 'AIzaSyCFC3QJKAZhz1R0k-h58wJA8_Rb_PbyiL4',
+  authDomain: 'q-feed.firebaseapp.com',
+  projectId: 'q-feed',
+  storageBucket: 'q-feed.firebasestorage.app',
+  messagingSenderId: '804246377517',
+  appId: '1:804246377517:web:71270af160949939da14a4',
 };
 
 // Initialize Firebase
@@ -19,7 +19,8 @@ const messaging = getMessaging(app);
 export const requestPermission = async () => {
   try {
     const token = await getToken(messaging, {
-      vapidKey: 'YOUR_VAPID_KEY', // 백엔드에서 받은 VAPID Key 사용
+      vapidKey:
+        'BKvBPha3ZSEI7Xb55-iWciONGqfKYtYgdj6kGWVe-mZDoeKYCCGwmAJaA12wl3zllzU5LCGX4Ar3_8Fix2QqEQ8',
     });
     console.log('FCM Token:', token);
     return token;
