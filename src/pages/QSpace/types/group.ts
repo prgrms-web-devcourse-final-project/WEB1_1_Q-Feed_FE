@@ -34,6 +34,7 @@ export interface GroupDetail {
     content: string;
     createdAt: string;
     likeCount: number;
+    groupCommentCount: number;
   }[];
 }
 

@@ -10,21 +10,24 @@ import {
   StyledAvatar,
 } from '@/components/ui/CommentList/CommentList.styles';
 import LikeButtonContainer from '@/components/ui/LikeButtonContainer/LikeButtonContainer';
+import ReplyContainer from '@/components/ui/ReplyContainer/ReplyContainer';
 interface Comment {
-  id: number; // groupPostId로 변경
+  id: number;
   content: string;
-  author: string; // nickname으로 변경
-  profileImage: string; // profile로 변경
+  author: string;
+  profileImage: string;
   createdAt: string;
   likeCount: number;
+  replyCount: number;
 }
 
 interface CommentListProps {
   comments: Comment[];
-  onLikeComment?: (commentId: number) => void; // 좋아요만 처리하도록 변경
+  onLikeComment?: (commentId: number) => void;
+  onReplyClick?: (commentId: number) => void;
 }
 
-export const CommentList = ({ comments, onLikeComment }: CommentListProps) => {
+export const CommentList = ({ comments, onLikeComment, onReplyClick }: CommentListProps) => {
   return (
     <Container>
       {comments.map((comment) => (
@@ -41,6 +44,10 @@ export const CommentList = ({ comments, onLikeComment }: CommentListProps) => {
                 size="small"
                 initialCount={comment.likeCount}
                 onLikeChange={() => onLikeComment?.(comment.id)}
+              />
+              <ReplyContainer
+                replyCount={comment.replyCount}
+                onReplyClick={() => onReplyClick?.(comment.id)}
               />
             </ActionButtons>
           </CommentContent>

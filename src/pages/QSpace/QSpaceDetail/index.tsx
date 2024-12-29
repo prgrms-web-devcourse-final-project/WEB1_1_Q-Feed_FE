@@ -152,6 +152,7 @@ const QSpaceDetailPage = () => {
                   profileImage: post.profile,
                   createdAt: formatLastUpdated(post.createdAt),
                   likeCount: post.likeCount,
+                  replyCount: post.groupCommentCount || 0,
                 }))}
                 onLikeComment={(commentId) => likePost.mutate(commentId)}
               />

@@ -12,7 +12,6 @@ export const Container = styled.div`
 export const MainContent = styled.div`
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 4rem; /* ChatInputWrapper 높이만큼 여백 추가 */
 `;
 export const NavigationBar = styled.div`
   padding: 0.5rem 1rem;
