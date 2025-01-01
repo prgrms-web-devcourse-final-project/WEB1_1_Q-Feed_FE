@@ -32,7 +32,7 @@ export interface GroupDetail {
     nickname: string;
     profile: string;
     content: string;
-    createdAt: string;
+    createAt: string;
     likeCount: number;
     groupCommentCount: number;
   }[];
@@ -60,6 +60,17 @@ export interface GroupFormData {
   description: string;
   imageFile: File | null;
   categoryId: number;
+}
+
+export interface Reply {
+  groupCommentId: number;
+  profile: string;
+  content: string;
+  createdAt: string;
+  userId: string;
+  nickname: string;
+  likeCount: number;
+  groupPostId: number;
 }
 
 export interface CreateGroupParams {

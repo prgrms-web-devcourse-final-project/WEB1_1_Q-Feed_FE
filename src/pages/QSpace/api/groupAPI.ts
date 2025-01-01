@@ -1,5 +1,5 @@
 import { apiClient } from '@/api/fetch';
-import { Group, GroupDetail, GroupMember, GroupPost } from '@/pages/QSpace/types/group';
+import { Group, GroupDetail, GroupMember, GroupPost, Reply } from '@/pages/QSpace/types/group';
 import { ActionResponse } from '@/types/response';
 
 export const groupAPI = {
@@ -53,7 +53,7 @@ export const groupAPI = {
     apiClient.patch<ActionResponse>(`/groups/${groupId}/status`),
 
   // 댓글 목록 조회
-  getComments: (groupPostId: number) => apiClient.get(`/groups/${groupPostId}/comments`),
+  getComments: (groupPostId: number) => apiClient.get<Reply[]>(`/groups/${groupPostId}/comments`),
 
   // 댓글 작성
   createComment: (groupPostId: number, content: string) =>

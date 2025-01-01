@@ -61,3 +61,17 @@ export const ActionButtons = styled.div`
   display: flex;
   margin-top: 0.5rem;
 `;
+
+export const ReplySection = styled.div`
+  margin-left: 3rem;
+  border-left: 1px solid ${theme.colors.gray[200]};
+  padding-left: 1rem;
+`;
+
+export const ReplyInputContainer = styled.div`
+  margin: 1rem 0;
+`;
+
+export const ReplyItem = styled(CommentItem)`
+  padding: 0.75rem 1rem;
+`;
