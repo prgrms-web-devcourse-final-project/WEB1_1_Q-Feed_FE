@@ -16,7 +16,8 @@ import LikeButtonContainer from '@/components/ui/LikeButtonContainer/LikeButtonC
 import ReplyContainer from '@/components/ui/ReplyContainer/ReplyContainer';
 import ChatInputBar from '@/pages/ChatRoom/component/InputBar';
 import { useCreateComment } from '@/pages/QSpace/hooks/Mutation/useCreateComment';
-import { useSingleComments, useCommentsQueries } from '@/pages/QSpace/hooks/Query/useComments';
+import { useComment } from '@/pages/QSpace/hooks/Query/useComment';
+import { useMultiComments } from '@/pages/QSpace/hooks/Query/useMultiComments';
 import { GroupDetail } from '@/pages/QSpace/types/group';
 import { formatLastUpdated } from '@/utils/formatLastUpdated';
 import { useState, useMemo } from 'react';
@@ -38,10 +39,10 @@ export const CommentList = ({ comments, onLikeComment, onReplyClick }: CommentLi
   const commentIds = useMemo(() => comments.map((comment) => comment.groupPostId), [comments]);
 
   // 모든 댓글의 답글 데이터를 한번에 조회
-  const commentQueries = useCommentsQueries(commentIds);
+  const commentQueries = useMultiComments(commentIds);
 
   // 확장된 댓글의 답글 조회
-  const expandedCommentQuery = useSingleComments(expandedCommentId || -1);
+  const expandedCommentQuery = useComment(expandedCommentId || -1);
   const expandedCommentReplies = expandedCommentQuery.data || [];
   const createGroupComment = useCreateComment(expandedCommentId || -1);
 
