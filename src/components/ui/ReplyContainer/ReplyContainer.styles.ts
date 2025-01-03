@@ -6,7 +6,7 @@ export const Container = styled.div`
   display: flex;
   align-items: center;
   background-color: none;
-  gap: 0.375rem;
+  gap: 0.25rem;
   cursor: pointer;
   padding: 0.25rem 0.5rem;
   border-radius: 4px;

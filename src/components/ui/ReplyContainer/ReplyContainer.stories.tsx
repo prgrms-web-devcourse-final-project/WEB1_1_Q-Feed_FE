@@ -1,82 +1,66 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { action } from '@storybook/addon-actions';
-import ReplyContainer from '@/components/ui/ReplyContainer/ReplyContainer';
+import ReplyContainer from './ReplyContainer';
 
 const meta = {
-  title: 'Components/ui/ReplyContainer',
+  title: 'Components/ReplyContainer',
   component: ReplyContainer,
   parameters: {
     layout: 'centered',
   },
-  tags: ['autodocs'],
   argTypes: {
-    replyCount: {
-      control: { type: 'number', min: 0 },
-      description: '답글의 개수',
+    groupCommentCount: {
+      control: 'number',
+      description: '대댓글 개수',
     },
     onReplyClick: {
-      description: '답글 아이콘 클릭 시 호출되는 함수',
+      action: 'clicked',
+      description: '답글 작성 버튼 클릭 시 호출되는 함수',
     },
     className: {
-      description: '컴포넌트에 적용할 추가 스타일 클래스',
+      control: 'text',
+      description: '추가 스타일링을 위한 className',
     },
   },
+  tags: ['autodocs'],
 } satisfies Meta<typeof ReplyContainer>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-// 기본 스토리
+// 기본 상태
 export const Default: Story = {
   args: {
-    replyCount: 5,
-    onReplyClick: action('reply-clicked'),
+    groupCommentCount: 0,
+    onReplyClick: () => console.log('Reply clicked'), // 필수 prop 추가
   },
 };
 
-// 답글이 없는 경우
-export const NoReplies: Story = {
+// 대댓글이 있는 상태
+export const WithComments: Story = {
   args: {
-    replyCount: 0,
-    onReplyClick: action('reply-clicked'),
+    groupCommentCount: 5,
+    onReplyClick: () => console.log('Reply clicked'),
   },
 };
 
-// 많은 답글이 있는 경우
-export const ManyReplies: Story = {
+// 많은 대댓글이 있는 상태
+export const ManyComments: Story = {
   args: {
-    replyCount: 999,
-    onReplyClick: action('reply-clicked'),
+    groupCommentCount: 99,
+    onReplyClick: () => console.log('Reply clicked'),
   },
 };
 
-// 커스텀 스타일이 적용된 경우
-export const CustomStyled: Story = {
+// 클릭 가능한 상호작용 상태
+export const Interactive: Story = {
   args: {
-    replyCount: 5,
-    onReplyClick: action('reply-clicked'),
-    className: 'custom-style',
+    groupCommentCount: 3,
+    onReplyClick: () => console.log('Reply clicked'),
   },
   parameters: {
     docs: {
       description: {
-        story: '커스텀 클래스를 통해 스타일을 변경할 수 있습니다.',
-      },
-    },
-  },
-};
-
-// 호버 상태를 보여주기 위한 스토리
-export const Hover: Story = {
-  args: {
-    replyCount: 5,
-    onReplyClick: action('reply-clicked'),
-  },
-  parameters: {
-    pseudo: { hover: true },
-    docs: {
-      description: {
-        story: '마우스를 올렸을 때의 상태를 보여줍니다.',
+        story: '클릭하면 대댓글 작성 영역이 토글됩니다.',
       },
     },
   },

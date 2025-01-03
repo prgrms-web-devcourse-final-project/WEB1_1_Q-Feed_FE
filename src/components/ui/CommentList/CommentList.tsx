@@ -16,10 +16,10 @@ import LikeButtonContainer from '@/components/ui/LikeButtonContainer/LikeButtonC
 import ReplyContainer from '@/components/ui/ReplyContainer/ReplyContainer';
 import ChatInputBar from '@/pages/ChatRoom/component/InputBar';
 import { useCreateComment } from '@/pages/QSpace/hooks/Mutation/useCreateComment';
-import { useComments } from '@/pages/QSpace/hooks/Query/useComments';
+import { useSingleComments, useCommentsQueries } from '@/pages/QSpace/hooks/Query/useComments';
 import { GroupDetail } from '@/pages/QSpace/types/group';
 import { formatLastUpdated } from '@/utils/formatLastUpdated';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 
 type CommentType = GroupDetail['posts'][0];
 
@@ -33,7 +33,16 @@ interface CommentListProps {
 
 export const CommentList = ({ comments, onLikeComment, onReplyClick }: CommentListProps) => {
   const [expandedCommentId, setExpandedCommentId] = useState<number | null>(null);
-  const { data: groupComments = [] } = useComments(expandedCommentId || -1);
+
+  // 모든 댓글 ID 추출
+  const commentIds = useMemo(() => comments.map((comment) => comment.groupPostId), [comments]);
+
+  // 모든 댓글의 답글 데이터를 한번에 조회
+  const commentQueries = useCommentsQueries(commentIds);
+
+  // 확장된 댓글의 답글 조회
+  const expandedCommentQuery = useSingleComments(expandedCommentId || -1);
+  const expandedCommentReplies = expandedCommentQuery.data || [];
   const createGroupComment = useCreateComment(expandedCommentId || -1);
 
   const handleReplyClick = (commentId: number) => {
@@ -49,57 +58,62 @@ export const CommentList = ({ comments, onLikeComment, onReplyClick }: CommentLi
 
   return (
     <Container>
-      {comments.map((comment) => (
-        <div key={comment.groupPostId}>
-          <CommentItem>
-            <StyledAvatar src={comment.profile} name={comment.nickname} size="sm" />
-            <CommentContent>
-              <AuthorInfo>
-                <AuthorName>{comment.nickname}</AuthorName>
-                <CreatedAt>{formatLastUpdated(comment.createAt)}</CreatedAt>
-              </AuthorInfo>
-              <Content>{comment.content}</Content>
-              <ActionButtons>
-                <LikeButtonContainer
-                  size="small"
-                  initialCount={comment.likeCount}
-                  onLikeChange={() => onLikeComment?.(comment.groupPostId)}
-                />
-                <ReplyContainer
-                  groupCommentCount={comment.groupCommentCount}
-                  onReplyClick={() => handleReplyClick(comment.groupPostId)}
-                />
-              </ActionButtons>
-            </CommentContent>
-          </CommentItem>
-          {expandedCommentId === comment.groupPostId && (
-            <ReplySection>
-              {groupComments?.map((reply) => (
-                <ReplyItem key={reply.groupCommentId}>
-                  <StyledAvatar src={reply.profile} name={reply.nickname} size="sm" />
-                  <CommentContent>
-                    <AuthorInfo>
-                      <AuthorName>{reply.nickname}</AuthorName>
-                      <CreatedAt>{formatLastUpdated(reply.createdAt)}</CreatedAt>
-                    </AuthorInfo>
-                    <Content>{reply.content}</Content>
-                    <ActionButtons>
-                      <LikeButtonContainer
-                        size="small"
-                        initialCount={reply.likeCount}
-                        onLikeChange={() => onLikeComment?.(reply.groupCommentId)}
-                      />
-                    </ActionButtons>
-                  </CommentContent>
-                </ReplyItem>
-              ))}
-              <ReplyInputContainer>
-                <ChatInputBar placeholder="답글을 입력하세요" onSend={handleSubmitReply} />
-              </ReplyInputContainer>
-            </ReplySection>
-          )}
-        </div>
-      ))}
+      {comments.map((comment, index) => {
+        const queryResult = commentQueries[index];
+        const repliesCount = queryResult.data?.length || 0;
+
+        return (
+          <div key={comment.groupPostId}>
+            <CommentItem>
+              <StyledAvatar src={comment.profile} name={comment.nickname} size="sm" />
+              <CommentContent>
+                <AuthorInfo>
+                  <AuthorName>{comment.nickname}</AuthorName>
+                  <CreatedAt>{formatLastUpdated(comment.createAt)}</CreatedAt>
+                </AuthorInfo>
+                <Content>{comment.content}</Content>
+                <ActionButtons>
+                  <LikeButtonContainer
+                    size="small"
+                    initialCount={comment.likeCount}
+                    onLikeChange={() => onLikeComment?.(comment.groupPostId)}
+                  />
+                  <ReplyContainer
+                    groupCommentCount={repliesCount}
+                    onReplyClick={() => handleReplyClick(comment.groupPostId)}
+                  />
+                </ActionButtons>
+              </CommentContent>
+            </CommentItem>
+            {expandedCommentId === comment.groupPostId && (
+              <ReplySection>
+                {expandedCommentReplies.map((reply) => (
+                  <ReplyItem key={reply.groupCommentId}>
+                    <StyledAvatar src={reply.profile} name={reply.nickname} size="sm" />
+                    <CommentContent>
+                      <AuthorInfo>
+                        <AuthorName>{reply.nickname}</AuthorName>
+                        <CreatedAt>{formatLastUpdated(reply.createdAt)}</CreatedAt>
+                      </AuthorInfo>
+                      <Content>{reply.content}</Content>
+                      <ActionButtons>
+                        <LikeButtonContainer
+                          size="small"
+                          initialCount={reply.likeCount}
+                          onLikeChange={() => onLikeComment?.(reply.groupCommentId)}
+                        />
+                      </ActionButtons>
+                    </CommentContent>
+                  </ReplyItem>
+                ))}
+                <ReplyInputContainer>
+                  <ChatInputBar placeholder="답글을 입력하세요" onSend={handleSubmitReply} />
+                </ReplyInputContainer>
+              </ReplySection>
+            )}
+          </div>
+        );
+      })}
     </Container>
   );
 };
