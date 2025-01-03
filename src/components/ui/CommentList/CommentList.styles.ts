@@ -69,7 +69,7 @@ export const ReplySection = styled.div`
 `;
 
 export const ReplyInputContainer = styled.div`
-  margin: 1rem 0;
+  padding: 1rem;
 `;
 
 export const ReplyItem = styled(CommentItem)`
