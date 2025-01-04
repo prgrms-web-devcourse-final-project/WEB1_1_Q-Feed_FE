@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://q-feed.n-e.kr/:path*"
+    },
+    {
+      "source": "/profile/users/:id",
+      "destination": "/index.html"
     }
   ]
 }

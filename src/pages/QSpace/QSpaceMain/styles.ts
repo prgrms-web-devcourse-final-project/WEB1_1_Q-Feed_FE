@@ -8,7 +8,7 @@ export const Container = styled.div`
 export const Body = styled.div`
   padding: 0 1rem;
   background-color: ${theme.colors.background};
-  height: 100vh;
+  height: 100%;
 `;
 
 export const CategorySection = styled.div`

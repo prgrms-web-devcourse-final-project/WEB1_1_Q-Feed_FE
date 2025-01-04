@@ -15,7 +15,7 @@ export const ROUTES = {
   CHATROOM: '/chatroom/:id',
   QUESTION: '/question/:category',
   SELECT: '/select',
-  PROFILE: '/profile/:id',
+  PROFILE: '/profile/users/:id',
   POST_DETAIL: '/post/:postId/:categoryId',
   PROFILE_EDIT: '/profile/edit',
   REGISTER: '/register',

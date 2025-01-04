@@ -68,7 +68,7 @@ const ProfilePage = () => {
   }, [interestsData]);
 
   const handleCopyProfileLink = () => {
-    const profileLink = `${window.location.origin}/profile/${followeeId}`;
+    const profileLink = `${window.location.origin}/profile/users/${followeeId}`;
     copyToClipboard(profileLink);
   };
 
