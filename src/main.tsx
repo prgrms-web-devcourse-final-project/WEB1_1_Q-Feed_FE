@@ -43,15 +43,21 @@ const messaging = getMessaging(firebaseApp);
 // FCM 초기화 및 토큰 요청
 const requestFCMToken = async () => {
   try {
+    // 알림 권한 요청
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      console.warn('알림 권한이 허용되지 않았습니다.');
+      return;
+    }
+
+    // FCM 토큰 요청
     const token = await getToken(messaging, {
       vapidKey:
-        'BKvBPha3ZSEI7Xb55-iWciONGqfKYtYgdj6kGWVe-mZDoeKYCCGwmAJaA12wl3zllzU5LCGX4Ar3_8Fix2QqEQ8', // Firebase 프로젝트 설정에서 VAPID 키 복사
+        'BKvBPha3ZSEI7Xb55-iWciONGqfKYtYgdj6kGWVe-mZDoeKYCCGwmAJaA12wl3zllzU5LCGX4Ar3_8Fix2QqEQ8',
     });
+
     if (token) {
       console.log('FCM 토큰:', token);
-
-      // 백엔드에 FCM 토큰 저장 (필요 시)
-      // await axios.post('/api/save-token', { token });
     } else {
       console.warn('FCM 토큰을 가져올 수 없습니다. 알림 권한이 허용되지 않았을 수 있습니다.');
     }

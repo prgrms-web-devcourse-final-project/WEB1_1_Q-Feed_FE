@@ -4,8 +4,9 @@ import { css } from '@emotion/react';
 export const containerStyle = css`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100vh; /* 전체 화면 높이 */
   background-color: #f9f4ef;
+  overflow: hidden; /* 스크롤 방지 */
 `;
 
 export const headerStyle = css`
@@ -17,6 +18,7 @@ export const headerStyle = css`
   background-color: #ffffff;
   border-bottom: 1px solid #ccc;
 `;
+
 export const readWrap = css`
   display: flex;
   text-align: center;

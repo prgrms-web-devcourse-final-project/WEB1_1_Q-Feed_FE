@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 // Firebase 서비스 워커 스크립트
-importScripts('https://www.gstatic.com/firebasejs/9.21.0/firebase-app.js');
-importScripts('https://www.gstatic.com/firebasejs/9.21.0/firebase-messaging.js');
+importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js');
+importScripts('https://www.gstatic.com/firebasejs/9.23.0/firebase-messaging.js');
 
 // Firebase 초기화
 firebase.initializeApp({
