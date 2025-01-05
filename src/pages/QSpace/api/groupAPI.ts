@@ -4,7 +4,8 @@ import { ActionResponse } from '@/types/response';
 
 export const groupAPI = {
   // 카테고리별 그룹 목록 조회
-  getGroupsByCategory: (categoryId: number) => apiClient.get<Group[]>(`/groups/${categoryId}`),
+  getGroupsByCategory: (categoryId: number, queryString?: string) =>
+    apiClient.get<Group[]>(`/groups/${categoryId}${queryString ? `?${queryString}` : ''}`),
 
   // 특정 그룹 상세 조회 (멤버와 게시글 포함)
   getGroupDetail: (groupId: number) => apiClient.get<GroupDetail>(`/groups/${groupId}/detail`),
