@@ -67,5 +67,6 @@ export const FEED_KEYS = {
     FeedAnswers: 'feeds',
     UserRecommendation: 'users',
     TrendPosts: 'trend',
+    FeedList: 'feedList',
   },
 } as const;

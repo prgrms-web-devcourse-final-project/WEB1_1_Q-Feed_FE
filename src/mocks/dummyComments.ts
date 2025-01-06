@@ -2,7 +2,7 @@ import { PostComments } from '@/pages/AnswerDetail/type/postType';
 
 export const dummyCommentList: PostComments[] = [
   {
-    commentId: 1,
+    answerId: 1,
     userId: 'user001',
     authorNickname: '여행 마니아',
     profileImage: 'https://example.com/profile1.jpg',
@@ -14,7 +14,7 @@ export const dummyCommentList: PostComments[] = [
     childCommentCount: 3,
     children: [
       {
-        commentId: 101,
+        answerId: 101,
         userId: 'user002',
         authorNickname: '포토그래퍼',
         profileImage: 'https://example.com/profile2.jpg',
@@ -29,7 +29,7 @@ export const dummyCommentList: PostComments[] = [
     ],
   },
   {
-    commentId: 2,
+    answerId: 2,
     userId: 'user003',
     authorNickname: '요리 탐험가',
     profileImage: 'https://example.com/profile3.jpg',
@@ -41,7 +41,7 @@ export const dummyCommentList: PostComments[] = [
     childCommentCount: 2,
     children: [
       {
-        commentId: 201,
+        answerId: 201,
         userId: 'user004',
         authorNickname: '셰프 지망생',
         profileImage: 'https://example.com/profile4.jpg',
@@ -56,7 +56,7 @@ export const dummyCommentList: PostComments[] = [
     ],
   },
   {
-    commentId: 3,
+    answerId: 3,
     userId: 'user005',
     authorNickname: '언어 마스터',
     profileImage: 'https://example.com/profile5.jpg',
@@ -68,7 +68,7 @@ export const dummyCommentList: PostComments[] = [
     childCommentCount: 1,
     children: [
       {
-        commentId: 301,
+        answerId: 301,
         userId: 'user006',
         authorNickname: '언어 학습자',
         profileImage: 'https://example.com/profile6.jpg',
@@ -83,7 +83,7 @@ export const dummyCommentList: PostComments[] = [
     ],
   },
   {
-    commentId: 4,
+    answerId: 4,
     userId: 'user007',
     authorNickname: '서핑 러버',
     profileImage: 'https://example.com/profile7.jpg',
@@ -95,7 +95,7 @@ export const dummyCommentList: PostComments[] = [
     childCommentCount: 2,
     children: [
       {
-        commentId: 401,
+        answerId: 401,
         userId: 'user008',
         authorNickname: '서핑 강사',
         profileImage: 'https://example.com/profile8.jpg',
@@ -110,7 +110,7 @@ export const dummyCommentList: PostComments[] = [
     ],
   },
   {
-    commentId: 5,
+    answerId: 5,
     userId: 'user009',
     authorNickname: '등산 애호가',
     profileImage: 'https://example.com/profile9.jpg',
@@ -122,7 +122,7 @@ export const dummyCommentList: PostComments[] = [
     childCommentCount: 1,
     children: [
       {
-        commentId: 501,
+        answerId: 501,
         userId: 'user010',
         authorNickname: '산악 전문가',
         profileImage: 'https://example.com/profile10.jpg',
@@ -137,7 +137,7 @@ export const dummyCommentList: PostComments[] = [
     ],
   },
   {
-    commentId: 6,
+    answerId: 6,
     userId: 'user011',
     authorNickname: '도예 마스터',
     profileImage: 'https://example.com/profile11.jpg',
@@ -150,7 +150,7 @@ export const dummyCommentList: PostComments[] = [
     childCommentCount: 1,
     children: [
       {
-        commentId: 601,
+        answerId: 601,
         userId: 'user012',
         authorNickname: '도예 애호가',
         profileImage: 'https://example.com/profile12.jpg',
@@ -165,7 +165,7 @@ export const dummyCommentList: PostComments[] = [
     ],
   },
   {
-    commentId: 7,
+    answerId: 7,
     userId: 'user013',
     authorNickname: '요가 여행자',
     profileImage: 'https://example.com/profile13.jpg',
@@ -177,7 +177,7 @@ export const dummyCommentList: PostComments[] = [
     childCommentCount: 2,
     children: [
       {
-        commentId: 701,
+        answerId: 701,
         userId: 'user014',
         authorNickname: '요가 강사',
         profileImage: 'https://example.com/profile14.jpg',
@@ -192,7 +192,7 @@ export const dummyCommentList: PostComments[] = [
     ],
   },
   {
-    commentId: 8,
+    answerId: 8,
     userId: 'user015',
     authorNickname: '댄스 러버',
     profileImage: 'https://example.com/profile15.jpg',
@@ -205,7 +205,7 @@ export const dummyCommentList: PostComments[] = [
     childCommentCount: 1,
     children: [
       {
-        commentId: 801,
+        answerId: 801,
         userId: 'user016',
         authorNickname: '댄스 마스터',
         profileImage: 'https://example.com/profile16.jpg',
@@ -220,7 +220,7 @@ export const dummyCommentList: PostComments[] = [
     ],
   },
   {
-    commentId: 9,
+    answerId: 9,
     userId: 'user017',
     authorNickname: '서예 탐험가',
     profileImage: 'https://example.com/profile17.jpg',
@@ -233,7 +233,7 @@ export const dummyCommentList: PostComments[] = [
     childCommentCount: 1,
     children: [
       {
-        commentId: 901,
+        answerId: 901,
         userId: 'user018',
         authorNickname: '서예 애호가',
         profileImage: 'https://example.com/profile18.jpg',
@@ -248,7 +248,7 @@ export const dummyCommentList: PostComments[] = [
     ],
   },
   {
-    commentId: 10,
+    answerId: 10,
     userId: 'user019',
     authorNickname: '와인 소믈리에',
     profileImage: 'https://example.com/profile19.jpg',
@@ -261,7 +261,7 @@ export const dummyCommentList: PostComments[] = [
     childCommentCount: 2,
     children: [
       {
-        commentId: 1001,
+        answerId: 1001,
         userId: 'user020',
         authorNickname: '와인 전문가',
         profileImage: 'https://example.com/profile20.jpg',

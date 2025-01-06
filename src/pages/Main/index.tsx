@@ -1,3 +1,4 @@
+import React from 'react';
 import Header from '@/components/common/Header';
 import { QuestionCard } from '@/pages/Main/components/QuestionCard/QuestionCard';
 import { PopularPostSlider } from '@/pages/Main/components/PopularPostSlider/PopularPostSlider';
@@ -7,6 +8,7 @@ import {
   Body,
   CategoryList,
   CategorySection,
+  CommentListWrapper,
   Container,
   PostWrapper,
   ProfileSlideWrapper,
@@ -24,6 +26,9 @@ import { useNavigation } from '@/hooks/useNavigation';
 import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
 import { useGetTrendingPosts } from '@/pages/Main/hooks/useGetTrendPosts';
 import { PopularPost } from '@/pages/Main/type/popularPosts';
+import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
+import { useGetComments } from '@/pages/Main/hooks/useGetFeedAnswerList';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Main = () => {
   const { gotoQuestionPage } = useNavigation();
@@ -41,6 +46,25 @@ const Main = () => {
   const { userId: followerId } = useUserStore();
   const { data: recommendList, isLoading } = useGetRecommendation(followerId || '');
   const { data: trendList } = useGetTrendingPosts(CATEGORY_QUESTION_MAP[activeCategory] || 1);
+
+  const {
+    data: commentsList,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+  } = useGetComments({
+    categoryId: CATEGORY_QUESTION_MAP[activeCategory] || 1,
+  });
+
+  const flattenedComments = React.useMemo(() => {
+    console.log('fattenedComments:', commentsList);
+    console.log('isFetching', isFetching);
+
+    // 데이터가 존재하지 않을 경우 빈 배열 반환
+    if (!commentsList?.pages) return [];
+
+    return commentsList.pages.flatMap((page) => (Array.isArray(page) ? page : []));
+  }, [commentsList]);
 
   interface TrendingAnswersResponse {
     trendingAnswers: PopularPost[];
@@ -72,7 +96,7 @@ const Main = () => {
   }, [todayQuestion, myAnswer, activeCategory, gotoQuestionPage, isAnswerLoading]);
 
   useEffect(() => {
-    console.log('test:', trendList);
+    console.log('trendList:', trendList);
   }, [trendList]);
 
   const handleCategoryChange = (category: string, isSelected: boolean) => {
@@ -121,6 +145,13 @@ const Main = () => {
     );
   }
 
+  const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
+    console.log(`Comment ${commentId} liked: ${isLiked}, count: ${count}`);
+  };
+
+  const handleReplyClick = (commentId: string) => {
+    console.log(`Reply clicked for comment ${commentId}`);
+  };
   return (
     <Container>
       <Header />
@@ -174,6 +205,28 @@ const Main = () => {
             )}
           <Title>최근 등록된 답변</Title>
         </ProfileSlideWrapper>
+
+        <CommentListWrapper>
+          <InfiniteScroll
+            dataLength={flattenedComments.length}
+            next={fetchNextPage}
+            hasMore={hasNextPage || false}
+            loader={isFetching ? <LoadingSpinner /> : null}
+            endMessage={
+              flattenedComments.length > 0 && (
+                <div style={{ textAlign: 'center', padding: '10px' }}>
+                  더 이상 불러올 답글이 없습니다.
+                </div>
+              )
+            }
+          >
+            <CommentItemList
+              comments={flattenedComments}
+              onLikeComment={handleLikeComment}
+              onReplyClick={handleReplyClick}
+            />
+          </InfiniteScroll>
+        </CommentListWrapper>
       </Body>
     </Container>
   );

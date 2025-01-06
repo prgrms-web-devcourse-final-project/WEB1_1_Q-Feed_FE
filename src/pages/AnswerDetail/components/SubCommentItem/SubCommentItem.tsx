@@ -38,7 +38,7 @@ export const SubCommentItem = ({ comment, onLikeComment }: SubCommentItemProps) 
               initialCount={comment.likeCount}
               initialLiked={comment.isLike}
               onLikeChange={(isLiked, count) =>
-                onLikeComment?.(comment.commentId.toString(), isLiked, count)
+                onLikeComment?.(comment.answerId.toString(), isLiked, count)
               }
             />
           </ActionButtons>

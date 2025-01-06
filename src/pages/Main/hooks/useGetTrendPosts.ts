@@ -3,8 +3,6 @@ import { FEED_KEYS } from '@/api/queryKeys';
 import { trendPostAPI } from '@/pages/Main/api/trendPostAPI';
 
 export const useGetTrendingPosts = (categoryId: number) => {
-  console.log('--->', categoryId);
-
   return useQuery({
     queryKey: [FEED_KEYS.ACTIONS.TrendPosts, categoryId],
     queryFn: async () => {

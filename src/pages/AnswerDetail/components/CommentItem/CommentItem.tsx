@@ -97,7 +97,7 @@ export const CommentItem = ({
         {showReplies && comments && (
           <RepliesWrapper>
             {comments.map((reply) => (
-              <SubCommentItem key={reply.commentId} comment={reply} onLikeComment={onLikeComment} />
+              <SubCommentItem key={reply.answerId} comment={reply} onLikeComment={onLikeComment} />
             ))}
           </RepliesWrapper>
         )}
