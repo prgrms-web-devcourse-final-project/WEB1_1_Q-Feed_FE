@@ -12,7 +12,6 @@ export const Container = styled.div`
 export const MainContent = styled.div`
   flex: 1;
   overflow-y: auto;
-  padding-bottom: 4rem; /* ChatInputWrapper 높이만큼 여백 추가 */
 `;
 export const NavigationBar = styled.div`
   padding: 0.5rem 1rem;
@@ -56,18 +55,13 @@ export const TagWrapper = styled.div`
   margin-top: 0.5rem;
 `;
 export const CommentArea = styled.div`
-  height: 100vh;
   background-color: ${theme.colors.white80};
+  padding-bottom: 5rem;
 `;
 export const ChatInputWrapper = styled.div`
-  position: fixed;
-  bottom: 5rem; /* footer 높이만큼 위로 */
-  left: 0;
-  right: 0;
+  position: relative;
   background-color: ${theme.colors.white80};
-  padding: 0.5rem;
-  max-width: 430px;
-  margin: 0 auto;
+  padding: 1rem;
   z-index: 10;
 `;
 

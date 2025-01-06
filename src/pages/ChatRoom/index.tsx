@@ -77,6 +77,7 @@ const ChatRoom = () => {
       roomId: Number(chatRoomId),
       senderId: '83974189-a749-4a24-bd5a-8ca2577fac73', // 본인의 ID (예시)
       message,
+      type: 'TEXT',
     };
 
     stompClient.publish({

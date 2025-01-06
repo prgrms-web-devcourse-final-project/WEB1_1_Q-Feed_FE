@@ -68,7 +68,7 @@ const MyPage = () => {
   };
 
   const handleCopyProfileLink = () => {
-    const profileLink = `${window.location.origin}/profile/${userId}`;
+    const profileLink = `${window.location.origin}/profile/users/${userId}`;
     copyToClipboard(profileLink);
   };
 

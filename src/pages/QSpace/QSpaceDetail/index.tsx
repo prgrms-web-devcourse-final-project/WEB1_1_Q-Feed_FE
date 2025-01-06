@@ -35,7 +35,6 @@ import {
 import DetailsHeader from '@/pages/QSpace/QSpaceDetail/components/DetailsHeader/DetailsHeader';
 import KebabMenu from '@/pages/QSpace/QSpaceDetail/components/KebabMenu/KebabMenu';
 import MemberContainer from '@/pages/QSpace/QSpaceDetail/components/MemberContainer/MemberContainer';
-import { formatLastUpdated } from '@/utils/formatLastUpdated';
 
 const QSpaceDetailPage = () => {
   const navigate = useNavigate();
@@ -81,6 +80,11 @@ const QSpaceDetailPage = () => {
     });
     return null;
   }
+
+  const handleReplyClick = (commentId: number) => {
+    // 대댓글 작성 또는 토글 처리
+    console.log('Reply clicked:', commentId);
+  };
 
   return (
     <Container>
@@ -131,9 +135,16 @@ const QSpaceDetailPage = () => {
 
         <MemberContainer
           memberCount={groupDetail.members.length}
-          lastChatTime={groupDetail.posts[0]?.createdAt}
+          lastChatTime={groupDetail.posts[0]?.createAt}
           onMemberListClick={handleMemberListClick}
         />
+
+        <ChatInputWrapper>
+          <ChatInputBar
+            placeholder="메시지를 입력하세요"
+            onSend={(content) => createPost.mutate(content)}
+          />
+        </ChatInputWrapper>
 
         {canJoinGroup ? (
           <JoinButtonContainer>
@@ -146,23 +157,18 @@ const QSpaceDetailPage = () => {
             <CommentArea>
               <CommentList
                 comments={groupDetail.posts.map((post) => ({
-                  id: post.groupPostId,
+                  groupPostId: post.groupPostId,
                   content: post.content,
-                  author: post.nickname,
-                  profileImage: post.profile,
-                  createdAt: formatLastUpdated(post.createdAt),
+                  nickname: post.nickname,
+                  profile: post.profile,
+                  createAt: post.createAt,
                   likeCount: post.likeCount,
+                  groupCommentCount: post.groupCommentCount || 0,
                 }))}
                 onLikeComment={(commentId) => likePost.mutate(commentId)}
+                onReplyClick={handleReplyClick}
               />
             </CommentArea>
-
-            <ChatInputWrapper>
-              <ChatInputBar
-                placeholder="메시지를 입력하세요"
-                onSend={(content) => createPost.mutate(content)}
-              />
-            </ChatInputWrapper>
           </>
         )}
       </MainContent>

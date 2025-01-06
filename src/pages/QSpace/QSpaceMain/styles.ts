@@ -8,7 +8,7 @@ export const Container = styled.div`
 export const Body = styled.div`
   padding: 0 1rem;
   background-color: ${theme.colors.background};
-  height: 100vh;
+  height: 100%;
 `;
 
 export const CategorySection = styled.div`
@@ -46,4 +46,12 @@ export const QSpaceList = styled.div`
   flex-direction: column;
   gap: 1rem;
   padding-bottom: 6rem;
+`;
+
+export const LoadingWrapper = styled.div`
+  width: 100%;
+  text-align: center;
+  padding: 2rem;
+  color: ${({ theme }) => theme.colors.gray[600]};
+  font-size: ${({ theme }) => theme.typography.fontFamily.korean};
 `;
