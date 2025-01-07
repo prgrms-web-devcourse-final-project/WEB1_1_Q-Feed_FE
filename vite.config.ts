@@ -3,6 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import svgr from 'vite-plugin-svgr';
 import * as path from 'path';
+import * as fs from 'fs';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -51,6 +52,10 @@ export default defineConfig({
     },
   },
   server: {
+    https: {
+      key: fs.readFileSync('./localhost-key.pem'), // SSL 인증서 키 파일
+      cert: fs.readFileSync('./localhost.pem'), // SSL 인증서 파일
+    },
     headers: {
       'Cross-Origin-Opener-Policy': 'same-origin',
       'Cross-Origin-Embedder-Policy': 'require-corp',
@@ -67,5 +72,6 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+
   },
 });
