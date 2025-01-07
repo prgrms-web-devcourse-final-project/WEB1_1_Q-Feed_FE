@@ -47,3 +47,11 @@ export const QSpaceList = styled.div`
   gap: 1rem;
   padding-bottom: 6rem;
 `;
+
+export const LoadingWrapper = styled.div`
+  width: 100%;
+  text-align: center;
+  padding: 2rem;
+  color: ${({ theme }) => theme.colors.gray[600]};
+  font-size: ${({ theme }) => theme.typography.fontFamily.korean};
+`;

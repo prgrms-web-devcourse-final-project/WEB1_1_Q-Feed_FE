@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 
 import { categories } from '@/constants/categories';
 import { categoryIdMap } from '@/utils/categoryIdMap';
@@ -8,10 +8,9 @@ import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
 import QSpaceCard from '@/components/ui/QSpaceCard/QSpaceCard';
 import Header from '@/components/common/Header';
 
-import GroupStateCheckBox from '@/pages/QSpace/QSpaceMain/components/GroupStateCheckBox/GroupStateCheckBox';
-import FloatingButton from '@/pages/QSpace/QSpaceMain/components/FloatingButton/FloatingButton';
-
-import { useGroups } from '@/pages/QSpace/hooks/Query/useGroupList';
+import GroupStateCheckBox from './components/GroupStateCheckBox/GroupStateCheckBox';
+import FloatingButton from './components/FloatingButton/FloatingButton';
+import { useGroups } from '@/pages/QSpace/hooks/Query/useGroups';
 
 import {
   Body,
@@ -19,31 +18,58 @@ import {
   CategorySection,
   Container,
   FilterSection,
+  LoadingWrapper,
   QSpaceList,
   Title,
-} from '@/pages/QSpace/QSpaceMain/styles';
+} from './styles';
 
 const QSpaceMainPage = () => {
   const [activeCategory, setActiveCategory] = useState('전체');
   const [showRecruiting, setShowRecruiting] = useState(false);
+  const loadMoreRef = useRef<HTMLDivElement | null>(null);
 
-  const { data: groups, isPending, error } = useGroups(categoryIdMap[activeCategory]);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch } = useGroups(
+    categoryIdMap[activeCategory]
+  );
 
-  const handleCategoryChange = useCallback((category: string, isSelected: boolean) => {
-    if (isSelected) {
-      setActiveCategory(category);
-    }
-  }, []);
+  const handleCategoryChange = useCallback(
+    (category: string, isSelected: boolean) => {
+      if (isSelected) {
+        setActiveCategory(category);
+        refetch();
+      }
+    },
+    [refetch]
+  );
 
   const handleRecruitingChange = useCallback((isChecked: boolean) => {
     setShowRecruiting(isChecked);
   }, []);
 
-  const filteredGroups = groups?.filter((group) => !showRecruiting || group.isOpen);
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
 
-  if (error instanceof Error) {
-    return <div>Error: {error.message}</div>;
-  }
+    const currentRef = loadMoreRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
+    }
+
+    return () => {
+      if (currentRef) {
+        observer.disconnect();
+      }
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+
+  const allGroups = data?.pages.flatMap((page) => page.items) ?? [];
+  const filteredGroups = allGroups.filter((group) => !showRecruiting || group.isOpen);
 
   return (
     <Container>
@@ -66,12 +92,19 @@ const QSpaceMainPage = () => {
           <GroupStateCheckBox initialChecked={showRecruiting} onChange={handleRecruitingChange} />
         </FilterSection>
         <QSpaceList>
-          {isPending ? (
-            <div>Loading...</div>
+          {isLoading ? (
+            <LoadingWrapper>Loading...</LoadingWrapper>
           ) : (
-            filteredGroups?.map((group) => (
-              <QSpaceCard key={group.groupId} {...getQSpaceCard(group)} />
-            ))
+            <>
+              {filteredGroups.map((group) => (
+                <QSpaceCard key={group.groupId} {...getQSpaceCard(group)} />
+              ))}
+              {hasNextPage && (
+                <div ref={loadMoreRef} style={{ height: '20px' }}>
+                  {isFetchingNextPage && <LoadingWrapper>Loading more spaces...</LoadingWrapper>}
+                </div>
+              )}
+            </>
           )}
         </QSpaceList>
         <FloatingButton onClick={() => console.log('Create new space')} />
