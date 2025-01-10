@@ -64,5 +64,9 @@ export const FEED_KEYS = {
   ACTIONS: {
     Answers: 'answer',
     MyAnswer: 'myanswer',
+    FeedAnswers: 'feeds',
+    UserRecommendation: 'users',
+    TrendPosts: 'trend',
+    FeedList: 'feedList',
   },
 } as const;

@@ -6,12 +6,14 @@ type CommentItemListProps = {
   comments: PostComments[];
   onLikeComment?: (commentId: string, isLiked: boolean, count: number) => void;
   onReplyClick?: (commentId: string) => void;
+  onLoadMore?: () => void;
 };
 
 export const CommentItemList = ({
   comments,
   onLikeComment,
   onReplyClick,
+  onLoadMore,
 }: CommentItemListProps) => {
   const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
     onLikeComment?.(commentId, isLiked, count);
@@ -25,8 +27,8 @@ export const CommentItemList = ({
     <Container>
       {comments.map((comment) => (
         <CommentItem
-          key={comment.commentId}
-          commentId={comment.commentId}
+          key={comment.answerId}
+          commentId={comment.answerId}
           profileImage={comment.profileImage}
           nickName={comment.authorNickname}
           content={comment.content}
@@ -41,6 +43,8 @@ export const CommentItemList = ({
           isCommentButtonExist={true}
         />
       ))}
+
+      {onLoadMore && <button onClick={onLoadMore}>더 많은 댓글 보기</button>}
     </Container>
   );
 };

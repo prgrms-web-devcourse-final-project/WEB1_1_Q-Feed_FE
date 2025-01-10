@@ -45,6 +45,7 @@ export const Body = styled.div`
 
 export const PostWrapper = styled.div`
   width: 100%;
+  margin-top: 20px;
   margin-left: 40px;
   display: flex;
   flex-direction: column;

@@ -17,3 +17,12 @@ export const CATEGORIES = {
   맛집: 'DELICIOUS_RESTAURANT',
   기타: 'ETC',
 } as const;
+
+export const CATEGORY_QUESTION_MAP = {
+  [Category.TRAVEL]: 1,
+  [Category.SPORTS]: 2,
+  [Category.FASHION]: 3,
+  [Category.CULTURE]: 4,
+  [Category.DELICIOUS_RESTAURANT]: 5,
+  [Category.ETC]: 6,
+};

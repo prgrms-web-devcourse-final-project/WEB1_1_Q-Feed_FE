@@ -1,13 +1,8 @@
-import { useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
+import React from 'react';
 import Header from '@/components/common/Header';
 import { QuestionCard } from '@/pages/Main/components/QuestionCard/QuestionCard';
 import { PopularPostSlider } from '@/pages/Main/components/PopularPostSlider/PopularPostSlider';
 import { ProfileSlider } from '@/pages/Main/components/ProfileSlider/ProfileSlider';
-import { categories } from '@/pages/Main/type/category';
-import { dummyData } from '@/mocks/dummyPosts';
-import { userProfileData } from '@/mocks/dummyUserProfiles';
 import AnswerCard from '@/pages/Main/components/AnswerCard/AnswerCard';
 import {
   Body,
@@ -20,38 +15,97 @@ import {
   Title,
 } from '@/pages/Main/styles';
 import { useFetchQuestion } from '@/pages/AnswerDetail/hooks/useFetchQuestion';
+import { getTodayDate } from '@/pages/Main/util/formatDate';
+import { useFetchMyAnswer } from '@/pages/Main/hooks/useGetMyAnswer';
+import { useEffect, useRef, useState } from 'react';
+import { categories, Category, CATEGORY_QUESTION_MAP } from '@/constants/categories';
+import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
+import { useGetRecommendation } from '@/pages/Main/hooks/useGetRecommendation';
+import { useUserStore } from '@/store/userStore';
+import { useNavigation } from '@/hooks/useNavigation';
+import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
+import { useGetTrendingPosts } from '@/pages/Main/hooks/useGetTrendPosts';
+import { PopularPost } from '@/pages/Main/type/popularPosts';
 import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
-// import { dummyComments } from '@/mocks/dummyComments';
-import { dummyPostComments } from '@/mocks/dummyPostCommentList';
-import { formatDate } from '@/pages/Main/formatDate';
+import { useGetComments } from '@/pages/Main/hooks/useGetFeedAnswerList';
+import InfiniteScroll from 'react-infinite-scroll-component';
 
 const Main = () => {
-  const navigate = useNavigate();
-  const [activeCategory, setActiveCategory] = useState(categories[0]);
-  // const [answerCursor, setAnswerCursor] = useState<string | undefined>(undefined);
+  const { gotoQuestionPage } = useNavigation();
+  const [activeCategory, setActiveCategory] = useState(Category.TRAVEL);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [isQLoading, setIsLoading] = useState(false);
+
   const categoryRef = useRef<HTMLDivElement>(null);
-  const { data: todayQuestion } = useFetchQuestion(1);
-  // const { data: answers } = useFetchAnswers({
-  //   categoryId: activeCategory,
-  //   size: 10,
-  //   answerCursor,
-  // // });
+  const { data: todayQuestion } = useFetchQuestion(CATEGORY_QUESTION_MAP[activeCategory] || 1);
+  const { data: myAnswer, isLoading: isAnswerLoading } = useFetchMyAnswer(
+    todayQuestion?.questionId || 1
+  );
+  const { userId: followerId } = useUserStore();
+  const { data: recommendList, isLoading } = useGetRecommendation(followerId || '');
+  const { data: trendList } = useGetTrendingPosts(CATEGORY_QUESTION_MAP[activeCategory] || 1);
+
+  const {
+    data: commentsList,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+  } = useGetComments({
+    categoryId: CATEGORY_QUESTION_MAP[activeCategory] || 1,
+  });
+
+  const flattenedComments = React.useMemo(() => {
+    console.log('fattenedComments:', commentsList);
+    console.log('isFetching', isFetching);
+
+    // 데이터가 존재하지 않을 경우 빈 배열 반환
+    if (!commentsList?.pages) return [];
+
+    return commentsList.pages.flatMap((page) => (Array.isArray(page) ? page : []));
+  }, [commentsList]);
+
+  interface TrendingAnswersResponse {
+    trendingAnswers: PopularPost[];
+  }
+
+  function isTrendingAnswersResponse(data: unknown): data is TrendingAnswersResponse {
+    if (typeof data !== 'object' || data === null) return false;
+
+    const trendingAnswers = (data as Record<string, unknown>)['trendingAnswers'];
+
+    return (
+      trendingAnswers !== undefined &&
+      Array.isArray(trendingAnswers) &&
+      trendingAnswers.length > 0 &&
+      trendingAnswers.every(
+        (item) =>
+          typeof item === 'object' && item !== null && 'answerId' in item && 'content' in item
+      )
+    );
+  }
+  useEffect(() => {
+    if (isAnswerLoading) {
+      setIsLoading(true);
+      return () => setIsLoading(false);
+    }
+    if (myAnswer?.answerContent === undefined) {
+      gotoQuestionPage(activeCategory);
+    }
+  }, [todayQuestion, myAnswer, activeCategory, gotoQuestionPage, isAnswerLoading]);
+
+  useEffect(() => {
+    console.log('trendList:', trendList);
+  }, [trendList]);
+
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
-      setActiveCategory(category);
-      console.log('Selected category:', category);
+      const validCategory = Object.values(Category).find((validCat) => validCat === category);
+      if (validCategory) {
+        setActiveCategory(validCategory);
+      }
     }
-  };
-  const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
-    console.log(`Comment ${commentId} liked: ${isLiked}, count: ${count}`);
-  };
-
-  const handleReplyClick = (commentId: string) => {
-    console.log(`Reply clicked for comment ${commentId}`);
-    navigate(`/post/6/2`);
   };
 
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -82,6 +136,22 @@ const Main = () => {
     console.log(e);
   };
 
+  if (isQLoading) {
+    return (
+      <Container>
+        <Header />
+        <LoadingSpinner />
+      </Container>
+    );
+  }
+
+  const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
+    console.log(`Comment ${commentId} liked: ${isLiked}, count: ${count}`);
+  };
+
+  const handleReplyClick = (commentId: string) => {
+    console.log(`Reply clicked for comment ${commentId}`);
+  };
   return (
     <Container>
       <Header />
@@ -93,7 +163,7 @@ const Main = () => {
         onMouseMove={handleMouseMove}
       >
         <CategoryList>
-          {categories.map((category) => (
+          {categories.slice(1).map((category) => (
             <CategoryButton
               key={category}
               label={category}
@@ -106,28 +176,56 @@ const Main = () => {
 
       <Body>
         <QuestionCard
-          date={formatDate(todayQuestion?.createdAt || '2024.11.28')}
-          question={todayQuestion?.content || '오늘의 질문은??'}
+          date={getTodayDate()}
+          question={todayQuestion?.content || `${activeCategory}질문 - 로딩 오류`}
         />
-        <AnswerCard date="2024.12.09" answer=" 무조건 스마트폰" />
+        <AnswerCard answer={myAnswer?.answerContent || `${activeCategory}에 대한 나의 답변`} />
 
-        <PostWrapper>
-          <Title>지금 뜨는 인기 답변</Title>
-          <PopularPostSlider popularPosts={dummyData} />
-        </PostWrapper>
+        {isTrendingAnswersResponse(trendList) && (
+          <PostWrapper>
+            <Title>지금 뜨는 인기 답변</Title>
+            <PopularPostSlider popularPosts={trendList.trendingAnswers} />
+          </PostWrapper>
+        )}
 
         <ProfileSlideWrapper>
-          <Title>친구 추천</Title>
-          <ProfileSlider initialProfiles={userProfileData} />
+          {!isLoading &&
+            recommendList &&
+            Array.isArray(recommendList) &&
+            recommendList.length >= 1 && (
+              <div>
+                <Title>친구 추천</Title>
+                <ProfileSlider
+                  initialProfiles={recommendList}
+                  onProfilesChange={(newProfiles) => {
+                    return newProfiles.length === 0 ? null : undefined;
+                  }}
+                />
+              </div>
+            )}
           <Title>최근 등록된 답변</Title>
         </ProfileSlideWrapper>
 
         <CommentListWrapper>
-          <CommentItemList
-            comments={dummyPostComments}
-            onLikeComment={handleLikeComment}
-            onReplyClick={handleReplyClick}
-          />
+          <InfiniteScroll
+            dataLength={flattenedComments.length}
+            next={fetchNextPage}
+            hasMore={hasNextPage || false}
+            loader={isFetching ? <LoadingSpinner /> : null}
+            endMessage={
+              flattenedComments.length > 0 && (
+                <div style={{ textAlign: 'center', padding: '10px' }}>
+                  더 이상 불러올 답글이 없습니다.
+                </div>
+              )
+            }
+          >
+            <CommentItemList
+              comments={flattenedComments}
+              onLikeComment={handleLikeComment}
+              onReplyClick={handleReplyClick}
+            />
+          </InfiniteScroll>
         </CommentListWrapper>
       </Body>
     </Container>

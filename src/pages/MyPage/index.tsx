@@ -27,17 +27,32 @@ import {
   MoreText,
 } from '@/pages/MyPage/styles';
 
+import { useNavigation } from '@/hooks/useNavigation';
 const MyPage = () => {
+  const { gotoLogin, gotoProfileEditPage, gotoDetailPage } = useNavigation();
+
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<'myQuestions' | 'qSpace'>('myQuestions');
   const { userId } = useUserStore();
 
-  const { data: profile, isLoading: profileLoading, error: profileError, refetch: refetchProfile } =
-    useUserProfile(userId || '');
-  const { data: interests, isLoading: interestsLoading, error: interestsError, refetch: refetchInterests } =
-    useUserInterests(userId || '');
-  const { data: groups, isLoading: groupsLoading, error: groupsError, refetch: refetchGroups } =
-    useUserGroups();
+  const {
+    data: profile,
+    isLoading: profileLoading,
+    error: profileError,
+    refetch: refetchProfile,
+  } = useUserProfile(userId || '');
+  const {
+    data: interests,
+    isLoading: interestsLoading,
+    error: interestsError,
+    refetch: refetchInterests,
+  } = useUserInterests(userId || '');
+  const {
+    data: groups,
+    isLoading: groupsLoading,
+    error: groupsError,
+    refetch: refetchGroups,
+  } = useUserGroups();
   const {
     data: answerData,
     fetchNextPage,
@@ -57,10 +72,9 @@ const MyPage = () => {
     copyToClipboard(profileLink);
   };
 
-
   useEffect(() => {
     if (!userId) {
-      navigate('/login');
+      gotoLogin();
     }
   }, [userId, navigate]);
 
@@ -101,11 +115,14 @@ const MyPage = () => {
           <>
             {myProfileData && <MyProfile profile={myProfileData} />}
             <ButtonGroup>
-              <Button onClick={() => navigate('/profile/edit')}>프로필 수정</Button>
+              <Button onClick={() => gotoProfileEditPage()}>프로필 수정</Button>
               <Button onClick={handleCopyProfileLink}>프로필 공유</Button>
             </ButtonGroup>
             <TabContainer>
-              <Tab onClick={() => setActiveTab('myQuestions')} isActive={activeTab === 'myQuestions'}>
+              <Tab
+                onClick={() => setActiveTab('myQuestions')}
+                isActive={activeTab === 'myQuestions'}
+              >
                 나의 답변
               </Tab>
               <Tab onClick={() => setActiveTab('qSpace')} isActive={activeTab === 'qSpace'}>
@@ -125,7 +142,7 @@ const MyPage = () => {
                         content={answer.answerContent}
                         isPrivate={!answer.visibility}
                         onLockToggle={() => handleLockToggle(answer.answerId, answer.visibility)}
-                        onClick={() => alert(`답변 상세 페이지 이동 - answer-id : [${answer.answerId}]`)}
+                        onClick={() => gotoDetailPage(`${answer.answerId}`)}
                       />
                     ))
                   )}
@@ -141,7 +158,9 @@ const MyPage = () => {
                   {groupsLoading ? (
                     <LoadingSpinner />
                   ) : (
-                    groups?.map((group, index) => <QSpaceCard key={index} {...getQSpaceCard(group)} />)
+                    groups?.map((group, index) => (
+                      <QSpaceCard key={index} {...getQSpaceCard(group)} />
+                    ))
                   )}
                 </QSpaceList>
               )}
