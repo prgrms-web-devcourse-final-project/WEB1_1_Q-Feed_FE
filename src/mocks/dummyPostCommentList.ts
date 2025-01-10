@@ -1,7 +1,7 @@
 import { PostComments } from '@/pages/AnswerDetail/type/postType';
 export const dummyPostComments: PostComments[] = [
   {
-    commentId: 1,
+    answerId: 1,
     userId: 'user001',
     authorNickname: '김철수',
     profileImage: 'https://example.com/profiles/kim_cheolsu.jpg',
@@ -15,7 +15,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 2,
+    answerId: 2,
     userId: 'user002',
     authorNickname: '이지영',
     profileImage: 'https://example.com/profiles/lee_jiyoung.jpg',
@@ -29,7 +29,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 3,
+    answerId: 3,
     userId: 'user003',
     authorNickname: '박민준',
     profileImage: 'https://example.com/profiles/park_minjun.jpg',
@@ -43,7 +43,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 4,
+    answerId: 4,
     userId: 'user004',
     authorNickname: '최서연',
     profileImage: 'https://example.com/profiles/choi_seoyeon.jpg',
@@ -57,7 +57,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 5,
+    answerId: 5,
     userId: 'user005',
     authorNickname: '정태현',
     profileImage: 'https://example.com/profiles/jung_taehyun.jpg',
@@ -71,7 +71,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 6,
+    answerId: 6,
     userId: 'user006',
     authorNickname: '윤지훈',
     profileImage: 'https://example.com/profiles/yoon_jihoon.jpg',
@@ -85,7 +85,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 7,
+    answerId: 7,
     userId: 'user007',
     authorNickname: '강민서',
     profileImage: 'https://example.com/profiles/kang_minseo.jpg',
@@ -98,7 +98,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 8,
+    answerId: 8,
     userId: 'user008',
     authorNickname: '이준호',
     profileImage: 'https://example.com/profiles/lee_junho.jpg',
@@ -111,7 +111,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 9,
+    answerId: 9,
     userId: 'user009',
     authorNickname: '박서윤',
     profileImage: 'https://example.com/profiles/park_seoyun.jpg',
@@ -124,7 +124,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 10,
+    answerId: 10,
     userId: 'user010',
     authorNickname: '정다은',
     profileImage: 'https://example.com/profiles/jung_daeun.jpg',
@@ -137,7 +137,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 11,
+    answerId: 11,
     userId: 'user011',
     authorNickname: '김태영',
     profileImage: 'https://example.com/profiles/kim_taeyoung.jpg',
@@ -150,7 +150,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 12,
+    answerId: 12,
     userId: 'user012',
     authorNickname: '최현우',
     profileImage: 'https://example.com/profiles/choi_hyunwoo.jpg',
@@ -163,7 +163,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 13,
+    answerId: 13,
     userId: 'user013',
     authorNickname: '한지원',
     profileImage: 'https://example.com/profiles/han_jiwon.jpg',
@@ -176,7 +176,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 14,
+    answerId: 14,
     userId: 'user014',
     authorNickname: '임수진',
     profileImage: 'https://example.com/profiles/im_sujin.jpg',
@@ -189,7 +189,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 15,
+    answerId: 15,
     userId: 'user015',
     authorNickname: '서현진',
     profileImage: 'https://example.com/profiles/seo_hyunjin.jpg',
@@ -202,7 +202,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 16,
+    answerId: 16,
     userId: 'user016',
     authorNickname: '박지훈',
     profileImage: 'https://example.com/profiles/park_jihoon.jpg',
@@ -215,7 +215,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 17,
+    answerId: 17,
     userId: 'user017',
     authorNickname: '김예린',
     profileImage: 'https://example.com/profiles/kim_yerin.jpg',
@@ -228,7 +228,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 18,
+    answerId: 18,
     userId: 'user018',
     authorNickname: '이동훈',
     profileImage: 'https://example.com/profiles/lee_donghoon.jpg',
@@ -241,7 +241,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 19,
+    answerId: 19,
     userId: 'user019',
     authorNickname: '정유진',
     profileImage: 'https://example.com/profiles/jung_yujin.jpg',
@@ -254,7 +254,7 @@ export const dummyPostComments: PostComments[] = [
     children: [],
   },
   {
-    commentId: 20,
+    answerId: 20,
     userId: 'user020',
     authorNickname: '최재혁',
     profileImage: 'https://example.com/profiles/choi_jaehyuk.jpg',

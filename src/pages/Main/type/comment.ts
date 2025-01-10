@@ -1,3 +1,5 @@
+import { PostComments } from '@/pages/AnswerDetail/type/postType';
+
 export interface Author {
   name: string;
   profileImage: string;
@@ -13,4 +15,9 @@ export interface Comment {
   replyCount: number;
   comments?: Comment[];
   parentId?: string;
+}
+
+export interface CommentsResponse {
+  answers: PostComments[];
+  nextCursor: string;
 }

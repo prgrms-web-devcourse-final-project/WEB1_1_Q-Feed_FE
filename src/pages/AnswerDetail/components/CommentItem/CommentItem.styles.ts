@@ -72,6 +72,9 @@ export const StyledAvatar = styled(Avatar)`
   border-radius: 100% !important;
 
   & > img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
     border-radius: 100% !important;
   }
 `;
