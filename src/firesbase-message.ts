@@ -15,22 +15,23 @@ firebase.initializeApp(firebaseConfig);
 
 const messaging = firebase.messaging();
 
-export function requestPermission() {
-  void Notification.requestPermission().then((permission) => {
+// FCM 토큰 요청 함수
+export async function requestFcmToken(): Promise<string | null> {
+  try {
+    const permission = await Notification.requestPermission();
     if (permission === 'granted') {
-      messaging
-        .getToken({
-          vapidKey:
-            'BKvBPha3ZSEI7Xb55-iWciONGqfKYtYgdj6kGWVe-mZDoeKYCCGwmAJaA12wl3zllzU5LCGX4Ar3_8Fix2QqEQ8',
-        })
-        .then((token: string) => {
-          console.log(`푸시 토큰 발급 완료 : ${token}`);
-        })
-        .catch((err: Error) => {
-          console.error('푸시 토큰 가져오는 중에 에러 발생:', err);
-        });
-    } else if (permission === 'denied') {
-      console.log('푸시 권한 차단');
+      const token = await messaging.getToken({
+        vapidKey:
+          'BKvBPha3ZSEI7Xb55-iWciONGqfKYtYgdj6kGWVe-mZDoeKYCCGwmAJaA12wl3zllzU5LCGX4Ar3_8Fix2QqEQ8',
+      });
+      console.log(`푸시 토큰 발급 완료 : ${token}`);
+      return token;
+    } else {
+      console.warn('푸시 권한이 거부되었습니다.');
+      return null;
     }
-  });
+  } catch (error) {
+    console.error('푸시 토큰 요청 중 에러 발생:', error);
+    return null;
+  }
 }

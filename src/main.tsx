@@ -33,8 +33,8 @@ if ('serviceWorker' in navigator) {
       console.log('Service Worker 등록 성공:', registration);
 
       // Firebase Messaging 초기화
-      import('./firesbase-message').then(({ requestPermission }) => {
-        requestPermission();
+      import('./firesbase-message').then(({ requestFcmToken }) => {
+        requestFcmToken();
       });
     })
     .catch((error) => {
