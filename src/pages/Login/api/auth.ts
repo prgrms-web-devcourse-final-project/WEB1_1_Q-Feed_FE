@@ -22,10 +22,10 @@ export const fcmAPI = {
   saveToken: (fcmToken: string) =>
     apiClient.post(
       '/notifications/fcmTokenSaves',
-      { fcmToken }, // 백엔드에서 기대하는 DTO 구조에 맞게 데이터 전송
+      { fcmToken },
       {
         headers: {
-          Authorization: `Bearer ${getCookie('accessToken')}`, // 쿠키에서 accessToken 가져오기
+          Authorization: `Bearer ${getCookie('accessToken')}`,
         },
       }
     ),
