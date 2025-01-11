@@ -30,6 +30,8 @@ export const Login = () => {
     if (data?.accessToken) {
       gotoSelectCategory();
     } else if (error) {
+      console.log('data:,', error);
+
       alert('로그인 정보가 일치하지 않아요');
     }
   }, [data, error, gotoSelectCategory]);

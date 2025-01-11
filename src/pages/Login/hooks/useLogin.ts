@@ -18,7 +18,6 @@ export const useLogin = () => {
     onSuccess: (data: LoginResponse) => {
       setCookie(ACCESS_TOKEN_KEY, data.accessToken);
       setCookie(REFRESH_TOKEN_KEY, data.refreshToken);
-
       setUserId(data.userId);
     },
     onError: (error: Error) => {

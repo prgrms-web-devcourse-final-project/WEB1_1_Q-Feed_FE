@@ -28,6 +28,7 @@ import { KakaoCallback } from '@/pages/KakaoCallback/KakaoCallback';
 import ProfileRegisterPage from '@/pages/ProfileRegister';
 import { ROUTES } from '@/constants/routes';
 import ErrorPage from '@/pages/Error';
+import { KakaoRedirect } from '@/pages/Redirect';
 
 const router = createBrowserRouter([
   {
@@ -146,6 +147,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.ERROR,
         element: <ErrorPage />,
+      },
+      {
+        path: ROUTES.REDIRECT,
+        element: <KakaoRedirect />,
       },
     ],
   },

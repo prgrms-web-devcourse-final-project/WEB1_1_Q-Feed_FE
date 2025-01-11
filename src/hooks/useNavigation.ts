@@ -37,6 +37,7 @@ export const useNavigation = () => {
   const gotoSearch = () => navigate(ROUTES.SEARCH);
   const gotoAuthKakao = () => navigate(ROUTES.KAKAO_CALLBACK);
   const gotoRegisterPage = () => navigate(ROUTES.REGISTER);
+  const gotoRedirectPage = () => navigate(ROUTES.REDIRECT);
 
   return {
     gotoRoot,
@@ -66,5 +67,6 @@ export const useNavigation = () => {
     gotoSearch,
     gotoAuthKakao,
     gotoRegisterPage,
+    gotoRedirectPage,
   };
 };

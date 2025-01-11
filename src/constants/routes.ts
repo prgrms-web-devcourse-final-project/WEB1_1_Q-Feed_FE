@@ -28,4 +28,5 @@ export const ROUTES = {
   KAKAO_CALLBACK: '/oauth/callback/kakao',
   PROFILE_REGISTER: '/profile/register',
   ERROR: '/error',
+  REDIRECT: '/auth/login/kakao',
 };
