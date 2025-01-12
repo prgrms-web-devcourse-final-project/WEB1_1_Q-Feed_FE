@@ -23,12 +23,12 @@ import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
 import { useGetRecommendation } from '@/pages/Main/hooks/useGetRecommendation';
 import { useUserStore } from '@/store/userStore';
 import { useNavigation } from '@/hooks/useNavigation';
-import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
 import { useGetTrendingPosts } from '@/pages/Main/hooks/useGetTrendPosts';
 import { PopularPost } from '@/pages/Main/type/popularPosts';
 import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
 import { useGetComments } from '@/pages/Main/hooks/useGetFeedAnswerList';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { QFeedLoadingSpinner } from '@/components/ui/QFeedLoadingSpinner/QFeedLoadingSpinner';
 
 const Main = () => {
   const { gotoQuestionPage } = useNavigation();
@@ -140,7 +140,7 @@ const Main = () => {
     return (
       <Container>
         <Header />
-        <LoadingSpinner />
+        <QFeedLoadingSpinner />
       </Container>
     );
   }
@@ -211,7 +211,7 @@ const Main = () => {
             dataLength={flattenedComments.length}
             next={fetchNextPage}
             hasMore={hasNextPage || false}
-            loader={isFetching ? <LoadingSpinner /> : null}
+            loader={isFetching ? <QFeedLoadingSpinner /> : null}
             endMessage={
               flattenedComments.length > 0 && (
                 <div style={{ textAlign: 'center', padding: '10px' }}>
