@@ -56,6 +56,8 @@ const Main = () => {
     categoryId: CATEGORY_QUESTION_MAP[activeCategory] || 1,
   });
 
+  console.log('myAnswer:', myAnswer);
+
   const flattenedComments = React.useMemo(() => {
     console.log('fattenedComments:', commentsList);
     console.log('isFetching', isFetching);
@@ -152,6 +154,7 @@ const Main = () => {
   const handleReplyClick = (commentId: string) => {
     console.log(`Reply clicked for comment ${commentId}`);
   };
+
   return (
     <Container>
       <Header />
@@ -179,7 +182,18 @@ const Main = () => {
           date={getTodayDate()}
           question={todayQuestion?.content || `${activeCategory}질문 - 로딩 오류`}
         />
-        <AnswerCard answer={myAnswer?.answerContent || `${activeCategory}에 대한 나의 답변`} />
+
+        {isAnswerLoading ? (
+          <QFeedLoadingSpinner />
+        ) : (
+          myAnswer?.answerContent &&
+          myAnswer.answerId && (
+            <AnswerCard
+              answer={myAnswer?.answerContent || `${activeCategory}에 대한 나의 답변`}
+              answerId={myAnswer?.answerId.toString()}
+            />
+          )
+        )}
 
         {isTrendingAnswersResponse(trendList) && (
           <PostWrapper>

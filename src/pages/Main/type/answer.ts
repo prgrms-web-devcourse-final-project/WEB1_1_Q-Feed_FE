@@ -1,5 +1,5 @@
 export interface AnswerData {
-  questionId: number;
+  answerId: number;
   answerContent: string;
   createdAt: string;
 }
