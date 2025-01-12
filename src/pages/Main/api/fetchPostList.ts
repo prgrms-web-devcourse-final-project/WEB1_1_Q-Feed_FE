@@ -39,4 +39,12 @@ export const feedAPI = {
   deleteAnswer: (answerId: string) => {
     apiClient.delete<APIResponse>(`/feed/answers/${answerId}`);
   },
+
+  setLike: (answerId: string) => {
+    apiClient.post<APIResponse>(`/feed/answers/${answerId}/likes`);
+  },
+
+  cancelLike: (answerId: string) => {
+    apiClient.post<APIResponse>(`/feed/answers/${answerId}/cancel-likes`);
+  },
 } as const;

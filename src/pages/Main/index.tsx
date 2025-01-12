@@ -31,7 +31,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { QFeedLoadingSpinner } from '@/components/ui/QFeedLoadingSpinner/QFeedLoadingSpinner';
 
 const Main = () => {
-  const { gotoQuestionPage } = useNavigation();
+  const { gotoQuestionPage, gotoDetailPage } = useNavigation();
   const [activeCategory, setActiveCategory] = useState(Category.TRAVEL);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -56,12 +56,7 @@ const Main = () => {
     categoryId: CATEGORY_QUESTION_MAP[activeCategory] || 1,
   });
 
-  console.log('myAnswer:', myAnswer);
-
   const flattenedComments = React.useMemo(() => {
-    console.log('fattenedComments:', commentsList);
-    console.log('isFetching', isFetching);
-
     // 데이터가 존재하지 않을 경우 빈 배열 반환
     if (!commentsList?.pages) return [];
 
@@ -147,12 +142,8 @@ const Main = () => {
     );
   }
 
-  const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
-    console.log(`Comment ${commentId} liked: ${isLiked}, count: ${count}`);
-  };
-
   const handleReplyClick = (commentId: string) => {
-    console.log(`Reply clicked for comment ${commentId}`);
+    gotoDetailPage(commentId);
   };
 
   return (
@@ -217,7 +208,7 @@ const Main = () => {
                 />
               </div>
             )}
-          <Title>최근 등록된 답변</Title>
+          {flattenedComments && <Title>최근 등록된 답변</Title>}
         </ProfileSlideWrapper>
 
         <CommentListWrapper>
@@ -229,16 +220,12 @@ const Main = () => {
             endMessage={
               flattenedComments.length > 0 && (
                 <div style={{ textAlign: 'center', padding: '10px' }}>
-                  더 이상 불러올 답글이 없습니다.
+                  더 이상 불러올 게시글이 없습니다.
                 </div>
               )
             }
           >
-            <CommentItemList
-              comments={flattenedComments}
-              onLikeComment={handleLikeComment}
-              onReplyClick={handleReplyClick}
-            />
+            <CommentItemList comments={flattenedComments} onReplyClick={handleReplyClick} />
           </InfiniteScroll>
         </CommentListWrapper>
       </Body>

@@ -69,7 +69,6 @@ export const useGetComments = ({ categoryId = 1, size = 2 }: UseFeedAnswersParam
 
       const lastItem = lastPage[lastPage.length - 1];
       const nextCursor = formatISOTime(lastItem?.createdAt) || currentTime;
-      console.log('Next Cursor:', lastItem?.answerId, nextCursor);
 
       return nextCursor || undefined;
     },

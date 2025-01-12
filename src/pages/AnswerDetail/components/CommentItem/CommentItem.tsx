@@ -83,7 +83,7 @@ export const CommentItem = ({
               }
             />
             <ReplyContainer
-              replyCount={replyCount}
+              groupCommentCount={replyCount}
               onReplyClick={() => {
                 onReplyClick?.(commentId.toString());
                 setShowReplies(!showReplies);
