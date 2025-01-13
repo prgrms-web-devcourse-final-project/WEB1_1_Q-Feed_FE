@@ -40,10 +40,12 @@ export const feedAPI = {
     apiClient.delete<APIResponse>(`/feed/answers/${answerId}`);
   },
 
+  // 좋아요 추가
   setLike: (answerId: string) => {
     apiClient.post<APIResponse>(`/feed/answers/${answerId}/likes`);
   },
 
+  // 좋아요 해제
   cancelLike: (answerId: string) => {
     apiClient.post<APIResponse>(`/feed/answers/${answerId}/cancel-likes`);
   },

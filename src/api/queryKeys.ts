@@ -56,6 +56,7 @@ export const POST_KEYS = {
   ACTIONS: {
     Question: 'question',
     DETAIL: 'detail',
+    AddComment: 'addcomment',
   },
 } as const;
 

@@ -26,3 +26,8 @@ export interface FeedParams {
   size?: number;
   category?: number;
 }
+
+export interface AnswerResponse {
+  answerCommentId: number;
+  message: string;
+}

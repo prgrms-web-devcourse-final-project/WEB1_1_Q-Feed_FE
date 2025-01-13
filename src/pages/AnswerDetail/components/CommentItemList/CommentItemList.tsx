@@ -60,7 +60,6 @@ export const CommentItemList = ({
           onLikeComment={handleLikeComment}
           onReplyClick={handleReplyClick}
           onClick={handleReplyClick}
-          isCommentButtonExist={true}
         />
       ))}
 

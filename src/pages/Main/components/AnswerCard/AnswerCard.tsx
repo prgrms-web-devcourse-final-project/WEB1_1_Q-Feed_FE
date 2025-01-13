@@ -16,10 +16,10 @@ type AnswerCardProps = {
 };
 
 const AnswerCard = ({ answer, answerId }: AnswerCardProps) => {
-  const { gotoSelectCategory } = useNavigation();
+  const { gotoSelectCategory, gotoDetailPage } = useNavigation();
   const deleteMutation = useDeleteAnswer(answerId);
   const handleEdit = () => {
-    alert(`answerid: ${answerId}`);
+    alert(`수정 페이지로 이동 ${answerId}`);
   };
 
   const handleDelete = async () => {
@@ -35,8 +35,12 @@ const AnswerCard = ({ answer, answerId }: AnswerCardProps) => {
     }
   };
 
+  const handleOnClick = () => {
+    gotoDetailPage(answerId);
+  };
+
   return (
-    <Container>
+    <Container onClick={handleOnClick}>
       <TitleContainer>
         <TextTitle>나의 답변</TextTitle>
         <RightContainer>

@@ -57,7 +57,10 @@ const Main = () => {
   });
 
   const flattenedComments = React.useMemo(() => {
-    // 데이터가 존재하지 않을 경우 빈 배열 반환
+    if (hasNextPage) {
+      fetchNextPage();
+    }
+
     if (!commentsList?.pages) return [];
 
     return commentsList.pages.flatMap((page) => (Array.isArray(page) ? page : []));
