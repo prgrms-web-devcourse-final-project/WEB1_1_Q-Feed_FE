@@ -1,103 +1,75 @@
 import { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import styled from '@emotion/styled';
+import { SwiperSlide } from 'swiper/react';
 import { ProfileCard } from '@/pages/Main/components/ProfileCard/ProfileCard';
-import { Navigation, Pagination } from 'swiper/modules';
+import { FreeMode, Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-import theme from '@/styles/theme';
-import { Profile, ProfileSliderProps } from '@/pages/Main/type/profile';
+import { RecommendProfile } from '@/pages/Main/type/profile';
+import { StyledSwiper } from '@/pages/Main/components/ProfileSlider/ProfileSlider.styles';
+import { useUserStore } from '@/store/userStore';
+import { useFollowUser } from '@/pages/Main/hooks/useFollowUser';
 
-export const ProfileSlider = ({ initialProfiles }: ProfileSliderProps) => {
-  const [profiles, setProfiles] = useState<Profile[]>(
-    initialProfiles || [
-      {
-        id: 1,
-        name: '홍길동',
-        imgsrc: '',
-        followerName: '철수',
-        followerNum: 100,
-      },
-      {
-        id: 2,
-        name: '영희',
-        imgsrc: '',
-        followerName: '둘리',
-        followerNum: 3,
-      },
-      {
-        id: 3,
-        name: '순자',
-        imgsrc: '',
-        followerName: '토마토',
-        followerNum: 1,
-      },
-      {
-        id: 4,
-        name: '감자',
-        imgsrc: '',
-        followerName: '고구마',
-        followerNum: 77,
-      },
-      {
-        id: 5,
-        name: '곰돌이',
-        imgsrc: '',
-        followerName: '희동이',
-        followerNum: 3,
-      },
-      {
-        id: 6,
-        name: '산타',
-        imgsrc: '',
-        followerName: '루돌프',
-        followerNum: 11,
-      },
-    ]
-  );
+interface RecommendProfileSliderProps {
+  initialProfiles?: RecommendProfile[];
+  onProfilesChange?: (profiles: RecommendProfile[]) => void;
+}
 
-  const handleDelete = (id: number) => {
-    setProfiles(profiles.filter((profile) => profile.id !== id));
+export const ProfileSlider = ({
+  initialProfiles,
+  onProfilesChange,
+}: RecommendProfileSliderProps) => {
+  const { userId: followerId } = useUserStore();
+  const [profiles, setProfiles] = useState<RecommendProfile[]>(initialProfiles || []);
+  const followUser = useFollowUser();
+
+  console.log('test--->>', profiles);
+
+  const closeRecommandCard = (id: string) => {
+    const newProfiles = profiles.filter((profile) => profile.userId !== id);
+    onProfilesChange?.(newProfiles);
+    setProfiles(profiles.filter((profile) => profile.userId !== id));
+  };
+
+  const handleDelete = (id: string) => {
+    console.log('closeRecommendCard:', id);
+    closeRecommandCard(id);
+  };
+
+  const handleFollow = (id: string) => {
+    console.log('Follow!!:', id);
+
+    if (followerId != '' && id != '') {
+      followUser.mutate({
+        followerId: followerId || '',
+        followeeId: id,
+      });
+    }
+    closeRecommandCard(id);
   };
 
   return (
     <StyledSwiper
-      modules={[Navigation, Pagination]}
+      slidesPerView={2}
       spaceBetween={20}
-      slidesPerView={1000}
-      navigation
-      pagination={{ clickable: true }}
+      freeMode={true}
+      pagination={{
+        clickable: true,
+      }}
+      modules={[FreeMode, Pagination]}
       direction="horizontal"
     >
       {profiles.map((profile) => (
-        <SwiperSlide key={profile.id}>
-          <ProfileCard {...profile} onClickClose={() => handleDelete(profile.id)} />
+        <SwiperSlide key={profile.userId}>
+          <ProfileCard
+            name={profile.nickname}
+            imgsrc={profile.profileImage}
+            followerNum={profile.followerCount}
+            onClickClose={() => handleDelete(profile.userId)}
+            onClickFollow={() => handleFollow(profile.userId)}
+          />
         </SwiperSlide>
       ))}
     </StyledSwiper>
   );
 };
-
-const StyledSwiper = styled(Swiper)`
-  width: 100%;
-  padding: 20px 0;
-  .swiper-wrapper {
-    display: flex;
-    flex-direction: row;
-  }
-
-  .swiper-slide {
-    flex: 0 0 auto;
-    width: auto !important;
-  }
-
-  .swiper-button-next,
-  .swiper-button-prev {
-    color: ${theme.colors.primary};
-  }
-
-  .swiper-pagination-bullet-active {
-    background: ${theme.colors.primary};
-  }
-`;

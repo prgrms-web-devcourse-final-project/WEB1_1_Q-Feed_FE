@@ -49,10 +49,8 @@ const NotificationItemComponent: React.FC<NotificationItemProps> = ({
     // URL이 있는 경우 해당 페이지로 이동
     if (notification.url) {
       navigate(notification.url);
-
     } else {
       console.error('알림에 URL이 없습니다:', notification.content);
-
     }
   };
 

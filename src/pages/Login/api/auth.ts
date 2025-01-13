@@ -12,3 +12,32 @@ export const fetchLogin = async (loginData: LoginRequest): Promise<LoginResponse
   }
   return data;
 };
+
+function getCookie(name: string): string | null {
+  const matches = document.cookie.match(new RegExp(`(?:^|; )${name}=([^;]*)`));
+  return matches ? decodeURIComponent(matches[1]) : null;
+}
+
+export const fcmAPI = {
+  saveToken: (fcmToken: string) =>
+    apiClient.post(
+      '/notifications/fcmTokenSaves',
+      { fcmToken },
+      {
+        headers: {
+          Authorization: `Bearer ${getCookie('accessToken')}`,
+        },
+      }
+    ),
+} as const;
+
+export const saveFcmToken = async (fcmToken: string): Promise<void> => {
+  try {
+    console.log('보내는 FCM 토큰:', { fcmToken }); // 확인용 로그
+    await fcmAPI.saveToken(fcmToken);
+    console.log('FCM 토큰이 서버에 성공적으로 저장되었습니다.');
+  } catch (error) {
+    console.error('FCM 토큰 저장 실패:', error);
+    throw error;
+  }
+};

@@ -18,7 +18,7 @@ import { formatLastUpdated } from '@/utils/formatLastUpdated';
 // comment: Comment;
 type SubCommentItemProps = {
   comment: PostComments;
-  onLikeComment?: (commentId: string, isLiked: boolean, count: number) => void;
+  onLikeComment?: (commentId: number, isLiked: boolean, count: number) => void;
 };
 
 export const SubCommentItem = ({ comment, onLikeComment }: SubCommentItemProps) => {
@@ -37,9 +37,7 @@ export const SubCommentItem = ({ comment, onLikeComment }: SubCommentItemProps) 
               size="medium"
               initialCount={comment.likeCount}
               initialLiked={comment.isLike}
-              onLikeChange={(isLiked, count) =>
-                onLikeComment?.(comment.commentId.toString(), isLiked, count)
-              }
+              onLikeChange={(isLiked, count) => onLikeComment?.(comment.answerId, isLiked, count)}
             />
           </ActionButtons>
         </ContentWrapper>

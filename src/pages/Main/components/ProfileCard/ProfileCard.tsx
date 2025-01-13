@@ -12,7 +12,6 @@ import {
 type ProfileCardProps = {
   name: string;
   imgsrc?: string;
-  followerName: string;
   followerNum: number;
   onClickClose?: () => void;
   onClickFollow?: () => void;
@@ -21,7 +20,6 @@ type ProfileCardProps = {
 export const ProfileCard = ({
   name,
   imgsrc,
-  followerName,
   followerNum,
   onClickClose,
   onClickFollow,
@@ -32,9 +30,7 @@ export const ProfileCard = ({
       <ProfileWrapper>
         <ProfileImage size={74} src={imgsrc} />
         <Name>{name}</Name>
-        <Description>
-          {followerName}님 외 {followerNum}명이 팔로우 합니다
-        </Description>
+        <Description>{followerNum}명이 팔로우 합니다</Description>
         <StyledButton onClick={onClickFollow}>Follow</StyledButton>
       </ProfileWrapper>
     </Container>

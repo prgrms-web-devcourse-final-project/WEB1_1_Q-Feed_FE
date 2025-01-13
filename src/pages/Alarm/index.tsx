@@ -11,6 +11,7 @@ import {
   unreadCountStyle,
   markAllAsReadStyle,
   listStyle,
+  backIconStyle,
 } from '@/pages/Alarm/styles';
 import { NotificationItem } from '@/pages/Alarm/type/alarmType';
 import { fetchNotifications, markAllNotificationsAsRead } from '@/pages/Alarm/api/fetchAlarm';
@@ -27,7 +28,8 @@ const NotificationPage = () => {
     const loadNotifications = async () => {
       try {
         const data = await fetchNotifications();
-        setNotifications(data);
+        const sortedData = data.sort((a, b) => b.notificationId - a.notificationId);
+        setNotifications(sortedData);
         const readIds = data
           .filter((notification) => notification.isRead)
           .map((n) => n.notificationId);
@@ -59,7 +61,7 @@ const NotificationPage = () => {
     <div css={containerStyle}>
       {/* Header */}
       <div css={headerStyle}>
-        <IoChevronBack onClick={() => navigate(-1)} />
+        <IoChevronBack css={backIconStyle} onClick={() => navigate(-1)} />
         <span css={headerTitleStyle}>알림</span>
       </div>
 

@@ -1,13 +1,27 @@
 import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
-export const TextTitle = styled.h1`
+export const TitleContainer = styled.div`
+  display: flex;
   width: 100%;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+export const RightContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  gap: 5px;
+`;
+
+export const TextTitle = styled.h1`
   font-family: 'Noto Sans KR';
   font-size: 16px;
   font-weight: normal;
   color: ${theme.colors.gray[300]};
   text-align: center;
+  width: 100%;
 `;
 export const TextAnswer = styled.h2`
   width: 100%;

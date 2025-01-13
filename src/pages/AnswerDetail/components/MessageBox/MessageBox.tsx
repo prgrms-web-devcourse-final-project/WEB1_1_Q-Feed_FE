@@ -15,9 +15,13 @@ export const MessageBox = ({ onSendMessage }: MessageBoxProps) => {
   const [message, setMessage] = useState('');
 
   const sendMessage = () => {
-    if (message.trim()) {
-      onSendMessage(message.trim());
-      setMessage('');
+    if (message == '') {
+      alert('메시지를 입력하세요');
+    } else {
+      if (message.trim()) {
+        onSendMessage(message.trim());
+        setMessage('');
+      }
     }
   };
 
@@ -30,8 +34,8 @@ export const MessageBox = ({ onSendMessage }: MessageBoxProps) => {
           onEnter={sendMessage}
         />
       </InputWrapper>
-      <ButtonWrapper>
-        <SendButton onClick={sendMessage} />
+      <ButtonWrapper onClick={sendMessage}>
+        <SendButton />
       </ButtonWrapper>
     </Container>
   );

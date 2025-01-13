@@ -1,4 +1,4 @@
 export interface PopularPost {
-  post: string;
-  src?: string | null;
+  answerId: number;
+  content: string;
 }
