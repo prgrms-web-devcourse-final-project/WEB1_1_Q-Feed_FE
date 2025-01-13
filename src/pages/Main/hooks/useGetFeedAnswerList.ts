@@ -1,7 +1,6 @@
 import { FEED_KEYS } from '@/api/queryKeys';
 import { PostComments } from '@/pages/AnswerDetail/type/postType';
 import { feedAPI } from '@/pages/Main/api/fetchPostList';
-// import { CommentsResponse } from '@/pages/Main/type/comment';
 import { currentTime, formatISOTime } from '@/pages/Main/util/getCurrentTime';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
@@ -69,7 +68,6 @@ export const useGetComments = ({ categoryId = 1, size = 2 }: UseFeedAnswersParam
 
       const lastItem = lastPage[lastPage.length - 1];
       const nextCursor = formatISOTime(lastItem?.createdAt) || currentTime;
-      console.log('Next Cursor:', lastItem?.answerId, nextCursor);
 
       return nextCursor || undefined;
     },

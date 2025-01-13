@@ -23,15 +23,15 @@ import CategoryButton from '@/components/ui/CategoryButtons/CategoryButton';
 import { useGetRecommendation } from '@/pages/Main/hooks/useGetRecommendation';
 import { useUserStore } from '@/store/userStore';
 import { useNavigation } from '@/hooks/useNavigation';
-import LoadingSpinner from '@/components/ui/LoadingSpinner/LoadingSpinner';
 import { useGetTrendingPosts } from '@/pages/Main/hooks/useGetTrendPosts';
 import { PopularPost } from '@/pages/Main/type/popularPosts';
 import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
 import { useGetComments } from '@/pages/Main/hooks/useGetFeedAnswerList';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { QFeedLoadingSpinner } from '@/components/ui/QFeedLoadingSpinner/QFeedLoadingSpinner';
 
 const Main = () => {
-  const { gotoQuestionPage } = useNavigation();
+  const { gotoQuestionPage, gotoDetailPage } = useNavigation();
   const [activeCategory, setActiveCategory] = useState(Category.TRAVEL);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -57,10 +57,10 @@ const Main = () => {
   });
 
   const flattenedComments = React.useMemo(() => {
-    console.log('fattenedComments:', commentsList);
-    console.log('isFetching', isFetching);
+    if (hasNextPage) {
+      fetchNextPage();
+    }
 
-    // 데이터가 존재하지 않을 경우 빈 배열 반환
     if (!commentsList?.pages) return [];
 
     return commentsList.pages.flatMap((page) => (Array.isArray(page) ? page : []));
@@ -140,18 +140,15 @@ const Main = () => {
     return (
       <Container>
         <Header />
-        <LoadingSpinner />
+        <QFeedLoadingSpinner />
       </Container>
     );
   }
 
-  const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
-    console.log(`Comment ${commentId} liked: ${isLiked}, count: ${count}`);
+  const handleReplyClick = (commentId: string) => {
+    gotoDetailPage(commentId);
   };
 
-  const handleReplyClick = (commentId: string) => {
-    console.log(`Reply clicked for comment ${commentId}`);
-  };
   return (
     <Container>
       <Header />
@@ -179,7 +176,18 @@ const Main = () => {
           date={getTodayDate()}
           question={todayQuestion?.content || `${activeCategory}질문 - 로딩 오류`}
         />
-        <AnswerCard answer={myAnswer?.answerContent || `${activeCategory}에 대한 나의 답변`} />
+
+        {isAnswerLoading ? (
+          <QFeedLoadingSpinner />
+        ) : (
+          myAnswer?.answerContent &&
+          myAnswer.answerId && (
+            <AnswerCard
+              answer={myAnswer?.answerContent || `${activeCategory}에 대한 나의 답변`}
+              answerId={myAnswer?.answerId.toString()}
+            />
+          )
+        )}
 
         {isTrendingAnswersResponse(trendList) && (
           <PostWrapper>
@@ -203,7 +211,7 @@ const Main = () => {
                 />
               </div>
             )}
-          <Title>최근 등록된 답변</Title>
+          {flattenedComments && <Title>최근 등록된 답변</Title>}
         </ProfileSlideWrapper>
 
         <CommentListWrapper>
@@ -211,20 +219,16 @@ const Main = () => {
             dataLength={flattenedComments.length}
             next={fetchNextPage}
             hasMore={hasNextPage || false}
-            loader={isFetching ? <LoadingSpinner /> : null}
+            loader={isFetching ? <QFeedLoadingSpinner /> : null}
             endMessage={
               flattenedComments.length > 0 && (
                 <div style={{ textAlign: 'center', padding: '10px' }}>
-                  더 이상 불러올 답글이 없습니다.
+                  더 이상 불러올 게시글이 없습니다.
                 </div>
               )
             }
           >
-            <CommentItemList
-              comments={flattenedComments}
-              onLikeComment={handleLikeComment}
-              onReplyClick={handleReplyClick}
-            />
+            <CommentItemList comments={flattenedComments} onReplyClick={handleReplyClick} />
           </InfiniteScroll>
         </CommentListWrapper>
       </Body>

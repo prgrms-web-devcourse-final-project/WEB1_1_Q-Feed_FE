@@ -1,5 +1,7 @@
 import { CommentItem } from '@/pages/AnswerDetail/components/CommentItem/CommentItem';
 import { PostComments } from '@/pages/AnswerDetail/type/postType';
+import { useCancelLike } from '@/pages/Main/hooks/useCancelLikeFeed';
+import { useLikeFeed } from '@/pages/Main/hooks/useLikeFeed';
 import { Container } from '@chakra-ui/react';
 
 type CommentItemListProps = {
@@ -15,8 +17,26 @@ export const CommentItemList = ({
   onReplyClick,
   onLoadMore,
 }: CommentItemListProps) => {
+  const likeMutation = useLikeFeed();
+  const cancelLikeMutation = useCancelLike();
   const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
     onLikeComment?.(commentId, isLiked, count);
+
+    if (!isLiked) {
+      cancelLikeMutation.mutate(commentId, {
+        onSuccess: () => {},
+        onError: (error) => {
+          console.error(error);
+        },
+      });
+    } else {
+      likeMutation.mutate(commentId, {
+        onSuccess: () => {},
+        onError: (error) => {
+          console.error(error);
+        },
+      });
+    }
   };
 
   const handleReplyClick = (commentId: string) => {
@@ -40,7 +60,6 @@ export const CommentItemList = ({
           onLikeComment={handleLikeComment}
           onReplyClick={handleReplyClick}
           onClick={handleReplyClick}
-          isCommentButtonExist={true}
         />
       ))}
 

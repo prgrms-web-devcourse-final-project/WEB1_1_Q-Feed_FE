@@ -33,6 +33,7 @@ type CommentItemProps = {
   onLikeComment?: (commentId: string, isLiked: boolean, count: number) => void;
   onReplyClick?: (commentId: string) => void;
   onClick?: (commentId: string) => void;
+  onClickProfile?: () => void;
   depth?: number;
   isCommentButtonExist?: boolean;
   onClikcProfile?: (commentId: string) => void;
@@ -51,6 +52,7 @@ export const CommentItem = ({
   onLikeComment,
   onReplyClick,
   onClick,
+  onClickProfile,
   depth = 0,
   isCommentButtonExist = false,
 }: CommentItemProps) => {
@@ -59,7 +61,13 @@ export const CommentItem = ({
   return (
     <CommentWrapper hideBorder={true}>
       <Container depth={depth} isCommentButtonExist={isCommentButtonExist}>
-        <StyledAvatar src={profileImage} crossOrigin="anonymous" name={nickName} size="sm" />
+        <StyledAvatar
+          src={profileImage}
+          crossOrigin="anonymous"
+          name={nickName}
+          size="sm"
+          onClick={onClickProfile}
+        />
         <CommentContent>
           <AuthorInfo>
             <AuthorName>{nickName}</AuthorName>
@@ -83,7 +91,7 @@ export const CommentItem = ({
               }
             />
             <ReplyContainer
-              replyCount={replyCount}
+              groupCommentCount={replyCount}
               onReplyClick={() => {
                 onReplyClick?.(commentId.toString());
                 setShowReplies(!showReplies);
@@ -97,7 +105,7 @@ export const CommentItem = ({
         {showReplies && comments && (
           <RepliesWrapper>
             {comments.map((reply) => (
-              <SubCommentItem key={reply.answerId} comment={reply} onLikeComment={onLikeComment} />
+              <SubCommentItem key={reply.answerId} comment={reply} />
             ))}
           </RepliesWrapper>
         )}

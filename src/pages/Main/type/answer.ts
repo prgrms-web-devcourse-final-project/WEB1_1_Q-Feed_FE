@@ -1,5 +1,5 @@
 export interface AnswerData {
-  questionId: number;
+  answerId: number;
   answerContent: string;
   createdAt: string;
 }
@@ -25,4 +25,9 @@ export interface FeedParams {
   answerCursor?: string;
   size?: number;
   category?: number;
+}
+
+export interface AnswerResponse {
+  answerCommentId: number;
+  message: string;
 }
