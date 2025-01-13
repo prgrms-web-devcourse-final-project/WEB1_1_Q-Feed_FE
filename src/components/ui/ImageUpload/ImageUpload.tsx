@@ -17,7 +17,7 @@ interface ImageUploadProps {
   maxSize?: number;
 }
 
-const ALLOWED_TYPES = ['image/jpeg', 'image/png']; // 허용 MIME 타입
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/jpg']; // 허용 MIME 타입
 const ERROR_MESSAGES = {
   INVALID_TYPE: 'jpg 또는 png 파일만 업로드할 수 있습니다.',
   SIZE_EXCEEDED: '파일 크기가 너무 큽니다.',
