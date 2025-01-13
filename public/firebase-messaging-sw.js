@@ -12,13 +12,13 @@ importScripts('https://www.gstatic.com/firebasejs/8.10.0/firebase-messaging.js')
 // https://firebase.google.com/docs/web/setup#config-object
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const firebaseApp = firebase.initializeApp({
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID,
+  apiKey: 'AIzaSyAQsKXoUdQO6i55N9ExqLoqjRDL9w6Hvuo',
+  authDomain: 'q-feed.firebaseapp.com',
+  projectId: 'q-feed',
+  storageBucket: 'q-feed.firebasestorage.app',
+  messagingSenderId: '804246377517',
+  appId: '1:804246377517:web:4fa09d8e470ac8a2da14a4',
+  measurementId: 'G-67D1ZC4V68',
 });
 
 // Firebase Messaging 초기화
