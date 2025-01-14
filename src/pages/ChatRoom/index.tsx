@@ -8,6 +8,7 @@ import MessageList from '@/pages/ChatRoom/component/MessageList';
 import { connectStomp, disconnectStomp, stompClient } from '@/pages/ChatRoom/api/socket';
 import { fetchMessages, markAsRead } from '@/pages/ChatRoom/api/fetchChatRoom';
 import { MessageType } from '@/pages/ChatRoom/type/messageType';
+import { useUserStore } from '@/store/userStore';
 import {
   backIconStyle,
   chatRoomContainer,
@@ -28,9 +29,11 @@ const ChatRoom = () => {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement | null>(null); // 메시지 컨테이너 참조 추가
+  const { userId } = useUserStore(); // 로그인한 사용자의 userId 가져오기
 
   console.log('Location State:', location.state); // 전체 state 확인
   console.log('Other User Nickname:', otherUserNickname); // 닉네임 확인
+  console.log('Current User ID:', userId); // 현재 로그인한 사용자 ID 확인
 
   // 뒤로가기 시 채팅 리스트 새로고침
   const handleBack = () => {
@@ -71,11 +74,11 @@ const ChatRoom = () => {
 
   // 메시지 전송 함수
   const handleSendMessage = (message: string) => {
-    if (!chatRoomId) return;
+    if (!chatRoomId || !userId) return;
 
     const payload = {
       roomId: Number(chatRoomId),
-      senderId: '83974189-a749-4a24-bd5a-8ca2577fac73', // 본인의 ID (예시)
+      senderId: userId,
       message,
       type: 'TEXT',
     };
@@ -108,8 +111,8 @@ const ChatRoom = () => {
               ...prevMessages,
               {
                 ...receivedMessage,
-                isMine: receivedMessage.senderId === '83974189-a749-4a24-bd5a-8ca2577fac73',
-              }, // 본인의 ID 비교
+                isMine: receivedMessage.senderId === userId, // userId와 비교하여 본인 여부 판단
+              },
             ];
             return updatedMessages.sort(
               (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
@@ -131,7 +134,7 @@ const ChatRoom = () => {
     };
 
     return () => disconnectStomp();
-  }, [chatRoomId, fetchInitialMessages, handleMarkAsRead]);
+  }, [chatRoomId, fetchInitialMessages, handleMarkAsRead, userId]);
 
   useEffect(() => {
     // 메시지가 업데이트될 때 스크롤 즉시 맨 아래로 이동
