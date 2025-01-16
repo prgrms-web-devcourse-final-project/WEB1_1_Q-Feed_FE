@@ -77,6 +77,10 @@ export const StyledAvatar = styled(Avatar)`
     object-fit: cover !important;
     border-radius: 100% !important;
   }
+
+  :hover {
+    opacity: 0.7;
+  }
 `;
 
 export const AddReplyButton = styled.h1`

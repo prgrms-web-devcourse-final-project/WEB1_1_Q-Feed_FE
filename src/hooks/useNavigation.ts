@@ -23,7 +23,8 @@ export const useNavigation = () => {
     navigate(ROUTES.QUESTION.replace(':category', targetCategory));
   };
   const gotoSelectCategory = () => navigate(ROUTES.SELECT);
-  const gotoProfilePage = () => navigate(ROUTES.PROFILE);
+  const gotoProfilePage = (userId: string) =>
+    navigate(ROUTES.PROFILE.replace(':id', String(userId)));
   const gotoDetailPage = (answerId: string | number) => {
     navigate(ROUTES.POST_DETAIL.replace(':postId', String(answerId)));
   };

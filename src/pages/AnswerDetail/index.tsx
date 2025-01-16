@@ -131,6 +131,7 @@ export const PostDetailPage = () => {
                 <CommentItem
                   commentId={postDetail.answerId}
                   profileImage={postDetail.profileImage}
+                  userId={postDetail.userId}
                   nickName={postDetail.authorNickname}
                   content={postDetail.content}
                   createdAt={postDetail.createdAt}

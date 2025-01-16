@@ -1,6 +1,6 @@
 export interface PostComments {
   answerId: number;
-  userId: string;
+  authorUserId: string;
   authorNickname: string;
   profileImage: string;
   content: string;
@@ -14,7 +14,7 @@ export interface PostComments {
 
 export interface PostDetail {
   answerId: number;
-  authorUserId: string;
+  userId: string;
   authorNickname: string;
   profileImage: string;
   content: string;
