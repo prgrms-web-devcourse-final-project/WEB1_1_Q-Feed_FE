@@ -45,25 +45,6 @@ export const useCreatePost = (groupId: number) => {
   });
 };
 
-export const useLikePost = (groupId: number) => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: async (postId: number) => {
-      const response = await groupAPI.likePost(postId);
-      if (!response.success) {
-        throw new Error(response.error?.message || '게시글 좋아요에 실패했습니다');
-      }
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [GROUP_KEYS.ROOT, groupId] });
-    },
-    onError: (error: Error) => {
-      console.log(error);
-    },
-  });
-};
-
 export const useUpdateGroupStatus = (groupId: number) => {
   const queryClient = useQueryClient();
   const toast = useToast();

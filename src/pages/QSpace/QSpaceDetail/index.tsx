@@ -13,7 +13,6 @@ import {
   useCreatePost,
   useDeleteGroup,
   useJoinGroup,
-  useLikePost,
 } from '@/pages/QSpace/hooks/Mutation/useGroupMutations';
 
 import {
@@ -46,7 +45,6 @@ const QSpaceDetailPage = () => {
 
   const joinGroup = useJoinGroup(groupId);
   const createPost = useCreatePost(groupId);
-  const likePost = useLikePost(groupId);
   const deleteGroup = useDeleteGroup(groupId);
 
   const isMember = useMemo(
@@ -84,6 +82,10 @@ const QSpaceDetailPage = () => {
   const handleReplyClick = (commentId: number) => {
     // 대댓글 작성 또는 토글 처리
     console.log('Reply clicked:', commentId);
+  };
+
+  const handleLikePost = () => {
+    console.log('like');
   };
 
   return (
@@ -139,13 +141,6 @@ const QSpaceDetailPage = () => {
           onMemberListClick={handleMemberListClick}
         />
 
-        <ChatInputWrapper>
-          <ChatInputBar
-            placeholder="메시지를 입력하세요"
-            onSend={(content) => createPost.mutate(content)}
-          />
-        </ChatInputWrapper>
-
         {canJoinGroup ? (
           <JoinButtonContainer>
             <JoinButton onClick={handleJoinGroup} disabled={joinGroup.isPending}>
@@ -154,6 +149,12 @@ const QSpaceDetailPage = () => {
           </JoinButtonContainer>
         ) : (
           <>
+            <ChatInputWrapper>
+              <ChatInputBar
+                placeholder="메시지를 입력하세요"
+                onSend={(content) => createPost.mutate(content)}
+              />
+            </ChatInputWrapper>
             <CommentArea>
               <CommentList
                 comments={groupDetail.posts.map((post) => ({
@@ -165,7 +166,7 @@ const QSpaceDetailPage = () => {
                   likeCount: post.likeCount,
                   groupCommentCount: post.groupCommentCount || 0,
                 }))}
-                onLikeComment={(commentId) => likePost.mutate(commentId)}
+                onLikeComment={handleLikePost}
                 onReplyClick={handleReplyClick}
               />
             </CommentArea>

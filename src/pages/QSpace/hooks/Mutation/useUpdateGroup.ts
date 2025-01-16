@@ -11,6 +11,11 @@ export const useUpdateGroup = (groupId: number) => {
 
   return useMutation({
     mutationFn: async (form: FormData) => {
+      console.log('수정할 데이터:');
+      for (const [key, value] of form.entries()) {
+        console.log(`${key}:`, value);
+      }
+
       const response = await groupAPI.updateGroup(groupId, form);
       if (!response.success) {
         throw new Error(response.error?.message || '토론방 수정에 실패했습니다');

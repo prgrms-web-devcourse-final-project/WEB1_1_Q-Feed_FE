@@ -45,6 +45,7 @@ export const DiscussionImage = styled.img`
 export const ContentArea = styled.div`
   padding: 1rem;
 `;
+
 export const Content = styled.div`
   font-size: ${theme.typography.body2.size};
   color: ${theme.colors.black};
@@ -56,6 +57,7 @@ export const TagWrapper = styled.div`
 `;
 export const CommentArea = styled.div`
   background-color: ${theme.colors.white80};
+  height: 100%;
   padding-bottom: 5rem;
 `;
 export const ChatInputWrapper = styled.div`
@@ -69,8 +71,7 @@ export const JoinButtonContainer = styled.div`
   padding: 1rem;
   position: relative;
   background-color: none;
-  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1rem;
+  margin-bottom: 5rem;
 `;
 
 export const JoinButton = styled(Button)`

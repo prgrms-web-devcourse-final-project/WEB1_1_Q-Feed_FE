@@ -1,5 +1,5 @@
 // ImageUpload.tsx
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LuImagePlus, LuImageOff } from 'react-icons/lu';
 import theme from '@/styles/theme';
 import {
@@ -15,6 +15,7 @@ import {
 interface ImageUploadProps {
   onImageUpload?: (file: File | null) => void;
   maxSize?: number;
+  initialImage?: string;
 }
 
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/jpg']; // 허용 MIME 타입
@@ -26,8 +27,9 @@ const ERROR_MESSAGES = {
 export const ImageUpload = ({
   onImageUpload,
   maxSize = 5 * 1024 * 1024, // 기본 파일 크기 제한: 5MB
+  initialImage,
 }: ImageUploadProps) => {
-  const [preview, setPreview] = useState<string | null>(null);
+  const [preview, setPreview] = useState<string | null>(initialImage || null);
   const [error, setError] = useState<string | null>(null);
 
   const processFile = (file: File) => {
@@ -72,6 +74,12 @@ export const ImageUpload = ({
       onImageUpload?.(null);
     }
   };
+
+  useEffect(() => {
+    if (initialImage) {
+      setPreview(initialImage);
+    }
+  }, [initialImage]);
 
   return (
     <Container>
