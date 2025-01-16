@@ -32,6 +32,7 @@ const ChatItem = ({
   chatRoomId,
   otherUserProfile,
   otherUserNickname,
+  otherUserId,
   lastMessageContent,
   lastMessageCreatedAt,
   unreadMessageCount,
@@ -40,7 +41,9 @@ const ChatItem = ({
 
   // 채팅방 클릭 시 해당 채팅방으로 이동
   const handleClick = () => {
-    navigate(`/chatroom/${chatRoomId}`); // 클릭 시 채팅방으로 이동
+    navigate(`/chatroom/${chatRoomId}`, {
+      state: { otherUserNickname, otherUserId }, // receiverId를 state에 포함
+    });
   };
 
   return (
@@ -123,8 +126,7 @@ const ChatList = () => {
             key={chat.chatRoomId}
             onClick={() => handleChatRoomClick(chat.chatRoomId, chat.otherUserNickname)} // 채팅방 클릭 이벤트 추가
           >
-            <ChatItem {...chat}
-             />
+            <ChatItem {...chat} />
           </div>
         ))}
       </div>

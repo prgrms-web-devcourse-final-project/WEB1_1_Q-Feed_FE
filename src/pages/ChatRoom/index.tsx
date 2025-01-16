@@ -30,10 +30,11 @@ const ChatRoom = () => {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   const messagesContainerRef = useRef<HTMLDivElement | null>(null); // 메시지 컨테이너 참조 추가
   const { userId } = useUserStore(); // 로그인한 사용자의 userId 가져오기
-
+  const receiverId = location.state?.otherUserId;
   console.log('Location State:', location.state); // 전체 state 확인
   console.log('Other User Nickname:', otherUserNickname); // 닉네임 확인
   console.log('Current User ID:', userId); // 현재 로그인한 사용자 ID 확인
+  console.log('Receiver id:', receiverId);
 
   // 뒤로가기 시 채팅 리스트 새로고침
   const handleBack = () => {
@@ -79,6 +80,7 @@ const ChatRoom = () => {
     const payload = {
       roomId: Number(chatRoomId),
       senderId: userId,
+      receiverId,
       message,
       type: 'TEXT',
     };
