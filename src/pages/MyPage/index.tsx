@@ -76,7 +76,7 @@ const MyPage = () => {
     if (!userId) {
       gotoLogin();
     }
-  }, [userId, navigate]);
+  }, [userId, navigate, gotoLogin]);
 
   useEffect(() => {
     if (userId) {
