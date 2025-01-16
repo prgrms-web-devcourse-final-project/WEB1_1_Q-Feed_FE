@@ -42,7 +42,7 @@ const PostGroupPage = ({ mode = 'create', initialData }: PostGroupPageProps) => 
     form.append('isOpen', 'true');
 
     if (formData.imageFile) {
-      form.append('file', formData.imageFile);
+      form.append('url', formData.imageFile);
     }
 
     if (mode === 'edit' && initialData?.groupId) {

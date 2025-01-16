@@ -23,7 +23,8 @@ export const useNavigation = () => {
     navigate(ROUTES.QUESTION.replace(':category', targetCategory));
   };
   const gotoSelectCategory = () => navigate(ROUTES.SELECT);
-  const gotoProfilePage = () => navigate(ROUTES.PROFILE);
+  const gotoProfilePage = (userId: string) =>
+    navigate(ROUTES.PROFILE.replace(':id', String(userId)));
   const gotoDetailPage = (answerId: string | number) => {
     navigate(ROUTES.POST_DETAIL.replace(':postId', String(answerId)));
   };
@@ -37,6 +38,8 @@ export const useNavigation = () => {
   const gotoSearch = () => navigate(ROUTES.SEARCH);
   const gotoAuthKakao = () => navigate(ROUTES.KAKAO_CALLBACK);
   const gotoRegisterPage = () => navigate(ROUTES.REGISTER);
+  const gotoEditPage = (postId: string, category: string) =>
+    navigate(ROUTES.POST_EDIT.replace(':id', String(postId)).replace(':category', category));
 
   return {
     gotoRoot,
@@ -66,5 +69,6 @@ export const useNavigation = () => {
     gotoSearch,
     gotoAuthKakao,
     gotoRegisterPage,
+    gotoEditPage,
   };
 };

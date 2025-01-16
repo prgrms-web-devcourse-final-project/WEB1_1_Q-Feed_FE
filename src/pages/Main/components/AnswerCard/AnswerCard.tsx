@@ -11,15 +11,16 @@ import { EditButton } from '@/pages/Main/components/EditButton/EditButton';
 import { useDeleteAnswer } from '@/pages/Main/hooks/useDeleteFeed';
 
 type AnswerCardProps = {
+  category: string;
   answer: string;
   answerId: string;
 };
 
-const AnswerCard = ({ answer, answerId }: AnswerCardProps) => {
-  const { gotoSelectCategory, gotoDetailPage } = useNavigation();
+const AnswerCard = ({ category, answer, answerId }: AnswerCardProps) => {
+  const { gotoSelectCategory, gotoEditPage } = useNavigation();
   const deleteMutation = useDeleteAnswer(answerId);
   const handleEdit = () => {
-    alert(`수정 페이지로 이동 ${answerId}`);
+    gotoEditPage(answerId, category);
   };
 
   const handleDelete = async () => {
@@ -35,12 +36,8 @@ const AnswerCard = ({ answer, answerId }: AnswerCardProps) => {
     }
   };
 
-  const handleOnClick = () => {
-    gotoDetailPage(answerId);
-  };
-
   return (
-    <Container onClick={handleOnClick}>
+    <Container>
       <TitleContainer>
         <TextTitle>나의 답변</TextTitle>
         <RightContainer>

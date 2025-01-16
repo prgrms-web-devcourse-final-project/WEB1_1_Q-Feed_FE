@@ -28,6 +28,7 @@ import { KakaoCallback } from '@/pages/KakaoCallback/KakaoCallback';
 import ProfileRegisterPage from '@/pages/ProfileRegister';
 import { ROUTES } from '@/constants/routes';
 import ErrorPage from '@/pages/Error';
+import EditPage from '@/pages/EditAnswer';
 
 const router = createBrowserRouter([
   {
@@ -142,6 +143,10 @@ const router = createBrowserRouter([
       {
         path: ROUTES.PROFILE_REGISTER,
         element: <ProfileRegisterPage />,
+      },
+      {
+        path: ROUTES.POST_EDIT,
+        element: <EditPage />,
       },
       {
         path: ROUTES.ERROR,

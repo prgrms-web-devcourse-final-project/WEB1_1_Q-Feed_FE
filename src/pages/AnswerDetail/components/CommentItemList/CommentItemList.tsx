@@ -19,6 +19,7 @@ export const CommentItemList = ({
 }: CommentItemListProps) => {
   const likeMutation = useLikeFeed();
   const cancelLikeMutation = useCancelLike();
+
   const handleLikeComment = (commentId: string, isLiked: boolean, count: number) => {
     onLikeComment?.(commentId, isLiked, count);
 
@@ -49,6 +50,7 @@ export const CommentItemList = ({
         <CommentItem
           key={comment.answerId}
           commentId={comment.answerId}
+          userId={comment.authorUserId}
           profileImage={comment.profileImage}
           nickName={comment.authorNickname}
           content={comment.content}

@@ -16,46 +16,45 @@ import {
   tabContainerStyle,
   tabStyle,
 } from '@/pages/Following/styles';
+import { useFollowerList, useFollowingList, useFollowActions } from '@/pages/Profile/hooks/useFollowList';
+import { useUserStore } from '@/store/userStore';
 
 const FollowerFollowingPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const initialTab = searchParams.get('tab') || 'follower';
-  const [activeTab, setActiveTab] = useState<'follower' | 'following'>(initialTab as 'following'); // "follower" or "following"
+  const [activeTab, setActiveTab] = useState<'follower' | 'following'>(initialTab as 'follower');
 
-  const [followers, setFollowers] = useState([
-    { id: 1, name: '백종원', isFollowing: true },
-    { id: 2, name: '백종원', isFollowing: false },
-    { id: 3, name: '백종원', isFollowing: false },
-    { id: 4, name: '백종원', isFollowing: true },
-  ]);
+  const { userId: followerId } = useUserStore();
 
-  const [following, setFollowing] = useState([
-    { id: 1, name: '백종원', isFollowing: true },
-    { id: 2, name: '백종원', isFollowing: true },
-    { id: 3, name: '백종원', isFollowing: true },
-    { id: 4, name: '백종원', isFollowing: true },
-  ]);
+  // React Query hooks for list data
+  const { data: followers, isLoading: followersLoading } = useFollowerList({
+    userId: followerId || '',
+    size: 10,
+  });
 
-  const handleFollowerToggle = (id: number) => {
-    setFollowers((prev) =>
-      prev.map((follower) =>
-        follower.id === id ? { ...follower, isFollowing: !follower.isFollowing } : follower
-      )
-    );
+  const { data: following, isLoading: followingLoading } = useFollowingList({
+    userId: followerId || '',
+    size: 10,
+  });
+
+  const { follow, unfollow } = useFollowActions(followerId || '');
+
+  const handleFollowToggle = (followeeId: string, isFollowing: boolean) => {
+    if (isFollowing) {
+      unfollow.mutate(followeeId);
+    } else {
+      follow.mutate(followeeId);
+    }
   };
-  const handleFollowingToggle = (id: number) => {
-    setFollowing((prev) =>
-      prev.map((follow) =>
-        follow.id === id ? { ...follow, isFollowing: !follow.isFollowing } : follow
-      )
-    );
-  };
+
   const handleTabChange = (tab: 'follower' | 'following') => {
     setActiveTab(tab);
     navigate(`/followers?tab=${tab}`);
   };
+
+  const isLoading = activeTab === 'follower' ? followersLoading : followingLoading;
 
   return (
     <div css={containerStyle}>
@@ -82,43 +81,40 @@ const FollowerFollowingPage = () => {
 
       {/* List */}
       <div css={listContainerStyle}>
-        {activeTab === 'follower' &&
-          followers.map((follower) => (
-            <div key={follower.id} css={listItemStyle}>
-              <ProfileImageCon src="" size={40} />
-              <span css={nameStyle}>{follower.name}</span>
-              {follower.isFollowing ? (
-                <div css={buttonGroupStyle}>
-                  <button css={ButtonStyle}>메시지</button>
-                  <button css={ButtonStyle} onClick={() => handleFollowerToggle(follower.id)}>
-                    팔로우 취소
-                  </button>
-                </div>
-              ) : (
-                <button css={ButtonStyle} onClick={() => handleFollowerToggle(follower.id)}>
+        {isLoading && <p>Loading...</p>}
+        {!isLoading &&
+          activeTab === 'follower' &&
+          followers?.map((follower) => (
+            <div key={follower.userId} css={listItemStyle}>
+              <ProfileImageCon src={follower.profileImage} size={40} />
+              <span css={nameStyle}>{follower.nickname}</span>
+              <div css={buttonGroupStyle}>
+                <button css={ButtonStyle}>메시지</button>
+                <button
+                  css={ButtonStyle}
+                  onClick={() => handleFollowToggle(follower.userId, false)}
+                >
                   맞팔로우
                 </button>
-              )}
+              </div>
             </div>
           ))}
 
-        {activeTab === 'following' &&
-          following.map((follow) => (
-            <div key={follow.id} css={listItemStyle}>
-              <ProfileImageCon src="" size={40} />
-              <span css={nameStyle}>{follow.name}</span>
-              {follow.isFollowing ? (
-                <div css={buttonGroupStyle}>
-                  <button css={ButtonStyle}>메시지</button>
-                  <button css={ButtonStyle} onClick={() => handleFollowingToggle(follow.id)}>
-                    팔로우 취소
-                  </button>
-                </div>
-              ) : (
-                <button css={ButtonStyle} onClick={() => handleFollowingToggle(follow.id)}>
-                  맞팔로우
+        {!isLoading &&
+          activeTab === 'following' &&
+          following?.map((follow) => (
+            <div key={follow.userId} css={listItemStyle}>
+              <ProfileImageCon src={follow.profileImage} size={40} />
+              <span css={nameStyle}>{follow.nickname}</span>
+              <div css={buttonGroupStyle}>
+                <button css={ButtonStyle}>메시지</button>
+                <button
+                  css={ButtonStyle}
+                  onClick={() => handleFollowToggle(follow.userId, true)}
+                >
+                  팔로우 취소
                 </button>
-              )}
+              </div>
             </div>
           ))}
       </div>

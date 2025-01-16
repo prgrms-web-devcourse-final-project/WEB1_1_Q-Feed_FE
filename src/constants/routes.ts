@@ -17,6 +17,7 @@ export const ROUTES = {
   SELECT: '/select',
   PROFILE: '/profile/users/:id',
   POST_DETAIL: '/post/:postId',
+  POST_EDIT: '/post/edit/:category/:id',
   PROFILE_EDIT: '/profile/edit',
   REGISTER: '/register',
   PASSWORD_RECOVERY: '/account-recovery/password',
