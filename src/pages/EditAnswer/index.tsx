@@ -27,6 +27,7 @@ const EditPage = () => {
   const [answer, setAnswer] = useState('');
   const [isPrivate, setIsPrivate] = useState(true);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const numericId = Number(id);
   const { data: postDetail } = usePostDetail(numericId);
@@ -43,27 +44,34 @@ const EditPage = () => {
     error: questionError,
   } = useQuestions(categoryIdMap[category || '']);
 
-  const { updateAnswer } = useUpdateAnswer(); // useUpdateAnswer
+  const { updateAnswer } = useUpdateAnswer();
 
   const handleImageUpload = (file: File | null) => {
     setUploadedImage(file);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!id) {
       console.error('id값이 없습니다.');
       return;
     }
 
     const fImg = uploadedImage ?? undefined;
+    setIsSubmitting(true);
 
-    updateAnswer(id, {
-      content: answer,
-      image: fImg,
-      visibility: isPrivate,
-    });
+    try {
+      await updateAnswer(id, {
+        content: answer,
+        image: fImg,
+        visibility: isPrivate,
+      });
 
-    gotoMain();
+      gotoMain();
+    } catch (error) {
+      console.log('Error updating answer:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   if (loadingQuestion) {
@@ -98,7 +106,9 @@ const EditPage = () => {
         isPrivate={isPrivate}
         onLockToggle={() => setIsPrivate((prev) => !prev)}
       />
-      <SubmitButton onClick={handleSubmit}>수정하기</SubmitButton>
+      <SubmitButton onClick={handleSubmit} disabled={isSubmitting}>
+        {isSubmitting ? '수정 중...' : '수정하기'}
+      </SubmitButton>
     </PageLayout>
   );
 };
