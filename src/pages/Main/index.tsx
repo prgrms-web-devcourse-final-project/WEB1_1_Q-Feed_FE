@@ -183,6 +183,7 @@ const Main = () => {
           myAnswer?.answerContent &&
           myAnswer.answerId && (
             <AnswerCard
+              category={activeCategory}
               answer={myAnswer?.answerContent || `${activeCategory}에 대한 나의 답변`}
               answerId={myAnswer?.answerId.toString()}
             />

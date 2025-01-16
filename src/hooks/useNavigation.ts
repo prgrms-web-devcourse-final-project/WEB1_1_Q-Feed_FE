@@ -37,6 +37,8 @@ export const useNavigation = () => {
   const gotoSearch = () => navigate(ROUTES.SEARCH);
   const gotoAuthKakao = () => navigate(ROUTES.KAKAO_CALLBACK);
   const gotoRegisterPage = () => navigate(ROUTES.REGISTER);
+  const gotoEditPage = (postId: string, category: string) =>
+    navigate(ROUTES.POST_EDIT.replace(':id', String(postId)).replace(':category', category));
 
   return {
     gotoRoot,
@@ -66,5 +68,6 @@ export const useNavigation = () => {
     gotoSearch,
     gotoAuthKakao,
     gotoRegisterPage,
+    gotoEditPage,
   };
 };
