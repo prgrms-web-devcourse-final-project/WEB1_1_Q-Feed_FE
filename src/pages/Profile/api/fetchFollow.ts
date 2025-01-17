@@ -87,7 +87,7 @@ export const chatAPI = {
 
   // 채팅방 생성
   createChatRoom: (userId: string, targetUserId: string) =>
-    apiClient.post('/chats/create', { userId, targetUserId }), // userId와 상대 userId를 이용한 채팅방 생성
+    apiClient.post('/chats', { userId, targetUserId }), // userId와 상대 userId를 이용한 채팅방 생성
 };
 
 export const fetchChatList = async (): Promise<ChatData[]> => {

@@ -104,33 +104,40 @@ const ChatRoom = () => {
     stompClient.onConnect = () => {
       console.log(`STOMP 연결 성공 (ChatRoom ID: ${chatRoomId})`);
 
-      const subscription = stompClient.subscribe(`/sub/chat/${chatRoomId}`, (message) => {
-        try {
-          const receivedMessage: MessageType = JSON.parse(message.body);
+      // userId를 headers에 포함하여 구독 요청
+      const subscription = stompClient.subscribe(
+        `/sub/chat/${chatRoomId}`,
+        (message) => {
+          try {
+            const receivedMessage: MessageType = JSON.parse(message.body);
 
-          setMessages((prevMessages) => {
-            const updatedMessages = [
-              ...prevMessages,
-              {
-                ...receivedMessage,
-                isMine: receivedMessage.senderId === userId, // userId와 비교하여 본인 여부 판단
-              },
-            ];
-            return updatedMessages.sort(
-              (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-            );
-          });
+            setMessages((prevMessages) => {
+              const updatedMessages = [
+                ...prevMessages,
+                {
+                  ...receivedMessage,
+                  isMine: receivedMessage.senderId === userId, // userId와 비교하여 본인 여부 판단
+                },
+              ];
+              return updatedMessages.sort(
+                (a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+              );
+            });
 
-          // 스크롤을 가장 아래로 이동
-          setTimeout(() => {
-            if (messagesEndRef.current) {
-              messagesEndRef.current.scrollIntoView({ behavior: 'instant' });
-            }
-          }, 0);
-        } catch (error) {
-          console.error('메시지 파싱 오류:', error);
+            // 스크롤을 가장 아래로 이동
+            setTimeout(() => {
+              if (messagesEndRef.current) {
+                messagesEndRef.current.scrollIntoView({ behavior: 'instant' });
+              }
+            }, 0);
+          } catch (error) {
+            console.error('메시지 파싱 오류:', error);
+          }
+        },
+        {
+          userId: userId || 'unknown',
         }
-      });
+      );
 
       return () => subscription.unsubscribe();
     };
