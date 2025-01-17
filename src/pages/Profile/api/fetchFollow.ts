@@ -2,7 +2,6 @@
 import { apiClient } from '@/api/fetch';
 import { FollowStatusResponse, FollowListResponse } from '@/pages/Profile/types/follow';
 import { ChatData } from '@/pages/ChatList/type/chatListType';
-
 // 팔로우 상태 확인
 export const fetchFollowStatus = async (
   followerId: string,

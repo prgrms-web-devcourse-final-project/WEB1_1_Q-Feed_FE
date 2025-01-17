@@ -135,7 +135,7 @@ const ChatRoom = () => {
           }
         },
         {
-          userId: userId || 'unknown',
+          senderId: userId || 'unknown',
         }
       );
 
