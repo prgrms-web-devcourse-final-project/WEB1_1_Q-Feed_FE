@@ -100,11 +100,23 @@ export const fetchChatList = async (): Promise<ChatData[]> => {
   }
 };
 
-export const createChatRoom = async (userId: string, targetUserId: string): Promise<void> => {
+export const createChatRoom = async (
+  userId: string,
+  userId2: string
+): Promise<{ chatRoomId: string }> => {
   try {
-    const response = await chatAPI.createChatRoom(userId, targetUserId);
-    console.log('채팅방 생성 완료:', response.data);
+    console.log('API 호출 시 전달된 userId:', userId);
+    console.log('API 호출 시 전달된 targetUserId:', userId2);
+
+    const response = await apiClient.post<{ chatRoomId: string }>('/chats', {
+      userId,
+      userId2,
+    });
+
+    // response.data.data.chatRoomId를 반환
+    return response.data as { chatRoomId: string };
   } catch (error) {
     console.error('채팅방 생성 실패:', error);
+    throw error; // 에러를 호출한 쪽으로 전달
   }
 };
