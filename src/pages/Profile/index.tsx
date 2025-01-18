@@ -38,18 +38,27 @@ import {
   TitleSection,
   MoreText,
 } from '@/pages/Profile/styles';
+import { createChatRoom, fetchChatList } from '@/pages/Profile/api/fetchFollow';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
   const { id: followeeId } = useParams<{ id: string }>();
-
-  const { userId: followerId } = useUserStore();// 현재 로그인된 사용자 ID
-
+  const { id: otherUserId } = useParams<{ id: string }>();
+  const { userId: followerId } = useUserStore(); // 현재 로그인된 사용자 ID
+  const { userId } = useUserStore();
   const { data: followStatus } = useFollowStatus(followerId || '', followeeId as string);
   const { follow, unfollow } = useFollowActions(followerId || '', followeeId as string);
 
-  const { data: profileData, isLoading: profileLoading, error: profileError } = useUserProfile(followeeId || '');
-  const { data: interestsData, isLoading: interestsLoading, error: interestsError } = useUserInterests(followeeId || '');
+  const {
+    data: profileData,
+    isLoading: profileLoading,
+    error: profileError,
+  } = useUserProfile(followeeId || '');
+  const {
+    data: interestsData,
+    isLoading: interestsLoading,
+    error: interestsError,
+  } = useUserInterests(followeeId || '');
   const {
     data: answerData,
     fetchNextPage,
@@ -84,6 +93,32 @@ const ProfilePage = () => {
     }
   };
 
+  const handleChatClick = async () => {
+    console.log('내 ID:', userId);
+    console.log('상대방 ID:', otherUserId);
+
+    if (!userId || !otherUserId) {
+      console.error('사용자 ID 또는 상대방 ID가 없습니다.');
+      return;
+    }
+
+    try {
+      const chatList = await fetchChatList();
+
+      const existingChatRoom = chatList.find((chat) => chat.otherUserId === otherUserId);
+
+      if (existingChatRoom) {
+        navigate(`/chatroom/${existingChatRoom.chatRoomId}`);
+      } else {
+        const newChatRoom = await createChatRoom(userId, otherUserId); // 수정된 부분
+        console.log('생성된 채팅방:', newChatRoom);
+        navigate(`/chatroom/${newChatRoom.chatRoomId}`); // chatRoomId 사용
+      }
+    } catch (error) {
+      console.error('채팅방 이동 중 오류 발생:', error);
+    }
+  };
+
   const isSelfProfile = followerId === followeeId; // 자기 자신인지 확인
 
   if (profileError || interestsError || answersError) {
@@ -94,7 +129,14 @@ const ProfilePage = () => {
     return <p>로딩 중...</p>;
   }
 
-  const { nickname: name, email: id, followerCount: followers, followingCount: following, description: bio, profileImageUrl } = profileData || {};
+  const {
+    nickname: name,
+    email: id,
+    followerCount: followers,
+    followingCount: following,
+    description: bio,
+    profileImageUrl,
+  } = profileData || {};
 
   return (
     <>
@@ -106,12 +148,20 @@ const ProfilePage = () => {
             <Id>({id})</Id>
           </NameSection>
           <ProfileImageWrapper>
-            <ProfileImage src={profileImageUrl || '/default-image.jpg'} size={200} alt={`${name}의 프로필 이미지`} />
+            <ProfileImage
+              src={profileImageUrl || '/default-image.jpg'}
+              size={200}
+              alt={`${name}의 프로필 이미지`}
+            />
           </ProfileImageWrapper>
           <Tags tags={tags} />
           <FollowInfo>
-            <InfoItem onClick={() => navigate(`/followers/${followeeId}?tab=follower`)}>{followers} followers</InfoItem>
-            <InfoItem onClick={() => navigate(`/followers/${followeeId}?tab=following`)}>{following} following</InfoItem>
+            <InfoItem onClick={() => navigate(`/followers/${followeeId}?tab=follower`)}>
+              {followers} followers
+            </InfoItem>
+            <InfoItem onClick={() => navigate(`/followers/${followeeId}?tab=following`)}>
+              {following} following
+            </InfoItem>
           </FollowInfo>
           <ButtonGroup>
             <Button
@@ -119,14 +169,10 @@ const ProfilePage = () => {
               backgroundColor={theme.colors.primary}
               textColor={theme.colors.white}
             >
-              {isSelfProfile
-                ? 'Me'
-                : followStatus
-                  ? 'Unfollow'
-                  : 'Follow'}
+              {isSelfProfile ? 'Me' : followStatus ? 'Unfollow' : 'Follow'}
             </Button>
             <Button
-              onClick={() => alert('Chat clicked!')}
+              onClick={handleChatClick}
               backgroundColor={theme.colors.white}
               textColor={theme.colors.primary}
             >
@@ -165,7 +211,9 @@ const ProfilePage = () => {
               ))
             )}
             {hasNextPage && (
-              <button onClick={() => fetchNextPage()}><MoreText>더보기</MoreText></button>
+              <button onClick={() => fetchNextPage()}>
+                <MoreText>더보기</MoreText>
+              </button>
             )}
           </QuestionList>
         </AnswerSection>
