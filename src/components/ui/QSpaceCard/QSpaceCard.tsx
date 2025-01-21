@@ -27,6 +27,8 @@ interface QSpaceCardProps {
   groupId: number;
 }
 
+const defaultImg = "https://picsum.photos/200";
+
 const QSpaceCard = ({
   imageUrl,
   title,
@@ -44,11 +46,16 @@ const QSpaceCard = ({
     });
   };
 
+  const onErrorImg: React.ReactEventHandler<HTMLImageElement> = e => {
+    const target = e.target as HTMLImageElement;
+    target.src = defaultImg;
+  };
+
   return (
     <Container onClick={handleClick}>
       <Content>
         <ImageContainer>
-          <Image crossOrigin="anonymous" src={imageUrl} alt={title} />
+          <Image crossOrigin="anonymous" src={imageUrl || defaultImg} alt={title} onError={onErrorImg} />
         </ImageContainer>
         <TextContainer>
           <RecruitingStatus isRecruiting={isRecruiting}>
