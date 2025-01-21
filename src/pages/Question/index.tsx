@@ -53,9 +53,16 @@ const QuestionPage = () => {
   };
 
   const handleSubmit = () => {
+    const trimmedAnswer = answer.trim();
+
+    if (!trimmedAnswer) {
+      alert('답변을 입력해주세요.');
+      return;
+    }
+
     const createAnswerRequest: CreateAnswerRequest = {
       questionId: questionId as number,
-      content: answer,
+      content: trimmedAnswer,
       visibility: isPrivate,
       image: uploadedImage,
     };
@@ -82,7 +89,7 @@ const QuestionPage = () => {
     <PageLayout>
       <TitleContainer>
         <Title>오늘의 질문</Title>
-        <Date>D+32</Date>
+        <Date>{question?.questionDate}</Date>
       </TitleContainer>
       <Question>{question?.content}</Question>
       <ImageUploadContainer>

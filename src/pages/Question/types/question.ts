@@ -1,4 +1,5 @@
 export interface QuestionResponse {
   questionId: number,
-  content: string
+  content: string,
+  questionDate: string,
 }
