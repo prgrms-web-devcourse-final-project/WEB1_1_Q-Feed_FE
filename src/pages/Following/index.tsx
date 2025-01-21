@@ -60,7 +60,7 @@ const FollowerFollowingPage = () => {
     <div css={containerStyle}>
       {/* Header */}
       <div css={headerStyle}>
-        <IoChevronBack css={backIconStyle} onClick={() => navigate(-1)} />
+        <IoChevronBack css={backIconStyle} onClick={() => navigate('/mypage')} />
       </div>
 
       {/* Tabs */}
