@@ -95,10 +95,6 @@ const Main = () => {
     }
   }, [todayQuestion, myAnswer, activeCategory, gotoQuestionPage, isAnswerLoading]);
 
-  useEffect(() => {
-    console.log('trendList:', trendList);
-  }, [trendList]);
-
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
       const validCategory = Object.values(Category).find((validCat) => validCat === category);
