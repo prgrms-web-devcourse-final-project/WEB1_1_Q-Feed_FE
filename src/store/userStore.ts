@@ -1,12 +1,21 @@
 import { create } from 'zustand';
-import { User } from '@/types/user';
+import { persist } from 'zustand/middleware';
 
-export const useUserStore = create<User>((set) => ({
-  userId: null,
-  setUserId: (userId: string) => {
-    set({ userId });
-  },
-  clearUserId: () => {
-    set({ userId: null });
-  },
-}));
+type UserStore = {
+  userId: string | null;
+  setUserId: (userId: string) => void;
+  clearUserId: () => void;
+};
+
+export const useUserStore = create<UserStore>()(
+  persist(
+    (set) => ({
+      userId: null,
+      setUserId: (userId: string) => set({ userId }),
+      clearUserId: () => set({ userId: null }),
+    }),
+    {
+      name: 'user-store',
+    }
+  )
+);
