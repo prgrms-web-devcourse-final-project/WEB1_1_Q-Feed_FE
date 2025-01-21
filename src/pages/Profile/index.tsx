@@ -39,9 +39,11 @@ import {
   MoreText,
 } from '@/pages/Profile/styles';
 import { createChatRoom, fetchChatList } from '@/pages/Profile/api/fetchFollow';
+import { useNavigation } from '@/hooks/useNavigation';
 
 const ProfilePage = () => {
   const navigate = useNavigate();
+  const { gotoDetailPage } = useNavigation();
   const { id: followeeId } = useParams<{ id: string }>();
   const { id: otherUserId } = useParams<{ id: string }>();
   const { userId: followerId } = useUserStore(); // 현재 로그인된 사용자 ID
@@ -156,10 +158,10 @@ const ProfilePage = () => {
           </ProfileImageWrapper>
           <Tags tags={tags} />
           <FollowInfo>
-            <InfoItem onClick={() => navigate(`/followers/${followeeId}?tab=follower`)}>
+            <InfoItem>
               {followers} followers
             </InfoItem>
-            <InfoItem onClick={() => navigate(`/followers/${followeeId}?tab=following`)}>
+            <InfoItem>
               {following} following
             </InfoItem>
           </FollowInfo>
@@ -206,7 +208,7 @@ const ProfilePage = () => {
                   date={formatDate(answer.createdAt)}
                   content={answer.answerContent}
                   isPrivate={!answer.visibility}
-                  onClick={() => alert(`답변 상세 페이지 이동 id(${answer.answerId})`)}
+                  onClick={() => gotoDetailPage(`${answer.answerId}`)}
                 />
               ))
             )}
