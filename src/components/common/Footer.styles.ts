@@ -14,9 +14,8 @@ export const FooterWrapper = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  height: 5.25rem; //84px
-  padding: 0;
-  margin: 0;
+  margin: 0 auto;
+  height: 5.25rem;
   z-index: 300;
 `;
 
@@ -24,11 +23,6 @@ export const Container = styled.div<{ maxWidth: string }>`
   width: 100%;
   max-width: ${(props) => props.maxWidth};
   background-color: ${theme.colors.white};
-  overflow: hidden;
-  position: relative;
-  height: 100%;
-  padding: 0;
-  margin: 0;
 `;
 
 export const StyledNavigationItem = styled(BottomNavigationItem)`
@@ -37,6 +31,8 @@ export const StyledNavigationItem = styled(BottomNavigationItem)`
   align-items: center;
   justify-content: center;
   width: 100%;
+  max-width: inherit;
+  position: relative;
   height: 100%;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
@@ -62,17 +58,16 @@ export const StyledLabel = styled(BottomNavigationLabel)<{ isActive: boolean }>`
 export const StyledBottomNavigation = styled(BottomNavigation)`
   width: 100%;
   height: 5.25rem; //84px
-  max-width: inherit;
+  max-width: 100%;
   position: relative;
   left: 0;
   bottom: 0;
   right: 0;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
   box-shadow: none;
   padding: 10px;
-  margin: 0;
 
   && {
     box-shadow: none;

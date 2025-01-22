@@ -52,7 +52,7 @@ const menuItems = [
   },
 ];
 
-const Footer = ({ maxWidth = '425px' }: FooterProps) => {
+const Footer = ({ maxWidth = '430px' }: FooterProps) => {
   const navigate = useNavigate();
   const [value, setValue] = useState<string>('/main');
   const [hoveredPath, setHoveredPath] = useState<string | null>(null);

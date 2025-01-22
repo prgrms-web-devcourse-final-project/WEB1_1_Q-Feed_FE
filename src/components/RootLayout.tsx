@@ -8,7 +8,8 @@ const RootLayout = () => {
     location.pathname === '/' ||
     location.pathname.startsWith('/chatroom') ||
     location.pathname === '/select' ||
-    location.pathname.startsWith('/question');
+    location.pathname.startsWith('/question') ||
+    location.pathname.startsWith('/post');
   return (
     <div>
       <main className="container">
