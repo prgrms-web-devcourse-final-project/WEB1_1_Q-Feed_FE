@@ -6,7 +6,9 @@ const RootLayout = () => {
   const isFooterHidden =
     location.pathname === '/login' ||
     location.pathname === '/' ||
-    location.pathname.startsWith('/chatroom');
+    location.pathname.startsWith('/chatroom') ||
+    location.pathname === '/select' ||
+    location.pathname.startsWith('/question');
   return (
     <div>
       <main className="container">

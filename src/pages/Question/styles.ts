@@ -8,8 +8,7 @@ export const Container = styled.div`
   padding: 1.5rem;
   background-color: ${theme.colors.background};
   width: 100%;
-  min-height: calc(100vh - 8.25rem);
-  margin-bottom: 5.25rem;
+  height: 100%;
 `;
 
 export const TitleContainer = styled.div`
