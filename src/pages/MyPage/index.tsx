@@ -142,7 +142,9 @@ const MyPage = () => {
                         content={answer.answerContent}
                         isPrivate={!answer.visibility}
                         onLockToggle={() => handleLockToggle(answer.answerId, answer.visibility)}
-                        onClick={() => gotoDetailPage(`${answer.answerId}`)}
+                        onClick={() =>
+                          gotoDetailPage(`${answer.answerId}`, `${answer.questionContent}`)
+                        }
                       />
                     ))
                   )}

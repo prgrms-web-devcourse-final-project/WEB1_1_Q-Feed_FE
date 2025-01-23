@@ -3,7 +3,8 @@ import { Global, css } from '@emotion/react';
 const globalStyles = css`
   @font-face {
     font-family: 'GyeonggiBatang';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff')
+      format('woff');
     font-weight: normal;
     font-style: normal;
   }
@@ -14,8 +15,18 @@ const globalStyles = css`
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Noto Sans KR', 'Playfair Display', -apple-system, BlinkMacSystemFont, Roboto, Oxygen, Ubuntu,
-      Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family:
+      'Noto Sans KR',
+      'Playfair Display',
+      -apple-system,
+      BlinkMacSystemFont,
+      Roboto,
+      Oxygen,
+      Ubuntu,
+      Cantarell,
+      'Open Sans',
+      'Helvetica Neue',
+      sans-serif;
   }
 
   h1,
@@ -48,7 +59,8 @@ const globalStyles = css`
     max-width: 430px;
     margin: 0 auto;
     position: relative;
-    background-color: white;
+    /* background-color: white; */
+    background-color: #f9f3ec;
   }
 
   body {

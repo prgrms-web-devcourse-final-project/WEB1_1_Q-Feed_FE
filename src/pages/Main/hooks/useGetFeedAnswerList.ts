@@ -2,24 +2,13 @@ import { FEED_KEYS } from '@/api/queryKeys';
 import { PostComments } from '@/pages/AnswerDetail/type/postType';
 import { feedAPI } from '@/pages/Main/api/fetchPostList';
 import { currentTime, formatISOTime } from '@/pages/Main/util/getCurrentTime';
+import { APIResponse } from '@/types/response';
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 interface UseFeedAnswersParams {
   categoryId?: number;
   size?: number;
   cursor?: string;
-}
-
-// API 응답 타입 정의
-interface APIResponse<T> {
-  success: boolean;
-  data?: T;
-  error?:
-    | string
-    | {
-        message: string;
-        details?: Record<string, string[]>;
-      };
 }
 
 interface CommentsResponse {

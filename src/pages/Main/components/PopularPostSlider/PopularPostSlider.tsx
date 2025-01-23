@@ -12,14 +12,15 @@ import {
 import { useNavigation } from '@/hooks/useNavigation';
 
 interface PopularPostSliderProps {
+  todayQuestion: string;
   popularPosts: PopularPost[];
 }
 
-export const PopularPostSlider = ({ popularPosts }: PopularPostSliderProps) => {
+export const PopularPostSlider = ({ todayQuestion, popularPosts }: PopularPostSliderProps) => {
   const { gotoDetailPage } = useNavigation();
 
   const handlePostClick = (answerId: number) => {
-    gotoDetailPage(answerId);
+    gotoDetailPage(answerId, todayQuestion);
   };
 
   return (

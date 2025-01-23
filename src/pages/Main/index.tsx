@@ -14,7 +14,6 @@ import {
   ProfileSlideWrapper,
   Title,
 } from '@/pages/Main/styles';
-import { useFetchQuestion } from '@/pages/AnswerDetail/hooks/useFetchQuestion';
 import { getTodayDate } from '@/pages/Main/util/formatDate';
 import { useFetchMyAnswer } from '@/pages/Main/hooks/useGetMyAnswer';
 import { useEffect, useRef, useState } from 'react';
@@ -29,6 +28,9 @@ import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList
 import { useGetComments } from '@/pages/Main/hooks/useGetFeedAnswerList';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { QFeedLoadingSpinner } from '@/components/ui/QFeedLoadingSpinner/QFeedLoadingSpinner';
+import { useCategoryQuestion } from '@/pages/AnswerDetail/hooks/useCategoryQuestion';
+import { useLikeFeed } from '@/pages/Main/hooks/useLikeFeed';
+import { useCancelLike } from '@/pages/Main/hooks/useCancelLikeFeed';
 
 const Main = () => {
   const { gotoQuestionPage, gotoDetailPage } = useNavigation();
@@ -39,13 +41,16 @@ const Main = () => {
   const [isQLoading, setIsLoading] = useState(false);
 
   const categoryRef = useRef<HTMLDivElement>(null);
-  const { data: todayQuestion } = useFetchQuestion(CATEGORY_QUESTION_MAP[activeCategory] || 1);
+  const { data: todayQuestion } = useCategoryQuestion(CATEGORY_QUESTION_MAP[activeCategory] || 1);
   const { data: myAnswer, isLoading: isAnswerLoading } = useFetchMyAnswer(
     todayQuestion?.questionId || 1
   );
   const { userId: followerId } = useUserStore();
   const { data: recommendList, isLoading } = useGetRecommendation(followerId || '');
   const { data: trendList } = useGetTrendingPosts(CATEGORY_QUESTION_MAP[activeCategory] || 1);
+
+  const { mutate: likeFeed } = useLikeFeed();
+  const { mutate: cancleLikeFeed } = useCancelLike();
 
   const {
     data: commentsList,
@@ -95,10 +100,6 @@ const Main = () => {
     }
   }, [todayQuestion, myAnswer, activeCategory, gotoQuestionPage, isAnswerLoading]);
 
-  useEffect(() => {
-    console.log('trendList:', trendList);
-  }, [trendList]);
-
   const handleCategoryChange = (category: string, isSelected: boolean) => {
     if (isSelected) {
       const validCategory = Object.values(Category).find((validCat) => validCat === category);
@@ -146,7 +147,19 @@ const Main = () => {
   }
 
   const handleReplyClick = (commentId: string) => {
-    gotoDetailPage(commentId);
+    const questionContent = todayQuestion?.content || '기본 질문 내용';
+    const questionQueryParam = encodeURIComponent(questionContent);
+    gotoDetailPage(commentId, questionQueryParam);
+  };
+
+  const handleLikeClick = (commentId: string, isLiked: boolean, count: number) => {
+    console.log(count);
+
+    if (isLiked) {
+      likeFeed(commentId);
+    } else {
+      cancleLikeFeed(commentId);
+    }
   };
 
   return (
@@ -193,7 +206,10 @@ const Main = () => {
         {isTrendingAnswersResponse(trendList) && (
           <PostWrapper>
             <Title>지금 뜨는 인기 답변</Title>
-            <PopularPostSlider popularPosts={trendList.trendingAnswers} />
+            <PopularPostSlider
+              todayQuestion={todayQuestion?.content || '질문 로드에 실패했어요'}
+              popularPosts={trendList.trendingAnswers}
+            />
           </PostWrapper>
         )}
 
@@ -229,7 +245,11 @@ const Main = () => {
               )
             }
           >
-            <CommentItemList comments={flattenedComments} onReplyClick={handleReplyClick} />
+            <CommentItemList
+              comments={flattenedComments}
+              onReplyClick={handleReplyClick}
+              onLikeComment={handleLikeClick}
+            />
           </InfiniteScroll>
         </CommentListWrapper>
       </Body>

@@ -1,11 +1,11 @@
 import { postAPI } from '@/pages/AnswerDetail/api/fetchPost';
 import { useState, useCallback } from 'react';
 
-interface UseCommentLikeProps {
-  commentId: number;
+interface UsePostLikeProps {
+  answerId: number;
 }
 
-export const useCommentLike = ({ commentId }: UseCommentLikeProps) => {
+export const usePostLike = ({ answerId }: UsePostLikeProps) => {
   const [isLiked, setIsLiked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -17,20 +17,20 @@ export const useCommentLike = ({ commentId }: UseCommentLikeProps) => {
 
     try {
       if (isLiked) {
-        // 좋아요 해제
-        await postAPI.cancleCommentLike(commentId);
+        // 답글 좋아요 해제
+        await postAPI.canclePostLike(answerId);
       } else {
-        // 좋아요 추가
-        await postAPI.setCommentLike(commentId);
+        // 답글 좋아요 추가
+        await postAPI.setPostLike(answerId);
       }
       setIsLiked((prevState) => !prevState);
     } catch (err) {
-      setError('댓글 좋아요 처리에 실패했습니다.');
+      setError('답글 좋아요 처리에 실패했습니다.');
       console.error(err);
     } finally {
       setLoading(false);
     }
-  }, [commentId, isLiked, loading]);
+  }, [answerId, isLiked, loading]);
 
   return {
     isLiked,

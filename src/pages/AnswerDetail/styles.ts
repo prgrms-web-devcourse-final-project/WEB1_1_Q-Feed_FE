@@ -2,13 +2,15 @@ import styled from '@emotion/styled';
 import theme from '@/styles/theme';
 
 export const Container = styled.div`
-  padding-bottom: calc(5.25rem + 84px);
-  min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  width: 100%;
+  padding-bottom: 4rem; // MessageBoxWrapper Height
+  height: calc(100% + 168.54px);
 `;
 
 export const Header = styled.div`
+  position: relative;
   width: 100%;
   height: 3rem;
   display: flex;
@@ -35,7 +37,7 @@ export const Body = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 1.25rem;
+  padding-top: 1.25rem; //header height
 `;
 
 export const PostWrapper = styled.div`
@@ -69,19 +71,16 @@ export const TextCommentCount = styled.p`
 
 export const CommentListWrapper = styled.div`
   width: 100%;
-  padding: 1.25rem 0;
+  padding: 1.25rem 0 0 0;
   background-color: ${theme.colors.white80};
 `;
 
 export const MessageBoxWrapper = styled.div`
   position: fixed;
-  bottom: 5.25rem;
-  left: 0;
-  right: 0;
+  bottom: 0;
   width: 100%;
   max-width: 26.875rem;
   margin: 0 auto;
   background-color: ${theme.colors.white};
-  padding: 0.625rem 0;
   border-top: 0.0625rem solid ${theme.colors.gray[300]};
 `;

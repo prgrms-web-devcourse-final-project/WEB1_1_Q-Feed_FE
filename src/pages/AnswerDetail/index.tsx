@@ -3,7 +3,7 @@ import { QuestionCard } from '@/pages/Main/components/QuestionCard/QuestionCard'
 import { CommentItem } from '@/pages/AnswerDetail/components/CommentItem/CommentItem';
 import { MessageBox } from '@/pages/AnswerDetail/components/MessageBox/MessageBox';
 import { CommentItemList } from '@/pages/AnswerDetail/components/CommentItemList/CommentItemList';
-import { useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import {
   Body,
   CommentHeader,
@@ -17,13 +17,13 @@ import {
   Title,
 } from '@/pages/AnswerDetail/styles';
 import { usePostDetail } from '@/pages/AnswerDetail/hooks/usePostDetail';
-import { useFetchQuestion } from '@/pages/AnswerDetail/hooks/useFetchQuestion';
 import { HobbyTag } from '@/constants/hobbytag';
 import { formatLastUpdated } from '@/utils/formatLastUpdated';
 import { useUserStore } from '@/store/userStore';
 import { QFeedLoadingSpinner } from '@/components/ui/QFeedLoadingSpinner/QFeedLoadingSpinner';
 import { useUserProfile } from '@/pages/MyPage/hooks/useUserProfile';
 import { useAddComments } from '@/pages/AnswerDetail/hooks/useAddComments';
+import { getTodayDate } from '@/pages/Main/util/formatDate';
 // import { useCancleCommentLike } from '@/pages/AnswerDetail/hooks/useCancleCommentLike';
 // import { useCommentLike } from '@/pages/AnswerDetail/hooks/useCommentLike';
 
@@ -38,7 +38,10 @@ export const PostDetailPage = () => {
     refetch: refetchPostDetail,
   } = usePostDetail(parsedPostId);
 
-  const { data: todayQuestion } = useFetchQuestion(parsedCategoryId);
+  const { search } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const question = decodeURIComponent(queryParams.get('question') || '기본 질문');
+
   const { userId } = useUserStore();
   const { data: profile, isLoading: profileLoading } = useUserProfile(userId || '');
 
@@ -123,8 +126,8 @@ export const PostDetailPage = () => {
           </Header>
           <Body>
             <QuestionCard
-              date={formatLastUpdated(todayQuestion?.createdAt || '2024-12-12')}
-              question={todayQuestion?.content || '오늘의 질문은 무엇이야??'}
+              date={formatLastUpdated(postDetail?.createdAt || getTodayDate())}
+              question={question}
             />
             <PostWrapper>
               {postDetail && (

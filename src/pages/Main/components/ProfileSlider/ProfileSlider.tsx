@@ -23,8 +23,6 @@ export const ProfileSlider = ({
   const [profiles, setProfiles] = useState<RecommendProfile[]>(initialProfiles || []);
   const followUser = useFollowUser();
 
-  console.log('test--->>', profiles);
-
   const closeRecommandCard = (id: string) => {
     const newProfiles = profiles.filter((profile) => profile.userId !== id);
     onProfilesChange?.(newProfiles);

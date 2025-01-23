@@ -25,8 +25,10 @@ export const useNavigation = () => {
   const gotoSelectCategory = () => navigate(ROUTES.SELECT);
   const gotoProfilePage = (userId: string) =>
     navigate(ROUTES.PROFILE.replace(':id', String(userId)));
-  const gotoDetailPage = (answerId: string | number) => {
-    navigate(ROUTES.POST_DETAIL.replace(':postId', String(answerId)));
+  const gotoDetailPage = (answerId: string | number, question: string) => {
+    navigate(
+      ROUTES.POST_DETAIL.replace(':postId', String(`${answerId}`).concat(`?question=${question}`))
+    );
   };
   const gotoProfileEditPage = () => navigate(ROUTES.PROFILE_EDIT);
   const gotoProfileRegister = () => navigate(ROUTES.PROFILE_REGISTER);
