@@ -38,6 +38,7 @@ type CommentItemProps = {
   onClickProfile?: (userId: string) => void;
   depth?: number;
   isCommentButtonExist?: boolean;
+  isCommentShow?: boolean;
 };
 
 export const CommentItem = ({
@@ -56,6 +57,7 @@ export const CommentItem = ({
   onClick,
   depth = 0,
   isCommentButtonExist = false,
+  isCommentShow = false,
 }: CommentItemProps) => {
   const [showReplies, setShowReplies] = useState(false);
   const { gotoProfilePage } = useNavigation();
@@ -81,8 +83,11 @@ export const CommentItem = ({
           </AuthorInfo>
           <Content
             onClick={() => {
-              onClick?.(commentId.toString());
-              setShowReplies(!showReplies);
+              onClick?.(String(commentId));
+
+              if (isCommentShow) {
+                setShowReplies(!showReplies);
+              }
             }}
           >
             {content}
@@ -92,15 +97,15 @@ export const CommentItem = ({
               size="small"
               initialCount={likeCount}
               initialLiked={isLike}
-              onLikeChange={(isLiked, count) =>
-                onLikeComment?.(commentId.toString(), isLiked, count)
-              }
+              onLikeChange={(isLiked, count) => onLikeComment?.(String(commentId), isLiked, count)}
             />
             <ReplyContainer
               groupCommentCount={replyCount}
               onReplyClick={() => {
-                onReplyClick?.(commentId.toString());
-                setShowReplies(!showReplies);
+                onReplyClick?.(String(commentId));
+                if (isCommentShow) {
+                  setShowReplies(!showReplies);
+                }
               }}
             />
             {isCommentButtonExist && <AddReplyButton>답글 달기</AddReplyButton>}
