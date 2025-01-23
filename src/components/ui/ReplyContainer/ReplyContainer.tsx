@@ -14,7 +14,7 @@ const ReplyContainer = ({ groupCommentCount, onReplyClick, className }: ReplyCon
   return (
     <Container onClick={onReplyClick} className={className}>
       <ReplyIcon />
-      {groupCommentCount > 0 && <ReplyCount>{groupCommentCount}</ReplyCount>}
+      <ReplyCount>{groupCommentCount}</ReplyCount>
     </Container>
   );
 };
