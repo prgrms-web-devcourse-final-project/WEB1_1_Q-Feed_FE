@@ -29,6 +29,8 @@ import { useGetComments } from '@/pages/Main/hooks/useGetFeedAnswerList';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { QFeedLoadingSpinner } from '@/components/ui/QFeedLoadingSpinner/QFeedLoadingSpinner';
 import { useCategoryQuestion } from '@/pages/AnswerDetail/hooks/useCategoryQuestion';
+import { useLikeFeed } from '@/pages/Main/hooks/useLikeFeed';
+import { useCancelLike } from '@/pages/Main/hooks/useCancelLikeFeed';
 
 const Main = () => {
   const { gotoQuestionPage, gotoDetailPage } = useNavigation();
@@ -46,6 +48,9 @@ const Main = () => {
   const { userId: followerId } = useUserStore();
   const { data: recommendList, isLoading } = useGetRecommendation(followerId || '');
   const { data: trendList } = useGetTrendingPosts(CATEGORY_QUESTION_MAP[activeCategory] || 1);
+
+  const { mutate: likeFeed } = useLikeFeed();
+  const { mutate: cancleLikeFeed } = useCancelLike();
 
   const {
     data: commentsList,
@@ -147,6 +152,16 @@ const Main = () => {
     gotoDetailPage(commentId, questionQueryParam);
   };
 
+  const handleLikeClick = (commentId: string, isLiked: boolean, count: number) => {
+    console.log(count);
+
+    if (isLiked) {
+      likeFeed(commentId);
+    } else {
+      cancleLikeFeed(commentId);
+    }
+  };
+
   return (
     <Container>
       <Header />
@@ -230,7 +245,11 @@ const Main = () => {
               )
             }
           >
-            <CommentItemList comments={flattenedComments} onReplyClick={handleReplyClick} />
+            <CommentItemList
+              comments={flattenedComments}
+              onReplyClick={handleReplyClick}
+              onLikeComment={handleLikeClick}
+            />
           </InfiniteScroll>
         </CommentListWrapper>
       </Body>

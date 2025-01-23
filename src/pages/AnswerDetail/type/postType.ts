@@ -5,6 +5,7 @@ export interface PostComments {
   profileImage: string;
   content: string;
   likeCount: number;
+  commentCount: number;
   createdAt: string;
   isLike: boolean;
   isFollowing: boolean;
@@ -41,17 +42,3 @@ export interface Comment {
   isLike: boolean;
   replyCount: number;
 }
-
-// const mapToPostComments = (apiResponse: any): PostComments => ({
-//   commentId: apiResponse.id,
-//   userId: apiResponse.user.id,
-//   authorNickname: apiResponse.user.nickname,
-//   profileImage: apiResponse.user.profileImage || '',
-//   content: apiResponse.content,
-//   likeCount: apiResponse.likeCount || 0,
-//   createdAt: apiResponse.createdAt,
-//   isLike: apiResponse.isLiked || false,
-//   isFollowing: apiResponse.isFollowing || false,
-//   childCommentCount: apiResponse.childCommentCount || 0,
-//   children: apiResponse.children?.map(mapToPostComments) || [],
-// });
